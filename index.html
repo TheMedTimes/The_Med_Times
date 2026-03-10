@@ -35,12 +35,13 @@
   .start-card-icon{font-size:20px;width:32px;text-align:center;flex-shrink:0;}
   .start-card-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin-bottom:2px;}
   .start-card-value{font-size:15px;font-weight:600;color:var(--text);}
-  .play-btn{width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:16px;font-size:17px;font-weight:700;font-family:var(--font-display);cursor:pointer;box-shadow:0 6px 24px rgba(200,57,43,0.35);display:flex;align-items:center;justify-content:center;gap:10px;-webkit-appearance:none;}
+  .play-btn{width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:16px;font-size:17px;font-weight:700;font-family:var(--font-display);cursor:pointer;box-shadow:0 6px 24px rgba(200,57,43,0.35);display:flex;align-items:center;justify-content:center;-webkit-appearance:none;}
   .play-btn:active{transform:scale(0.97);}
   .start-rules{margin-top:14px;font-size:12px;color:var(--text-muted);text-align:center;line-height:1.9;}
 
   /* ── HEADER ── */
   header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;}
+  .header-left{display:flex;flex-direction:column;}
   .logo{font-family:var(--font-display);font-size:18px;font-weight:900;color:var(--accent);cursor:pointer;line-height:1;}
   .date-label{font-size:10px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;}
   .header-right{display:flex;align-items:center;gap:8px;}
@@ -48,17 +49,16 @@
   .timer.running{color:var(--accent);}
   .icon-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;color:var(--text);font-size:12px;font-family:var(--font-body);font-weight:600;}
 
-  /* ── CLUE NAVIGATOR ── */
-  .clue-nav{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;min-height:52px;}
-  .clue-nav-btn{background:none;border:1.5px solid var(--border);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:14px;flex-shrink:0;-webkit-appearance:none;}
+  /* ── TOP CLUE NAV (number + arrows + check/reveal) ── */
+  .clue-nav-top{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
+  .clue-nav-btn{background:none;border:1.5px solid var(--border);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text);font-size:13px;flex-shrink:0;-webkit-appearance:none;}
   .clue-nav-btn:active{background:var(--border);}
-  .clue-nav-text{flex:1;text-align:center;font-size:12px;line-height:1.4;color:var(--text);padding:0 4px;}
-  .clue-nav-text strong{color:var(--accent);font-weight:700;display:block;font-size:11px;margin-bottom:1px;}
-  .check-actions{display:flex;gap:6px;flex-shrink:0;}
+  .clue-nav-label{font-size:12px;font-weight:700;color:var(--accent);white-space:nowrap;font-family:var(--font-mono);}
+  .check-actions{display:flex;gap:6px;margin-left:auto;flex-shrink:0;}
   .action-btn{background:none;border:1.5px solid var(--wrong);border-radius:20px;padding:4px 11px;font-size:11px;font-weight:600;cursor:pointer;color:var(--wrong);font-family:var(--font-body);white-space:nowrap;-webkit-appearance:none;}
 
   /* ── GRID ── */
-  .grid-wrap{display:flex;justify-content:center;align-items:flex-start;padding:10px 4px 6px;background:var(--bg);flex-shrink:0;}
+  .grid-wrap{display:flex;justify-content:center;align-items:flex-start;padding:8px 4px 6px;background:var(--bg);flex-shrink:0;}
   .crossword-grid{display:grid;gap:2px;background:var(--text);border:2.5px solid var(--text);border-radius:4px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.15);}
   .cell{width:var(--cell-size);height:var(--cell-size);background:var(--surface);position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;transition:background 0.08s;}
   .cell.black{background:var(--black);cursor:default;}
@@ -71,13 +71,17 @@
   .cell-num{position:absolute;top:1px;left:2px;font-size:calc(var(--cell-size)*0.22);font-weight:600;color:var(--text);line-height:1;pointer-events:none;}
   .cell-letter{font-size:calc(var(--cell-size)*0.50);font-weight:600;color:var(--text);text-transform:uppercase;line-height:1;pointer-events:none;}
 
-  /* ── BUILT-IN KEYBOARD ── */
-  .keyboard{flex-shrink:0;background:var(--bg);padding:6px 3px 12px;border-top:1px solid var(--border);}
-  .kb-row{display:flex;justify-content:center;gap:4px;margin-bottom:5px;}
-  .kb-key{flex:1;max-width:36px;height:44px;background:var(--surface);border:none;border-radius:8px;font-size:15px;font-weight:600;color:var(--text);cursor:pointer;font-family:var(--font-body);box-shadow:0 2px 0 var(--border);display:flex;align-items:center;justify-content:center;-webkit-appearance:none;transition:background 0.08s;}
+  /* ── CLUE BAR (between grid and keyboard) ── */
+  .clue-bar{flex-shrink:0;background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:7px 16px;min-height:38px;display:flex;align-items:center;}
+  .clue-bar-text{font-size:12px;line-height:1.4;color:var(--text);width:100%;text-align:center;}
+
+  /* ── KEYBOARD ── */
+  .keyboard{flex-shrink:0;background:var(--bg);padding:5px 3px 10px;border-top:1px solid var(--border);}
+  .kb-row{display:flex;justify-content:center;gap:4px;margin-bottom:4px;}
+  .kb-key{flex:1;max-width:34px;height:42px;background:var(--surface);border:none;border-radius:8px;font-size:15px;font-weight:600;color:var(--text);cursor:pointer;font-family:var(--font-body);box-shadow:0 2px 0 var(--border);display:flex;align-items:center;justify-content:center;-webkit-appearance:none;transition:background 0.08s;}
   .kb-key:active{background:var(--border);transform:translateY(1px);box-shadow:none;}
-  .kb-key.wide{max-width:54px;font-size:12px;}
-  .kb-key.del{max-width:54px;font-size:13px;}
+  .kb-key.wide{max-width:52px;font-size:11px;}
+  .kb-key.del{max-width:52px;font-size:13px;}
   [data-theme="dark"] .kb-key{background:#2c2c2e;box-shadow:0 2px 0 #000;}
   [data-theme="dark"] .kb-key:active{background:#3a3a3c;}
 
@@ -137,13 +141,6 @@
         </div>
       </div>
       <div class="start-card-row">
-        <div class="start-card-icon">📐</div>
-        <div class="start-card-info">
-          <div class="start-card-label">Grid Size</div>
-          <div class="start-card-value">15 × 15</div>
-        </div>
-      </div>
-      <div class="start-card-row">
         <div class="start-card-icon">🔥</div>
         <div class="start-card-info">
           <div class="start-card-label">Your Streak</div>
@@ -151,7 +148,7 @@
         </div>
       </div>
     </div>
-    <button class="play-btn" onclick="startGame()">▶&nbsp;&nbsp;Play Today's Puzzle</button>
+    <button class="play-btn" onclick="startGame()">Play Today's Puzzle</button>
     <div class="start-rules">
       Tap a cell · Tap again to flip direction<br>
       Use arrows to move between clues
@@ -172,12 +169,10 @@
     </div>
   </header>
 
-  <!-- CLUE NAVIGATOR (replaces clue list) -->
-  <div class="clue-nav">
+  <!-- TOP: clue number + arrows + check/reveal -->
+  <div class="clue-nav-top">
     <button class="clue-nav-btn" onclick="prevClue()">&#8592;</button>
-    <div class="clue-nav-text" id="clue-nav-text">
-      <strong>—</strong>Tap a cell to begin
-    </div>
+    <span class="clue-nav-label" id="clue-nav-label">—</span>
     <button class="clue-nav-btn" onclick="nextClue()">&#8594;</button>
     <div class="check-actions">
       <button class="action-btn" onclick="checkWord()">Check</button>
@@ -188,8 +183,13 @@
   <!-- GRID -->
   <div class="grid-wrap"><div class="crossword-grid" id="grid"></div></div>
 
-  <!-- BUILT-IN KEYBOARD -->
-  <div class="keyboard" id="keyboard">
+  <!-- CLUE TEXT — sits between grid and keyboard -->
+  <div class="clue-bar">
+    <div class="clue-bar-text" id="clue-bar-text">Tap a cell to begin</div>
+  </div>
+
+  <!-- KEYBOARD -->
+  <div class="keyboard">
     <div class="kb-row">
       <button class="kb-key" onclick="kbInput('Q')">Q</button>
       <button class="kb-key" onclick="kbInput('W')">W</button>
@@ -265,8 +265,7 @@
 <script>
 // ═══════════════════════════════════════════════════
 //  PASTE YOUR DAILY PUZZLE BLOCK HERE
-//  Replace everything between the two comment lines
-//  with the block Claude gives you each day
+//  Only replace between PUZZLE START and PUZZLE END
 // ═══════════════════════════════════════════════════
 // ── PUZZLE START ──
 const PUZZLE = {
@@ -292,18 +291,18 @@ const PUZZLE = {
   ],
   clues: {
     across: [
-      {number:1, row:0, col:0, len:8, clue:"Anticholinergic blocking muscarinic receptors; treats bradycardia and organophosphate poisoning"},
-      {number:2, row:0, col:9, len:6, clue:"Cardiac glycoside from foxglove; inhibits Na⁺/K⁺-ATPase; treats heart failure and AF"},
-      {number:5, row:2, col:5, len:8, clue:"Prototype opioid analgesic; binds μ-receptors; causes respiratory depression"},
-      {number:7, row:4, col:0, len:8, clue:"Vitamin K antagonist; oral anticoagulant monitored by INR"},
-      {number:9, row:6, col:4, len:10, clue:"Catecholamine from adrenal medulla; first-line drug for anaphylaxis"},
-      {number:11,row:9, col:1, len:7, clue:"Functional unit of the kidney; glomerulus and renal tubules"},
-      {number:13,row:11,col:3, len:7, clue:"Most abundant plasma protein; maintains oncotic pressure"}
+      {number:1, row:0, col:0, len:8, clue:"Anticholinergic; treats bradycardia and OPC poisoning"},
+      {number:2, row:0, col:9, len:6, clue:"Cardiac glycoside; inhibits Na/K-ATPase"},
+      {number:5, row:2, col:5, len:8, clue:"Opioid analgesic; binds mu-receptors"},
+      {number:7, row:4, col:0, len:8, clue:"Vitamin K antagonist; monitored by INR"},
+      {number:9, row:6, col:4, len:10, clue:"Catecholamine; first-line for anaphylaxis"},
+      {number:11,row:9, col:1, len:7, clue:"Functional unit of the kidney"},
+      {number:13,row:11,col:3, len:7, clue:"Most abundant plasma protein"}
     ],
     down: [
-      {number:3, row:0, col:2, len:10, clue:"Study of drug ADME — absorption, distribution, metabolism, excretion"},
-      {number:4, row:0, col:9, len:11, clue:"Inhibitory neurotransmitter targeted by benzodiazepines; deficiency causes seizures"},
-      {number:6, row:1, col:1, len:14, clue:"Pancreatic hormone from beta cells; facilitates glucose uptake; first protein sequenced"}
+      {number:3, row:0, col:2, len:10, clue:"Study of drug ADME in the body"},
+      {number:4, row:0, col:9, len:11, clue:"Inhibitory neurotransmitter; target of benzodiazepines"},
+      {number:6, row:1, col:1, len:14, clue:"Beta-cell hormone; facilitates glucose uptake"}
     ]
   }
 };
@@ -316,17 +315,15 @@ const SIZE=PUZZLE.size;
 let userGrid=[],selectedRow=-1,selectedCol=-1;
 let direction='across';
 let timerInterval=null,seconds=0,started=false;
-let instantCheck=false,completedCells=new Set();
+let completedCells=new Set();
 let allClues=[],currentClueIndex=0;
 
-// Build flat ordered clue list (across first, then down, by number)
 function buildClueList(){
   const ac=PUZZLE.clues.across.map(c=>({...c,dir:'across'}));
   const dn=PUZZLE.clues.down.map(c=>({...c,dir:'down'}));
   allClues=[...ac,...dn].sort((a,b)=>a.number-b.number||a.dir.localeCompare(b.dir));
 }
 
-// ── START SCREEN ──
 (function initStart(){
   const d=new Date();
   document.getElementById('start-date').textContent=
@@ -351,9 +348,7 @@ function goToStart(){
   document.getElementById('start-screen').classList.add('active');
 }
 
-// ── GAME INIT ──
 function initGame(){
-  // Auto date
   const d=new Date();
   document.getElementById('date-label').textContent=
     d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
@@ -361,11 +356,9 @@ function initGame(){
   buildClueList();
   buildGrid(computeNumbers());
   document.getElementById('puzzle-topic-end').textContent=PUZZLE.topic;
-  // Jump to first clue
   jumpToClueIndex(0);
 }
 
-// ── GRID ──
 function computeNumbers(){
   const nums={};let n=1;
   for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){
@@ -399,45 +392,39 @@ function buildGrid(numbers){
   }
 }
 
-// ── CLUE NAVIGATION ──
 function jumpToClueIndex(idx){
   if(idx<0)idx=allClues.length-1;
   if(idx>=allClues.length)idx=0;
   currentClueIndex=idx;
   const cl=allClues[idx];
   direction=cl.dir;
-  selectedRow=cl.row;
-  selectedCol=cl.col;
-  // advance to first empty cell in word
+  selectedRow=cl.row;selectedCol=cl.col;
   const wc=getWordCells(cl.row,cl.col,cl.dir);
   const firstEmpty=wc.find(([r,c])=>!userGrid[r][c]);
-  if(firstEmpty){[selectedRow,selectedCol]=firstEmpty;}
+  if(firstEmpty)[selectedRow,selectedCol]=firstEmpty;
   highlightCells();
-  updateClueNav();
+  updateClueUI();
   if(!started)startTimer();
 }
-
 function prevClue(){jumpToClueIndex(currentClueIndex-1);}
 function nextClue(){jumpToClueIndex(currentClueIndex+1);}
 
-function updateClueNav(){
+function updateClueUI(){
   const cl=allClues[currentClueIndex];
   if(!cl)return;
-  const label=`${cl.number} ${cl.dir==='across'?'Across':'Down'}`;
-  document.getElementById('clue-nav-text').innerHTML=
-    `<strong>${label}</strong>${cl.clue}`;
+  document.getElementById('clue-nav-label').textContent=
+    `${cl.number} ${cl.dir==='across'?'Across':'Down'}`;
+  document.getElementById('clue-bar-text').textContent=cl.clue;
 }
 
 function syncClueIndex(){
-  // Update currentClueIndex to match selected cell
   const idx=allClues.findIndex(cl=>{
     if(cl.dir!==direction)return false;
     return getWordCells(cl.row,cl.col,cl.dir).some(([r,c])=>r===selectedRow&&c===selectedCol);
   });
-  if(idx!==-1){currentClueIndex=idx;updateClueNav();}
+  if(idx!==-1){currentClueIndex=idx;updateClueUI();}
 }
 
-// ── CELL INTERACTION ──
 function handleCellClick(r,c){
   if(PUZZLE.solution[r][c]==='#')return;
   if(selectedRow===r&&selectedCol===c){
@@ -449,11 +436,9 @@ function handleCellClick(r,c){
     if(!canGo(r,c,'across')&&canGo(r,c,'down'))direction='down';
     else if(!canGo(r,c,'down'))direction='across';
   }
-  highlightCells();
-  syncClueIndex();
+  highlightCells();syncClueIndex();
   if(!started)startTimer();
 }
-
 function canGo(r,c,dir){
   if(dir==='across')return acrossLen(r,wordStart(r,c,'across'))>1;
   return downLen(wordStart(r,c,'down'),c)>1;
@@ -482,7 +467,6 @@ function highlightCells(){
   if(a){a.classList.remove('highlighted');a.classList.add('active');}
 }
 
-// ── BUILT-IN KEYBOARD ──
 function kbInput(letter){
   if(selectedRow===-1)return;
   if(completedCells.has(`${selectedRow},${selectedCol}`)){advanceSelection();return;}
@@ -490,13 +474,7 @@ function kbInput(letter){
   const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=letter;
   const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
   cell.classList.remove('correct','wrong');
-  if(instantCheck){
-    const ok=PUZZLE.solution[selectedRow][selectedCol]===letter;
-    cell.classList.add(ok?'correct':'wrong');
-    if(!ok){cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
-  }
-  advanceSelection();
-  checkCompletion();
+  advanceSelection();checkCompletion();
 }
 function kbDelete(){
   if(selectedRow===-1)return;
@@ -506,7 +484,6 @@ function kbDelete(){
     document.getElementById(`cell-${selectedRow}-${selectedCol}`)?.classList.remove('correct','wrong');
   }else{retreatSelection();}
 }
-
 function advanceSelection(){
   const wc=getCurrentWordCells();
   const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);
@@ -524,8 +501,6 @@ function retreatSelection(){
     highlightCells();
   }
 }
-
-// ── CHECK / REVEAL ──
 function checkWord(){
   getCurrentWordCells().forEach(([r,c])=>{
     if(!userGrid[r][c])return;
@@ -546,8 +521,6 @@ function revealLetter(){
   completedCells.add(`${selectedRow},${selectedCol}`);
   advanceSelection();checkCompletion();
 }
-
-// ── COMPLETION ──
 function checkCompletion(){
   for(let r=0;r<SIZE;r++)for(let c=0;c<SIZE;c++){
     if(PUZZLE.solution[r][c]==='#')continue;
@@ -571,8 +544,6 @@ function spawnConfetti(){
     document.body.appendChild(el);setTimeout(()=>el.remove(),4000);
   },i*30);
 }
-
-// ── TIMER ──
 function startTimer(){
   started=true;
   timerInterval=setInterval(()=>{
@@ -583,8 +554,6 @@ function startTimer(){
 }
 function stopTimer(){clearInterval(timerInterval);document.getElementById('timer').className='timer';}
 function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;}
-
-// ── THEME ──
 function openThemeModal(){document.getElementById('theme-modal').classList.add('open');}
 function closeThemeModal(e){if(!e||e.target===document.getElementById('theme-modal'))document.getElementById('theme-modal').classList.remove('open');}
 function setTheme(t){
