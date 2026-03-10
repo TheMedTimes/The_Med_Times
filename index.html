@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MedCross — MBBS Daily Crossword</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f4ef; --surface: #ffffff; --border: #d4cfc8;
+    --text: #1a1a1a; --text-muted: #7a7570; --accent: #c8392b;
+    --accent-light: #f5e6e4; --highlight: #fef3c7; --highlight-active: #fde68a;
+    --correct: #16a34a; --correct-bg: #dcfce7; --wrong: #dc2626; --wrong-bg: #fee2e2; --black: #1a1a1a;
+    --cell-size: min(6.1vw, 40px);
+    --font-display: 'Playfair Display', serif; --font-body: 'DM Sans', sans-serif; --font-mono: 'DM Mono', monospace;
+  }
+  [data-theme="dark"] {
+    --bg:#0f0f0f;--surface:#1c1c1e;--border:#3a3a3c;--text:#f5f5f0;--text-muted:#8e8e93;--accent:#ff6b5b;
+    --accent-light:#2d1a18;--highlight:#2d2810;--highlight-active:#4a3f0a;--correct:#34d399;--correct-bg:#052e16;
+    --wrong:#f87171;--wrong-bg:#2d0a0a;--black:#000;
+  }
+  [data-theme="medical"] {
+    --bg:#f0f7f4;--surface:#ffffff;--border:#b8d8cc;--text:#0f2d24;--text-muted:#5a8a78;--accent:#0d6e52;
+    --accent-light:#e0f2ec;--highlight:#d1fae5;--highlight-active:#6ee7b7;--correct:#059669;--correct-bg:#d1fae5;
+    --wrong:#dc2626;--wrong-bg:#fee2e2;--black:#0f2d24;
+  }
+  * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
+  body { font-family:var(--font-body); background:var(--bg); color:var(--text); min-height:100dvh; display:flex; flex-direction:column; transition:background 0.3s,color 0.3s; overscroll-behavior:none; }
+
+/* SCREENS */
+.screen { display:none; flex-direction:column; flex:1; }
+.screen.active { display:flex; }
+
+/* ── START SCREEN ── */
+#start-screen { align-items:center; justify-content:center; padding:32px 24px 48px; min-height:100dvh; position:relative; overflow:hidden; }
+.start-bg-grid { position:absolute; inset:0; display:grid; grid-template-columns:repeat(15,1fr); grid-template-rows:repeat(20,1fr); opacity:0.055; pointer-events:none; z-index:0; }
+.start-bg-cell { border:1px solid var(–text); }
+.start-bg-cell.filled { background:var(–text); }
+.start-content { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; width:100%; max-width:400px; }
+.start-badge { background:var(–accent-light); color:var(–accent); font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:5px 14px; border-radius:20px; margin-bottom:16px; border:1px solid var(–accent); }
+.start-logo { font-family:var(–font-display); font-size:clamp(48px,14vw,72px); font-weight:900; color:var(–accent); letter-spacing:-2px; line-height:1; text-align:center; margin-bottom:6px; }
+.start-tagline { font-size:15px; color:var(–text-muted); text-align:center; margin-bottom:32px; font-weight:400; line-height:1.5; }
+.start-card { background:var(–surface); border:1px solid var(–border); border-radius:20px; padding:4px 20px; width:100%; margin-bottom:20px; box-shadow:0 4px 24px rgba(0,0,0,0.06); }
+.start-card-row { display:flex; align-items:center; gap:12px; padding:13px 0; border-bottom:1px solid var(–border); }
+.start-card-row:last-child { border-bottom:none; }
+.start-card-icon { font-size:22px; width:34px; text-align:center; flex-shrink:0; }
+.start-card-info { flex:1; }
+.start-card-label { font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.8px; color:var(–text-muted); margin-bottom:2px; }
+.start-card-value { font-size:15px; font-weight:600; color:var(–text); }
+.play-btn { width:100%; padding:18px; background:var(–accent); color:white; border:none; border-radius:16px; font-size:18px; font-weight:700; font-family:var(–font-display); cursor:pointer; letter-spacing:0.5px; box-shadow:0 6px 24px rgba(200,57,43,0.3); transition:transform 0.1s,box-shadow 0.1s; display:flex; align-items:center; justify-content:center; gap:10px; }
+.play-btn:active { transform:scale(0.97); box-shadow:0 2px 12px rgba(200,57,43,0.2); }
+.start-rules { margin-top:16px; font-size:12px; color:var(–text-muted); text-align:center; line-height:1.9; }
+.start-rules span { display:inline-block; background:var(–surface); border:1px solid var(–border); border-radius:4px; padding:1px 5px; font-family:var(–font-mono); font-size:11px; color:var(–text); }
+
+/* ── GAME SCREEN ── */
+header { display:flex; align-items:center; justify-content:space-between; padding:10px 16px 8px; border-bottom:1px solid var(–border); background:var(–surface); position:sticky; top:0; z-index:100; }
+.header-left { display:flex; flex-direction:column; }
+.logo { font-family:var(–font-display); font-size:20px; font-weight:900; color:var(–accent); letter-spacing:-0.5px; line-height:1; cursor:pointer; }
+.date-label { font-size:10px; color:var(–text-muted); font-weight:500; text-transform:uppercase; letter-spacing:0.8px; margin-top:2px; }
+.header-right { display:flex; align-items:center; gap:8px; }
+.timer { font-family:var(–font-mono); font-size:18px; font-weight:500; color:var(–text); min-width:56px; text-align:right; }
+.timer.running { color:var(–accent); }
+.icon-btn { background:none; border:1px solid var(–border); border-radius:8px; padding:5px 8px; cursor:pointer; color:var(–text); font-size:13px; display:flex; align-items:center; gap:4px; font-family:var(–font-body); font-weight:500; }
+.icon-btn:active { background:var(–border); }
+.toolbar { display:flex; align-items:center; justify-content:space-between; padding:7px 14px; background:var(–surface); border-bottom:1px solid var(–border); gap:8px; }
+.active-clue-bar { flex:1; font-size:12px; color:var(–text); font-weight:400; line-height:1.3; min-width:0; }
+.active-clue-bar strong { color:var(–accent); font-weight:700; }
+.toolbar-actions { display:flex; gap:6px; flex-shrink:0; }
+.action-btn { background:none; border:1.5px solid var(–border); border-radius:20px; padding:4px 11px; font-size:11px; font-weight:600; cursor:pointer; color:var(–text); font-family:var(–font-body); white-space:nowrap; }
+.action-btn:active { background:var(–border); }
+.action-btn.danger { border-color:var(–wrong); color:var(–wrong); }
+.check-toggle-wrap { display:flex; align-items:center; gap:8px; padding:5px 14px; background:var(–bg); border-bottom:1px solid var(–border); }
+.toggle-label { font-size:11px; font-weight:500; color:var(–text-muted); flex:1; }
+.toggle { position:relative; width:38px; height:21px; flex-shrink:0; }
+.toggle input { opacity:0; width:0; height:0; }
+.slider { position:absolute; inset:0; background:var(–border); border-radius:21px; cursor:pointer; transition:background 0.2s; }
+.slider:before { content:’’; position:absolute; height:15px; width:15px; left:3px; top:3px; background:white; border-radius:50%; transition:transform 0.2s; box-shadow:0 1px 3px rgba(0,0,0,0.2); }
+input:checked+.slider { background:var(–accent); }
+input:checked+.slider:before { transform:translateX(17px); }
+.grid-wrap { display:flex; justify-content:center; padding:10px 4px 6px; background:var(–bg); overflow-x:auto; }
+.crossword-grid { display:grid; gap:2px; background:var(–text); border:2px solid var(–text); border-radius:4px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.12); flex-shrink:0; }
+.cell { width:var(–cell-size); height:var(–cell-size); background:var(–surface); position:relative; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background 0.1s; user-select:none; }
+.cell.black { background:var(–black); cursor:default; }
+.cell.highlighted { background:var(–highlight); }
+.cell.active { background:var(–highlight-active); }
+.cell.correct { background:var(–correct-bg); }
+.cell.correct .cell-letter { color:var(–correct); }
+.cell.wrong { background:var(–wrong-bg); }
+.cell.wrong .cell-letter { color:var(–wrong); }
+.cell-num { position:absolute; top:1px; left:2px; font-size:calc(var(–cell-size)*0.22); font-weight:600; color:var(–text); line-height:1; }
+.cell-letter { font-size:calc(var(–cell-size)*0.50); font-weight:600; color:var(–text); text-transform:uppercase; line-height:1; }
+.direction-tabs { display:flex; border-bottom:1px solid var(–border); background:var(–surface); }
+.dir-tab { flex:1; padding:9px; text-align:center; font-size:12px; font-weight:600; color:var(–text-muted); cursor:pointer; border-bottom:3px solid transparent; transition:all 0.15s; text-transform:uppercase; letter-spacing:0.5px; }
+.dir-tab.active { color:var(–accent); border-bottom-color:var(–accent); }
+.clue-list-wrap { flex:1; overflow-y:auto; background:var(–surface); -webkit-overflow-scrolling:touch; max-height:32vh; }
+.clue-item { display:flex; gap:10px; padding:9px 14px; border-bottom:1px solid var(–border); cursor:pointer; transition:background 0.1s; align-items:flex-start; }
+.clue-item:active { background:var(–bg); }
+.clue-item.active { background:var(–accent-light); }
+.clue-num { font-weight:700; font-size:12px; color:var(–accent); min-width:22px; font-family:var(–font-mono); flex-shrink:0; padding-top:1px; }
+.clue-text { font-size:12px; line-height:1.5; color:var(–text); flex:1; }
+.clue-item.solved .clue-text { color:var(–text-muted); text-decoration:line-through; }
+
+/* MODALS */
+.modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; align-items:flex-end; justify-content:center; }
+.modal-overlay.open { display:flex; }
+.modal { background:var(–surface); border-radius:20px 20px 0 0; padding:20px 20px 40px; width:100%; max-width:480px; animation:slideUp 0.25s ease; }
+@keyframes slideUp { from{transform:translateY(100%)} to{transform:translateY(0)} }
+.modal-handle { width:36px; height:4px; background:var(–border); border-radius:2px; margin:0 auto 16px; }
+.modal-title { font-family:var(–font-display); font-size:20px; font-weight:700; margin-bottom:16px; text-align:center; }
+.theme-options { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:16px; }
+.theme-opt { border:2px solid var(–border); border-radius:12px; padding:14px 10px; text-align:center; cursor:pointer; transition:all 0.15s; background:var(–bg); }
+.theme-opt.selected { border-color:var(–accent); background:var(–accent-light); }
+.theme-swatch { width:36px; height:36px; border-radius:50%; margin:0 auto 8px; border:2px solid rgba(0,0,0,0.1); }
+.theme-name { font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; color:var(–text); }
+.modal-close { width:100%; padding:14px; background:var(–accent); color:white; border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer; font-family:var(–font-body); }
+.success-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:300; align-items:center; justify-content:center; padding:24px; }
+.success-overlay.open { display:flex; }
+.success-card { background:var(–surface); border-radius:20px; padding:32px 24px; width:100%; max-width:360px; text-align:center; animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes popIn { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+.success-emoji { font-size:56px; margin-bottom:12px; }
+.success-title { font-family:var(–font-display); font-size:28px; font-weight:900; color:var(–accent); margin-bottom:6px; }
+.success-time { font-family:var(–font-mono); font-size:36px; font-weight:500; color:var(–text); margin:12px 0; }
+.success-sub { font-size:14px; color:var(–text-muted); margin-bottom:20px; }
+.success-btn { display:block; width:100%; padding:14px; background:var(–accent); color:white; border:none; border-radius:12px; font-size:15px; font-weight:600; cursor:pointer; font-family:var(–font-body); margin-bottom:10px; }
+.success-btn.outline { background:none; border:1.5px solid var(–border); color:var(–text); }
+.confetti-piece { position:fixed; width:8px; height:8px; border-radius:2px; animation:confettiFall linear forwards; z-index:400; pointer-events:none; }
+@keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1} 100%{transform:translateY(100vh) rotate(720deg);opacity:0} }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-3px)} 40%{transform:translateX(3px)} 60%{transform:translateX(-2px)} 80%{transform:translateX(2px)} }
+.cell.shaking { animation:shake 0.3s ease; }
+#hidden-input { position:absolute; opacity:0; pointer-events:none; width:1px; height:1px; top:0; left:0; }
+</style>
+
+</head>
+<body data-theme="light">
+<input type="text" id="hidden-input" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" maxlength="2">
+
+<!-- ══ START SCREEN ══ -->
+
+<div id="start-screen" class="screen active">
+  <div class="start-bg-grid" id="start-bg-grid"></div>
+  <div class="start-content">
+    <div class="start-badge">Daily Puzzle</div>
+    <div class="start-logo">MedCross</div>
+    <div class="start-tagline">The daily crossword built for<br>2nd Year MBBS students</div>
+    <div class="start-card">
+      <div class="start-card-row">
+        <div class="start-card-icon">📅</div>
+        <div class="start-card-info">
+          <div class="start-card-label">Today's Date</div>
+          <div class="start-card-value" id="start-date">—</div>
+        </div>
+      </div>
+      <div class="start-card-row">
+        <div class="start-card-icon">🧬</div>
+        <div class="start-card-info">
+          <div class="start-card-label">Today's Topic</div>
+          <div class="start-card-value" id="start-topic">—</div>
+        </div>
+      </div>
+      <div class="start-card-row">
+        <div class="start-card-icon">📐</div>
+        <div class="start-card-info">
+          <div class="start-card-label">Grid Size</div>
+          <div class="start-card-value">15 × 15</div>
+        </div>
+      </div>
+      <div class="start-card-row">
+        <div class="start-card-icon">🔥</div>
+        <div class="start-card-info">
+          <div class="start-card-label">Your Streak</div>
+          <div class="start-card-value">— <span style="font-size:12px;color:var(--text-muted);font-weight:400">Login to track</span></div>
+        </div>
+      </div>
+    </div>
+    <button class="play-btn" onclick="startGame()">▶&nbsp;&nbsp;Play Today's Puzzle</button>
+    <div class="start-rules">
+      Tap a cell to select &nbsp;·&nbsp; Tap again to flip direction<br>
+      <span>Check</span> validates your word &nbsp;·&nbsp; <span>Reveal</span> shows a letter<br>
+      Toggle ⚡ for instant letter feedback
+    </div>
+  </div>
+</div>
+
+<!-- ══ GAME SCREEN ══ -->
+
+<div id="game-screen" class="screen">
+  <header>
+    <div class="header-left">
+      <div class="logo" onclick="goToStart()">MedCross</div>
+      <div class="date-label" id="date-label"></div>
+    </div>
+    <div class="header-right">
+      <div class="timer" id="timer">0:00</div>
+      <button class="icon-btn" onclick="openThemeModal()">🎨</button>
+    </div>
+  </header>
+  <div class="toolbar">
+    <div class="active-clue-bar" id="active-clue-bar"><strong>—</strong> Tap a cell to begin</div>
+    <div class="toolbar-actions">
+      <button class="action-btn danger" onclick="checkWord()">Check</button>
+      <button class="action-btn danger" onclick="revealLetter()">Reveal</button>
+    </div>
+  </div>
+  <div class="check-toggle-wrap">
+    <span class="toggle-label">⚡ Check as you type</span>
+    <label class="toggle"><input type="checkbox" id="instant-check-toggle"><span class="slider"></span></label>
+  </div>
+  <div class="grid-wrap"><div class="crossword-grid" id="grid"></div></div>
+  <div class="direction-tabs">
+    <div class="dir-tab active" id="tab-across" onclick="switchTab('across')">Across</div>
+    <div class="dir-tab" id="tab-down" onclick="switchTab('down')">Down</div>
+  </div>
+  <div class="clue-list-wrap"><div id="clue-list"></div></div>
+</div>
+
+<!-- THEME MODAL -->
+
+<div class="modal-overlay" id="theme-modal" onclick="closeThemeModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Choose Theme</div>
+    <div class="theme-options">
+      <div class="theme-opt selected" onclick="setTheme('light')" id="opt-light">
+        <div class="theme-swatch" style="background:linear-gradient(135deg,#f7f4ef,#c8392b)"></div>
+        <div class="theme-name">Classic</div>
+      </div>
+      <div class="theme-opt" onclick="setTheme('dark')" id="opt-dark">
+        <div class="theme-swatch" style="background:linear-gradient(135deg,#0f0f0f,#ff6b5b)"></div>
+        <div class="theme-name">Dark</div>
+      </div>
+      <div class="theme-opt" onclick="setTheme('medical')" id="opt-medical">
+        <div class="theme-swatch" style="background:linear-gradient(135deg,#f0f7f4,#0d6e52)"></div>
+        <div class="theme-name">Medical</div>
+      </div>
+    </div>
+    <button class="modal-close" onclick="closeThemeModal()">Done</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+
+<div class="success-overlay" id="success-overlay">
+  <div class="success-card">
+    <div class="success-emoji">🎉</div>
+    <div class="success-title">Puzzle Complete!</div>
+    <div class="success-time" id="final-time">—</div>
+    <div class="success-sub">Topic: <span id="puzzle-topic-end"></span></div>
+    <button class="success-btn" onclick="goToStart()">Back to Home</button>
+    <button class="success-btn outline" onclick="document.getElementById('success-overlay').classList.remove('open')">View Board</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+//  PLACEHOLDER 15×15 PUZZLE
+//  '#' = black square. All other cells = correct letter (uppercase).
+//  Replace this with your real puzzles when ready.
+// ══════════════════════════════════════════════════════════════════
+const PUZZLE = {
+  date: "2026-03-10",
+  topic: "Pharmacology",
+  size: 15,
+  solution: [
+    ["A","T","R","O","P","I","N","E","#","D","I","G","O","X","I"],
+    ["#","#","E","#","#","#","#","#","#","I","#","#","#","#","#"],
+    ["#","#","P","#","#","M","O","R","P","H","I","N","E","#","#"],
+    ["#","#","H","#","#","#","#","#","#","A","#","#","#","#","#"],
+    ["W","A","R","F","A","R","I","N","#","Z","#","#","#","#","#"],
+    ["#","#","I","#","#","#","#","#","#","I","#","#","#","#","#"],
+    ["#","#","N","#","A","D","R","E","N","A","L","I","N","E","#"],
+    ["#","#","E","#","#","#","#","#","#","M","#","#","#","#","#"],
+    ["#","I","#","#","#","#","#","#","#","I","#","#","#","#","#"],
+    ["#","N","E","P","H","R","O","N","#","D","#","#","#","#","#"],
+    ["#","S","#","#","#","#","#","#","#","E","#","#","#","#","#"],
+    ["#","U","#","A","L","B","U","M","I","N","#","#","#","#","#"],
+    ["#","L","#","#","#","#","#","#","#","#","#","#","#","#","#"],
+    ["#","I","#","#","#","#","#","#","#","#","#","#","#","#","#"],
+    ["#","N","#","#","#","#","#","#","#","#","#","#","#","#","#"]
+  ],
+  clues: {
+    across: [
+      { number:1,  row:0,  col:0,  len:8,  clue:"Anticholinergic blocking muscarinic receptors; treats bradycardia and organophosphate poisoning" },
+      { number:2,  row:0,  col:9,  len:6,  clue:"Cardiac glycoside from foxglove; inhibits Na⁺/K⁺-ATPase; treats heart failure and AF" },
+      { number:5,  row:2,  col:5,  len:8,  clue:"Prototype opioid analgesic; binds μ-receptors; causes respiratory depression and constipation" },
+      { number:7,  row:4,  col:0,  len:8,  clue:"Vitamin K antagonist; oral anticoagulant monitored by INR; treats DVT and AF" },
+      { number:9,  row:6,  col:4,  len:10, clue:"Catecholamine released by the adrenal medulla; first-line drug for anaphylaxis" },
+      { number:11, row:9,  col:1,  len:7,  clue:"Functional unit of the kidney; consists of glomerulus and renal tubules" },
+      { number:13, row:11, col:3,  len:7,  clue:"Most abundant plasma protein; maintains oncotic pressure; produced by the liver" }
+    ],
+    down: [
+      { number:3,  row:0,  col:2,  len:10, clue:"Study of drug absorption, distribution, metabolism and excretion in the body" },
+      { number:4,  row:0,  col:9,  len:11, clue:"Pyrimidine with hazardous potency; also refers to the sympathomimetic pathway neurotransmitter" },
+      { number:6,  row:1,  col:1,  len:14, clue:"Pancreatic peptide hormone from β-cells; facilitates glucose uptake; first protein sequenced" }
+    ]
+  }
+};
+
+// ══════════════════════════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════════════════════════
+const SIZE = PUZZLE.size;
+let userGrid=[], selectedRow=-1, selectedCol=-1;
+let direction='across', currentTab='across';
+let timerInterval=null, seconds=0, started=false;
+let instantCheck=false;
+let completedCells=new Set();
+
+// ══════════════════════════════════════════════════════════════════
+//  START SCREEN
+// ══════════════════════════════════════════════════════════════════
+(function initStart(){
+  const d=new Date();
+  document.getElementById('start-date').textContent=
+    d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  document.getElementById('start-topic').textContent=PUZZLE.topic;
+  // Decorative bg grid
+  const bg=document.getElementById('start-bg-grid');
+  for(let i=0;i<300;i++){
+    const c=document.createElement('div');
+    c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
+    bg.appendChild(c);
+  }
+})();
+
+function startGame(){
+  document.getElementById('start-screen').classList.remove('active');
+  document.getElementById('game-screen').classList.add('active');
+  if(!started) initGame();
+}
+
+function goToStart(){
+  document.getElementById('success-overlay').classList.remove('open');
+  document.getElementById('game-screen').classList.remove('active');
+  document.getElementById('start-screen').classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  GAME INIT
+// ══════════════════════════════════════════════════════════════════
+function initGame(){
+  const d=new Date();
+  document.getElementById('date-label').textContent=
+    d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  for(let r=0;r<SIZE;r++){userGrid[r]=[];for(let c=0;c<SIZE;c++)userGrid[r][c]='';}
+  buildGrid(computeNumbers());
+  renderClueList();
+  document.getElementById('puzzle-topic-end').textContent=PUZZLE.topic;
+  document.getElementById('instant-check-toggle').addEventListener('change',e=>{instantCheck=e.target.checked;rerenderAll();});
+  const inp=document.getElementById('hidden-input');
+  inp.addEventListener('input',onInput);
+  inp.addEventListener('keydown',onKeydown);
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  GRID HELPERS
+// ══════════════════════════════════════════════════════════════════
+function computeNumbers(){
+  const nums={};let n=1;
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++){
+    if(PUZZLE.solution[r][c]==='#') continue;
+    const sA=c===0||PUZZLE.solution[r][c-1]==='#';
+    const sD=r===0||PUZZLE.solution[r-1][c]==='#';
+    if((sA&&acrossLen(r,c)>1)||(sD&&downLen(r,c)>1)) nums[`${r},${c}`]=n++;
+  }
+  return nums;
+}
+function acrossLen(r,c){let l=0;while(c+l<SIZE&&PUZZLE.solution[r][c+l]!=='#')l++;return l;}
+function downLen(r,c){let l=0;while(r+l<SIZE&&PUZZLE.solution[r+l][c]!=='#')l++;return l;}
+
+function buildGrid(numbers){
+  const el=document.getElementById('grid');
+  el.style.gridTemplateColumns=`repeat(${SIZE},var(--cell-size))`;
+  el.innerHTML='';
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++){
+    const div=document.createElement('div');
+    const blk=PUZZLE.solution[r][c]==='#';
+    div.className='cell'+(blk?' black':'');
+    div.id=`cell-${r}-${c}`;
+    if(!blk){
+      const num=numbers[`${r},${c}`];
+      if(num){const n=document.createElement('div');n.className='cell-num';n.textContent=num;div.appendChild(n);}
+      const lt=document.createElement('div');lt.className='cell-letter';lt.id=`letter-${r}-${c}`;div.appendChild(lt);
+      div.addEventListener('click',()=>handleCellClick(r,c));
+      div.addEventListener('touchstart',e=>{e.preventDefault();handleCellClick(r,c);},{passive:false});
+    }
+    el.appendChild(div);
+  }
+}
+
+function wordStart(r,c,dir){
+  if(dir==='across'){while(c>0&&PUZZLE.solution[r][c-1]!=='#')c--;return c;}
+  else{while(r>0&&PUZZLE.solution[r-1][c]!=='#')r--;return r;}
+}
+function getWordCells(sr,sc,dir){
+  const cells=[];
+  if(dir==='across'){let c=sc;while(c<SIZE&&PUZZLE.solution[sr][c]!=='#')cells.push([sr,c++]);}
+  else{let r=sr;while(r<SIZE&&PUZZLE.solution[r][sc]!=='#')cells.push([r++,sc]);}
+  return cells;
+}
+function getCurrentWordCells(){
+  if(selectedRow===-1)return[];
+  const sr=direction==='down'?wordStart(selectedRow,selectedCol,'down'):selectedRow;
+  const sc=direction==='across'?wordStart(selectedRow,selectedCol,'across'):selectedCol;
+  return getWordCells(sr,sc,direction);
+}
+function canGo(r,c,dir){
+  if(dir==='across'){return acrossLen(r,wordStart(r,c,'across'))>1;}
+  return downLen(wordStart(r,c,'down'),c)>1;
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  INTERACTION
+// ══════════════════════════════════════════════════════════════════
+function handleCellClick(r,c){
+  if(PUZZLE.solution[r][c]==='#')return;
+  if(selectedRow===r&&selectedCol===c){
+    direction=direction==='across'?'down':'across';
+    if(!canGo(r,c,'across'))direction='down';
+    if(!canGo(r,c,'down'))direction='across';
+  }else{
+    selectedRow=r;selectedCol=c;
+    if(!canGo(r,c,'across')&&canGo(r,c,'down'))direction='down';
+    else if(!canGo(r,c,'down'))direction='across';
+  }
+  currentTab=direction;
+  updateTabUI();highlightCells();updateClueBar();renderClueList();scrollActiveClue();
+  const inp=document.getElementById('hidden-input');inp.focus();inp.value='';
+  if(!started)startTimer();
+}
+
+function highlightCells(){
+  document.querySelectorAll('.cell:not(.black)').forEach(el=>el.classList.remove('highlighted','active'));
+  if(selectedRow===-1)return;
+  getCurrentWordCells().forEach(([r,c])=>document.getElementById(`cell-${r}-${c}`)?.classList.add('highlighted'));
+  const a=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
+  if(a){a.classList.remove('highlighted');a.classList.add('active');}
+}
+
+function onInput(e){
+  const inp=document.getElementById('hidden-input');
+  const val=inp.value.replace(/[^a-zA-Z]/g,'').toUpperCase();
+  inp.value='';
+  if(val)enterLetter(val[val.length-1]);
+}
+function onKeydown(e){
+  if(e.key==='Backspace'){e.preventDefault();deleteLetter();return;}
+  const m={ArrowRight:[0,1],ArrowLeft:[0,-1],ArrowDown:[1,0],ArrowUp:[-1,0]};
+  if(m[e.key]){e.preventDefault();moveSelection(...m[e.key]);}
+}
+
+function enterLetter(letter){
+  if(selectedRow===-1)return;
+  if(completedCells.has(`${selectedRow},${selectedCol}`)){advanceSelection();return;}
+  userGrid[selectedRow][selectedCol]=letter;
+  const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=letter;
+  const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
+  cell.classList.remove('correct','wrong');
+  if(instantCheck){
+    const ok=PUZZLE.solution[selectedRow][selectedCol]===letter;
+    cell.classList.add(ok?'correct':'wrong');
+    if(!ok){cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
+  }
+  advanceSelection();checkCompletion();
+}
+function deleteLetter(){
+  if(selectedRow===-1)return;
+  if(userGrid[selectedRow][selectedCol]){
+    userGrid[selectedRow][selectedCol]='';
+    const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent='';
+    document.getElementById(`cell-${selectedRow}-${selectedCol}`)?.classList.remove('correct','wrong');
+  }else{retreatSelection();}
+}
+function advanceSelection(){
+  const wc=getCurrentWordCells();
+  const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);
+  if(idx<wc.length-1){[selectedRow,selectedCol]=wc[idx+1];highlightCells();updateClueBar();}
+}
+function retreatSelection(){
+  const wc=getCurrentWordCells();
+  const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);
+  if(idx>0){
+    [selectedRow,selectedCol]=wc[idx-1];
+    userGrid[selectedRow][selectedCol]='';
+    const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent='';
+    document.getElementById(`cell-${selectedRow}-${selectedCol}`)?.classList.remove('correct','wrong');
+    highlightCells();
+  }
+}
+function moveSelection(dr,dc){
+  const nr=selectedRow+dr,nc=selectedCol+dc;
+  if(nr>=0&&nr<SIZE&&nc>=0&&nc<SIZE&&PUZZLE.solution[nr][nc]!=='#'){
+    selectedRow=nr;selectedCol=nc;
+    if(dr!==0)direction='down';if(dc!==0)direction='across';
+    currentTab=direction;updateTabUI();highlightCells();updateClueBar();renderClueList();
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  CHECK / REVEAL
+// ══════════════════════════════════════════════════════════════════
+function checkWord(){
+  getCurrentWordCells().forEach(([r,c])=>{
+    if(!userGrid[r][c])return;
+    const cell=document.getElementById(`cell-${r}-${c}`);
+    cell.classList.remove('correct','wrong');
+    const ok=PUZZLE.solution[r][c]===userGrid[r][c];
+    cell.classList.add(ok?'correct':'wrong');
+    if(!ok){cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
+  });
+}
+function revealLetter(){
+  if(selectedRow===-1)return;
+  const sol=PUZZLE.solution[selectedRow][selectedCol];if(sol==='#')return;
+  userGrid[selectedRow][selectedCol]=sol;
+  const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=sol;
+  const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
+  cell.classList.remove('wrong');cell.classList.add('correct');
+  completedCells.add(`${selectedRow},${selectedCol}`);
+  advanceSelection();checkCompletion();
+}
+function rerenderAll(){
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++){
+    if(PUZZLE.solution[r][c]==='#')continue;
+    const cell=document.getElementById(`cell-${r}-${c}`);if(!cell)continue;
+    cell.classList.remove('correct','wrong');
+    if(userGrid[r][c]&&instantCheck)cell.classList.add(PUZZLE.solution[r][c]===userGrid[r][c]?'correct':'wrong');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  COMPLETION
+// ══════════════════════════════════════════════════════════════════
+function checkCompletion(){
+  for(let r=0;r<SIZE;r++) for(let c=0;c<SIZE;c++){
+    if(PUZZLE.solution[r][c]==='#')continue;
+    if(userGrid[r][c]!==PUZZLE.solution[r][c])return;
+  }
+  stopTimer();setTimeout(showSuccess,400);
+}
+function showSuccess(){
+  spawnConfetti();
+  document.getElementById('final-time').textContent=formatTime(seconds);
+  document.getElementById('success-overlay').classList.add('open');
+}
+function spawnConfetti(){
+  const colors=['#c8392b','#f59e0b','#16a34a','#2563eb','#9333ea'];
+  for(let i=0;i<60;i++) setTimeout(()=>{
+    const el=document.createElement('div');el.className='confetti-piece';
+    el.style.left=Math.random()*100+'vw';el.style.top='-10px';
+    el.style.background=colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDuration=(1.5+Math.random()*2)+'s';
+    el.style.animationDelay=Math.random()*0.5+'s';
+    document.body.appendChild(el);setTimeout(()=>el.remove(),4000);
+  },i*30);
+}
+
+// ══════════════════════════════════════════════════════════════════
+//  TIMER
+// ══════════════════════════════════════════════════════════════════
+function startTimer(){
+  started=true;
+  timerInterval=setInterval(()=>{
+    seconds++;
+    document.getElementById('timer').textContent=formatTime(seconds);
+    document.getElementById('timer').className='timer running';
+  },1000);
+}
+function stopTimer(){clearInterval(timerInterval);document.getElementById('timer').className='timer';}
+function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;}
+
+// ══════════════════════════════════════════════════════════════════
+//  UI UPDATES
+// ══════════════════════════════════════════════════════════════════
+function updateClueBar(){
+  if(selectedRow===-1)return;
+  const all=[...PUZZLE.clues.across,...PUZZLE.clues.down];
+  const active=all.find(cl=>{
+    const dir=PUZZLE.clues.across.includes(cl)?'across':'down';
+    if(dir!==direction)return false;
+    return getWordCells(cl.row,cl.col,dir).some(([r,c])=>r===selectedRow&&c===selectedCol);
+  });
+  if(active) document.getElementById('active-clue-bar').innerHTML=
+    `<strong>${active.number}${direction==='across'?'A':'D'}</strong> ${active.clue}`;
+}
+function switchTab(tab){
+  currentTab=tab;direction=tab;
+  updateTabUI();renderClueList();highlightCells();updateClueBar();
+}
+function updateTabUI(){
+  document.getElementById('tab-across').className='dir-tab'+(currentTab==='across'?' active':'');
+  document.getElementById('tab-down').className='dir-tab'+(currentTab==='down'?' active':'');
+}
+function renderClueList(){
+  const list=document.getElementById('clue-list');list.innerHTML='';
+  PUZZLE.clues[currentTab].forEach(clue=>{
+    const item=document.createElement('div');item.className='clue-item';
+    const dir=PUZZLE.clues.across.includes(clue)?'across':'down';
+    const cells=getWordCells(clue.row,clue.col,dir);
+    const isActive=selectedRow!==-1&&dir===direction&&cells.some(([r,c])=>r===selectedRow&&c===selectedCol);
+    const isDone=cells.every(([r,c])=>userGrid[r][c]===PUZZLE.solution[r][c]);
+    if(isActive)item.classList.add('active');
+    if(isDone)item.classList.add('solved');
+    item.innerHTML=`<div class="clue-num">${clue.number}</div><div class="clue-text">${clue.clue}</div>`;
+    item.addEventListener('click',()=>{
+      direction=dir;selectedRow=clue.row;selectedCol=clue.col;currentTab=dir;
+      updateTabUI();highlightCells();updateClueBar();renderClueList();
+      document.getElementById('hidden-input').focus();window.scrollTo({top:0,behavior:'smooth'});
+    });
+    list.appendChild(item);
+  });
+}
+function scrollActiveClue(){document.querySelector('.clue-item.active')?.scrollIntoView({block:'nearest',behavior:'smooth'});}
+
+// ══════════════════════════════════════════════════════════════════
+//  THEME
+// ══════════════════════════════════════════════════════════════════
+function openThemeModal(){document.getElementById('theme-modal').classList.add('open');}
+function closeThemeModal(e){if(!e||e.target===document.getElementById('theme-modal'))document.getElementById('theme-modal').classList.remove('open');}
+function setTheme(t){
+  document.body.dataset.theme=t;
+  ['light','dark','medical'].forEach(n=>document.getElementById(`opt-${n}`).classList.toggle('selected',n===t));
+}
+</script>
+
+</body>
+</html>
