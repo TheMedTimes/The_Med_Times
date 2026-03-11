@@ -440,6 +440,11 @@ function streakDisplay(n){
 
 // ── AUTH ──
 async function boot(){
+  // Handle OAuth redirect token in URL hash
+  if(window.location.hash&&window.location.hash.includes('access_token')){
+    await sb.auth.exchangeCodeForSession(window.location.href).catch(()=>{});
+    window.history.replaceState(null,'',window.location.pathname);
+  }
   const{data:{session}}=await sb.auth.getSession();
   if(session){
     currentUser=session.user;
