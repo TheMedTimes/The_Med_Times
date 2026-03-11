@@ -1,38 +1,24 @@
 {
   "date": "2026-03-11",
-  "topic": "Placeholder",
-  "size": 15,
+  "topic": "Test Puzzle",
+  "size": 7,
   "solution": [
-    ["Y","Y","Y","Y","Y","Y","Y","Y","#","Y","Y","Y","Y","Y","Y"],
-    ["#","#","Y","#","#","#","#","#","#","Y","#","#","#","#","#"],
-    ["#","#","Y","#","#","Y","Y","Y","Y","Y","Y","Y","Y","#","#"],
-    ["#","#","Y","#","#","#","#","#","#","Y","#","#","#","#","#"],
-    ["Y","Y","Y","Y","Y","Y","Y","Y","#","Y","#","#","#","#","#"],
-    ["#","#","Y","#","#","#","#","#","#","Y","#","#","#","#","#"],
-    ["#","#","Y","#","Y","Y","Y","Y","Y","Y","Y","Y","Y","Y","#"],
-    ["#","#","Y","#","#","#","#","#","#","Y","#","#","#","#","#"],
-    ["#","Y","#","#","#","#","#","#","#","Y","#","#","#","#","#"],
-    ["#","Y","Y","Y","Y","Y","Y","Y","#","Y","#","#","#","#","#"],
-    ["#","Y","#","#","#","#","#","#","#","Y","#","#","#","#","#"],
-    ["#","Y","#","Y","Y","Y","Y","Y","Y","Y","#","#","#","#","#"],
-    ["#","Y","#","#","#","#","#","#","#","#","#","#","#","#","#"],
-    ["#","Y","#","#","#","#","#","#","#","#","#","#","#","#","#"],
-    ["#","Y","#","#","#","#","#","#","#","#","#","#","#","#","#"]
+    ["C","A","T","#","D","O","G"],
+    ["#","R","#","#","#","#","#"],
+    ["#","M","#","#","#","#","#"],
+    ["S","#","#","#","#","#","#"],
+    ["U","#","#","#","#","#","#"],
+    ["N","#","#","#","#","#","#"],
+    ["#","#","#","#","#","#","#"]
   ],
   "clues": {
     "across": [
-      {"number":1,"row":0,"col":0,"len":8,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
-      {"number":2,"row":0,"col":9,"len":6,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
-      {"number":5,"row":2,"col":5,"len":8,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
-      {"number":7,"row":4,"col":0,"len":8,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
-      {"number":9,"row":6,"col":4,"len":10,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
-      {"number":11,"row":9,"col":1,"len":7,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
-      {"number":13,"row":11,"col":3,"len":7,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
+      {"number":1,"row":0,"col":0,"len":3,"clue":"A common pet that meows"},
+      {"number":2,"row":0,"col":4,"len":3,"clue":"A common pet that barks"}
     ],
     "down": [
-      {"number":3,"row":0,"col":2,"len":10,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
-      {"number":4,"row":0,"col":9,"len":11,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
-      {"number":6,"row":1,"col":1,"len":14,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
+      {"number":3,"row":0,"col":1,"len":3,"clue":"Upper limb of the body"},
+      {"number":4,"row":3,"col":0,"len":3,"clue":"It rises in the morning"}
     ]
   }
 }
