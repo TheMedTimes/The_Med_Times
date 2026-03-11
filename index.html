@@ -79,11 +79,13 @@
   .cell{width:var(--cell-size);height:var(--cell-size);background:var(--surface);position:relative;cursor:pointer;display:flex;align-items:center;justify-content:center;user-select:none;transition:background 0.08s;}
   .cell.black{background:var(--black);cursor:default;}
   .cell.highlighted{background:var(--highlight);}
-  .cell.active{background:var(--highlight-active);}
   .cell.correct{background:var(--correct-bg);}
   .cell.correct .cell-letter{color:var(--correct);}
   .cell.wrong{background:var(--wrong-bg);}
   .cell.wrong .cell-letter{color:var(--wrong);}
+  /* active always wins — sits after correct/wrong so it overrides */
+  .cell.active{background:var(--highlight-active) !important;outline:2.5px solid var(--accent);outline-offset:-2px;z-index:1;}
+  .cell.active .cell-letter{color:var(--text) !important;}
   .cell-num{position:absolute;top:1px;left:2px;font-size:calc(var(--cell-size)*0.22);font-weight:600;color:var(--text);line-height:1;pointer-events:none;}
   .cell-letter{font-size:calc(var(--cell-size)*0.50);font-weight:600;color:var(--text);text-transform:uppercase;line-height:1;pointer-events:none;}
 
@@ -306,7 +308,7 @@
     <div class="modal-toggle-row">
       <div>
         <div class="modal-toggle-label">Check as you type</div>
-        <div class="modal-toggle-sub">Letters turn green or red instantly</div>
+        <div class="modal-toggle-sub">Correct letters lock and can't be deleted</div>
       </div>
       <label class="toggle">
         <input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)">
@@ -338,7 +340,6 @@ let instantCheck=false,completedCells=new Set();
 let allClues=[],currentClueIndex=0;
 let countdownInterval=null;
 
-// ── HELPERS ──
 function getTodayString(){
   const d=new Date();
   return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -366,26 +367,27 @@ function startCountdown(){
   countdownInterval=setInterval(tick,1000);
 }
 
-// ── PROGRESS (localStorage) ──
+// ── PROGRESS ──
 function saveProgress(){
+  if(!PUZZLE)return;
   const S=PUZZLE.size;
-  const state={
-    date:getTodayString(),
-    grid:userGrid.map(r=>[...r]),
-    cellStates:[],
-    seconds,
-    instantCheck
-  };
+  const cellStates=[];
   for(let r=0;r<S;r++){
-    state.cellStates[r]=[];
+    cellStates[r]=[];
     for(let c=0;c<S;c++){
+      if(PUZZLE.solution[r][c]==='#'){cellStates[r][c]=null;continue;}
       const cell=document.getElementById(`cell-${r}-${c}`);
-      if(!cell||PUZZLE.solution[r][c]==='#'){state.cellStates[r][c]=null;continue;}
-      state.cellStates[r][c]=cell.classList.contains('correct')?'correct':cell.classList.contains('wrong')?'wrong':'';
+      cellStates[r][c]=cell.classList.contains('correct')?'correct':cell.classList.contains('wrong')?'wrong':'';
     }
   }
-  state.completedCells=[...completedCells];
-  localStorage.setItem('tmt_progress',JSON.stringify(state));
+  localStorage.setItem('tmt_progress',JSON.stringify({
+    date:getTodayString(),
+    grid:userGrid.map(r=>[...r]),
+    cellStates,
+    completedCells:[...completedCells],
+    seconds,
+    instantCheck
+  }));
 }
 
 function loadProgress(){
@@ -405,9 +407,8 @@ function loadProgress(){
       const lt=document.getElementById(`letter-${r}-${c}`);
       if(lt)lt.textContent=userGrid[r][c]||'';
       const cell=document.getElementById(`cell-${r}-${c}`);
-      if(cell&&state.cellStates[r]&&state.cellStates[r][c]){
-        cell.classList.add(state.cellStates[r][c]);
-      }
+      const st=state.cellStates[r]&&state.cellStates[r][c];
+      if(cell&&st)cell.classList.add(st);
     }
     document.getElementById('timer').textContent=formatTime(seconds);
     return true;
@@ -452,7 +453,6 @@ function showNoPuzzle(today){
   startCountdown();
 }
 
-// ── NAVIGATION ──
 function startGame(){
   document.getElementById('start-screen').classList.remove('active');
   document.getElementById('game-screen').classList.add('active');
@@ -460,12 +460,13 @@ function startGame(){
 }
 function goToStart(){
   if(started)saveProgress();
+  clearInterval(timerInterval);
   document.getElementById('success-overlay').classList.remove('open');
   document.getElementById('game-screen').classList.remove('active');
   document.getElementById('start-screen').classList.add('active');
 }
 
-// ── GAME INIT ──
+// ── INIT ──
 function initGame(){
   const d=new Date();
   document.getElementById('date-label').textContent=
@@ -480,10 +481,7 @@ function initGame(){
   buildGrid(computeNumbers());
   document.getElementById('puzzle-topic-end').textContent=PUZZLE.topic;
   const restored=loadProgress();
-  if(restored){
-    started=true;
-    startTimer();
-  }
+  if(restored){started=true;startTimer();}
   jumpToClueIndex(0);
 }
 
@@ -529,10 +527,19 @@ function buildGrid(numbers){
 }
 
 // ── CLUE NAV ──
-function jumpToClueIndex(idx){
+function isClueComplete(cl){
+  return getWordCells(cl.row,cl.col,cl.dir).every(([r,c])=>userGrid[r][c]===PUZZLE.solution[r][c]);
+}
+function jumpToClueIndex(idx,skipComplete=false){
   const len=allClues.length;
   if(idx<0)idx=len-1;
   if(idx>=len)idx=0;
+  if(skipComplete){
+    let tries=0;
+    while(isClueComplete(allClues[idx])&&tries<len){
+      idx=(idx+1)%len;tries++;
+    }
+  }
   currentClueIndex=idx;
   const cl=allClues[idx];
   direction=cl.dir;
@@ -602,9 +609,12 @@ function highlightCells(){
 }
 
 // ── KEYBOARD ──
+function isLocked(r,c){
+  return instantCheck&&completedCells.has(`${r},${c}`);
+}
 function kbInput(letter){
   if(selectedRow===-1)return;
-  if(completedCells.has(`${selectedRow},${selectedCol}`)){advanceSelection();return;}
+  if(isLocked(selectedRow,selectedCol)){advanceSelection();return;}
   userGrid[selectedRow][selectedCol]=letter;
   const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=letter;
   const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
@@ -612,13 +622,19 @@ function kbInput(letter){
   if(instantCheck){
     const ok=PUZZLE.solution[selectedRow][selectedCol]===letter;
     cell.classList.add(ok?'correct':'wrong');
-    if(!ok){cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
+    if(ok){
+      completedCells.add(`${selectedRow},${selectedCol}`);
+    }else{
+      cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);
+    }
   }
   saveProgress();
-  advanceSelection();checkCompletion();
+  advanceSelection();
+  checkCompletion();
 }
 function kbDelete(){
   if(selectedRow===-1)return;
+  if(isLocked(selectedRow,selectedCol)){retreatSelection();return;}
   if(userGrid[selectedRow][selectedCol]){
     userGrid[selectedRow][selectedCol]='';
     const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent='';
@@ -630,17 +646,24 @@ function advanceSelection(){
   const wc=getCurrentWordCells();
   const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);
   if(idx<wc.length-1){[selectedRow,selectedCol]=wc[idx+1];highlightCells();}
-  else{nextClue();}
+  else{jumpToClueIndex(currentClueIndex+1,true);}
 }
 function retreatSelection(){
   const wc=getCurrentWordCells();
   const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);
   if(idx>0){
-    [selectedRow,selectedCol]=wc[idx-1];
-    userGrid[selectedRow][selectedCol]='';
-    const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent='';
-    document.getElementById(`cell-${selectedRow}-${selectedCol}`)?.classList.remove('correct','wrong');
-    highlightCells();
+    let prevIdx=idx-1;
+    while(prevIdx>=0&&isLocked(wc[prevIdx][0],wc[prevIdx][1]))prevIdx--;
+    if(prevIdx>=0){
+      [selectedRow,selectedCol]=wc[prevIdx];
+      if(!isLocked(selectedRow,selectedCol)){
+        userGrid[selectedRow][selectedCol]='';
+        const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent='';
+        document.getElementById(`cell-${selectedRow}-${selectedCol}`)?.classList.remove('correct','wrong');
+        saveProgress();
+      }
+      highlightCells();
+    }
   }
 }
 
@@ -652,7 +675,8 @@ function checkWord(){
     cell.classList.remove('correct','wrong');
     const ok=PUZZLE.solution[r][c]===userGrid[r][c];
     cell.classList.add(ok?'correct':'wrong');
-    if(!ok){cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
+    if(ok)completedCells.add(`${r},${c}`);
+    else{cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
   });
   saveProgress();
 }
@@ -669,13 +693,27 @@ function revealLetter(){
 }
 function toggleInstantCheck(val){
   instantCheck=val;
-  const S=PUZZLE.size;
-  for(let r=0;r<S;r++)for(let c=0;c<S;c++){
-    if(PUZZLE.solution[r][c]==='#')continue;
-    const cell=document.getElementById(`cell-${r}-${c}`);if(!cell)continue;
-    cell.classList.remove('correct','wrong');
-    if(userGrid[r][c]&&instantCheck)
-      cell.classList.add(PUZZLE.solution[r][c]===userGrid[r][c]?'correct':'wrong');
+  if(!val){
+    // turning off — clear wrong states only, keep correct
+    const S=PUZZLE.size;
+    for(let r=0;r<S;r++)for(let c=0;c<S;c++){
+      if(PUZZLE.solution[r][c]==='#')continue;
+      const cell=document.getElementById(`cell-${r}-${c}`);if(!cell)continue;
+      if(cell.classList.contains('wrong'))cell.classList.remove('wrong');
+    }
+  }else{
+    // turning on — evaluate all filled cells now
+    const S=PUZZLE.size;
+    for(let r=0;r<S;r++)for(let c=0;c<S;c++){
+      if(PUZZLE.solution[r][c]==='#')continue;
+      const cell=document.getElementById(`cell-${r}-${c}`);if(!cell)continue;
+      cell.classList.remove('correct','wrong');
+      if(userGrid[r][c]){
+        const ok=PUZZLE.solution[r][c]===userGrid[r][c];
+        cell.classList.add(ok?'correct':'wrong');
+        if(ok)completedCells.add(`${r},${c}`);
+      }
+    }
   }
   saveProgress();
 }
