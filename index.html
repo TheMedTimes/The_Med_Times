@@ -21,6 +21,29 @@
   .screen{display:none;flex-direction:column;flex:1;overflow:hidden;}
   .screen.active{display:flex;}
 
+  /* AUTH SCREEN */
+  #auth-screen{align-items:center;justify-content:center;padding:32px 24px 48px;height:100dvh;position:relative;overflow-y:auto;}
+  .auth-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;max-width:360px;}
+  .auth-logo{font-family:var(--font-display);font-size:clamp(36px,11vw,56px);font-weight:900;color:var(--accent);letter-spacing:-1px;line-height:1;text-align:center;margin-bottom:8px;}
+  .auth-tagline{font-size:14px;color:var(--text-muted);text-align:center;margin-bottom:40px;line-height:1.5;}
+  .auth-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.07);margin-bottom:16px;}
+  .auth-card-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:6px;text-align:center;}
+  .auth-card-sub{font-size:13px;color:var(--text-muted);text-align:center;margin-bottom:24px;}
+  .google-btn{width:100%;padding:14px;background:#fff;color:#1a1a1a;border:1.5px solid var(--border);border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;-webkit-appearance:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+  .google-btn:active{transform:scale(0.98);}
+  .google-icon{width:20px;height:20px;flex-shrink:0;}
+  .auth-divider{display:flex;align-items:center;gap:12px;margin:4px 0 16px;}
+  .auth-divider-line{flex:1;height:1px;background:var(--border);}
+  .auth-divider-text{font-size:12px;color:var(--text-muted);font-weight:500;}
+  .auth-input{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:16px;font-family:var(--font-body);color:var(--text);background:var(--bg);margin-bottom:10px;outline:none;}
+  .auth-input:focus{border-color:var(--accent);}
+  .auth-submit{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font-display);-webkit-appearance:none;margin-top:4px;}
+  .auth-submit:active{transform:scale(0.98);}
+  .auth-switch{font-size:13px;color:var(--text-muted);text-align:center;margin-top:16px;}
+  .auth-switch a{color:var(--accent);font-weight:600;cursor:pointer;text-decoration:none;}
+  .auth-error{font-size:13px;color:var(--wrong);text-align:center;margin-top:8px;min-height:20px;}
+  .auth-mode-title{font-family:var(--font-display);font-size:22px;font-weight:700;text-align:center;margin-bottom:4px;}
+
   /* START */
   #start-screen{align-items:center;justify-content:center;padding:32px 24px 48px;height:100dvh;position:relative;overflow-y:auto;}
   .start-bg-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(20,1fr);opacity:0.055;pointer-events:none;}
@@ -39,6 +62,7 @@
   .play-btn{width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:16px;font-size:17px;font-weight:700;font-family:var(--font-display);cursor:pointer;box-shadow:0 6px 24px rgba(200,57,43,0.35);display:flex;align-items:center;justify-content:center;-webkit-appearance:none;}
   .play-btn:active{transform:scale(0.97);}
   .start-rules{margin-top:14px;font-size:12px;color:var(--text-muted);text-align:center;line-height:1.9;}
+  .start-signout{margin-top:12px;font-size:12px;color:var(--text-muted);text-align:center;cursor:pointer;text-decoration:underline;}
 
   /* NO PUZZLE */
   #no-puzzle-screen{align-items:center;justify-content:center;text-align:center;padding:40px 24px;}
@@ -83,7 +107,6 @@
   .cell.correct .cell-letter{color:var(--correct);}
   .cell.wrong{background:var(--wrong-bg);}
   .cell.wrong .cell-letter{color:var(--wrong);}
-  /* active always wins — sits after correct/wrong so it overrides */
   .cell.active{background:var(--highlight-active) !important;outline:2.5px solid var(--accent);outline-offset:-2px;z-index:1;}
   .cell.active .cell-letter{color:var(--text) !important;}
   .cell-num{position:absolute;top:1px;left:2px;font-size:calc(var(--cell-size)*0.22);font-weight:600;color:var(--text);line-height:1;pointer-events:none;}
@@ -140,6 +163,7 @@
   .success-emoji{font-size:56px;margin-bottom:12px;}
   .success-title{font-family:var(--font-display);font-size:28px;font-weight:900;color:var(--accent);margin-bottom:6px;}
   .success-time{font-family:var(--font-mono);font-size:36px;color:var(--text);margin:12px 0;}
+  .success-streak{font-size:22px;margin-bottom:4px;}
   .success-sub{font-size:14px;color:var(--text-muted);margin-bottom:20px;}
   .success-btn{display:block;width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);margin-bottom:10px;-webkit-appearance:none;}
   .success-btn.outline{background:none;border:1.5px solid var(--border);color:var(--text);}
@@ -155,6 +179,40 @@
 <div class="loading-wrap" id="loading">
   <div class="loading-logo">TheMedTimes</div>
   <div class="loading-spinner"></div>
+</div>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen" class="screen">
+  <div class="start-bg-grid" id="auth-bg-grid"></div>
+  <div class="auth-content">
+    <div class="auth-logo">TheMedTimes</div>
+    <div class="auth-tagline">The daily crossword built for<br>2nd Year MBBS students</div>
+    <div class="auth-card">
+      <div class="auth-mode-title" id="auth-title">Welcome</div>
+      <div class="auth-card-sub" id="auth-sub">Sign in to track your streak and compete</div>
+      <button class="google-btn" onclick="signInWithGoogle()">
+        <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Continue with Google
+      </button>
+      <div class="auth-divider">
+        <div class="auth-divider-line"></div>
+        <div class="auth-divider-text">or</div>
+        <div class="auth-divider-line"></div>
+      </div>
+      <div id="auth-email-form">
+        <div id="auth-name-wrap" style="display:none;">
+          <input class="auth-input" type="text" id="auth-name" placeholder="Your name">
+        </div>
+        <input class="auth-input" type="email" id="auth-email" placeholder="Email address">
+        <input class="auth-input" type="password" id="auth-password" placeholder="Password">
+        <button class="auth-submit" id="auth-submit-btn" onclick="handleEmailAuth()">Sign In</button>
+      </div>
+      <div class="auth-error" id="auth-error"></div>
+    </div>
+    <div class="auth-switch" id="auth-switch">
+      Don't have an account? <a onclick="toggleAuthMode()">Sign up</a>
+    </div>
+  </div>
 </div>
 
 <!-- START SCREEN -->
@@ -180,10 +238,17 @@
         </div>
       </div>
       <div class="start-card-row">
+        <div class="start-card-icon">👤</div>
+        <div class="start-card-info">
+          <div class="start-card-label">Signed in as</div>
+          <div class="start-card-value" id="start-username">—</div>
+        </div>
+      </div>
+      <div class="start-card-row">
         <div class="start-card-icon">🔥</div>
         <div class="start-card-info">
           <div class="start-card-label">Your Streak</div>
-          <div class="start-card-value">— <span style="font-size:12px;color:var(--text-muted);font-weight:400">Login to track</span></div>
+          <div class="start-card-value" id="start-streak">—</div>
         </div>
       </div>
     </div>
@@ -193,6 +258,7 @@
       Use arrows to move between clues<br>
       Tap View to change theme and enable live checking
     </div>
+    <div class="start-signout" onclick="signOut()">Sign out</div>
   </div>
 </div>
 
@@ -325,21 +391,31 @@
     <div class="success-emoji">🎉</div>
     <div class="success-title">Puzzle Complete!</div>
     <div class="success-time" id="final-time">—</div>
+    <div class="success-streak" id="final-streak"></div>
     <div class="success-sub">Topic: <span id="puzzle-topic-end"></span></div>
     <button class="success-btn" onclick="goToStart()">Back to Home</button>
     <button class="success-btn outline" onclick="document.getElementById('success-overlay').classList.remove('open')">View Board</button>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-let PUZZLE=null;
+// ── SUPABASE ──
+const SUPABASE_URL='https://ojxzzfjapjwpxitnruqa.supabase.co';
+const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeHp6ZmphcGp3cHhpdG5ydXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDQ5MDksImV4cCI6MjA4ODcyMDkwOX0.yTq0aXLd6L8Grjsc4IWAbJ3TTnIGOnJdM3ciFz7JJe4';
+const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON);
+
+let PUZZLE=null,currentUser=null,userProfile=null,userStreak=0;
 let userGrid=[],selectedRow=-1,selectedCol=-1;
 let direction='across';
 let timerInterval=null,seconds=0,started=false;
 let instantCheck=false,completedCells=new Set();
 let allClues=[],currentClueIndex=0;
 let countdownInterval=null;
+let authMode='signin';
+let puzzleAlreadyCompleted=false;
 
+// ── HELPERS ──
 function getTodayString(){
   const d=new Date();
   return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -349,6 +425,195 @@ function getMidnightCountdown(){
   const midnight=new Date();
   midnight.setHours(24,0,0,0);
   return Math.floor((midnight-now)/1000);
+}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── AUTH ──
+async function boot(){
+  const{data:{session}}=await sb.auth.getSession();
+  if(session){
+    currentUser=session.user;
+    await loadUserProfile();
+    await loadPuzzle();
+  }else{
+    document.getElementById('loading').style.display='none';
+    buildAuthBg();
+    showScreen('auth-screen');
+  }
+  sb.auth.onAuthStateChange(async(event,session)=>{
+    if(event==='SIGNED_IN'&&session){
+      currentUser=session.user;
+      await loadUserProfile();
+      await loadPuzzle();
+    }
+    if(event==='SIGNED_OUT'){
+      currentUser=null;userProfile=null;userStreak=0;
+      document.getElementById('loading').style.display='none';
+      buildAuthBg();
+      showScreen('auth-screen');
+    }
+  });
+}
+
+function buildAuthBg(){
+  const bg=document.getElementById('auth-bg-grid');
+  if(bg.children.length)return;
+  for(let i=0;i<300;i++){
+    const c=document.createElement('div');
+    c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
+    bg.appendChild(c);
+  }
+}
+
+async function signInWithGoogle(){
+  setAuthError('');
+  const{error}=await sb.auth.signInWithOAuth({
+    provider:'google',
+    options:{redirectTo:window.location.href}
+  });
+  if(error)setAuthError(error.message);
+}
+
+function toggleAuthMode(){
+  authMode=authMode==='signin'?'signup':'signin';
+  const isSignup=authMode==='signup';
+  document.getElementById('auth-title').textContent=isSignup?'Create Account':'Welcome Back';
+  document.getElementById('auth-sub').textContent=isSignup?'Join TheMedTimes and track your streak':'Sign in to continue your streak';
+  document.getElementById('auth-submit-btn').textContent=isSignup?'Create Account':'Sign In';
+  document.getElementById('auth-name-wrap').style.display=isSignup?'block':'none';
+  document.getElementById('auth-switch').innerHTML=isSignup?
+    'Already have an account? <a onclick="toggleAuthMode()">Sign in</a>':
+    'Don\'t have an account? <a onclick="toggleAuthMode()">Sign up</a>';
+  setAuthError('');
+}
+
+async function handleEmailAuth(){
+  const email=document.getElementById('auth-email').value.trim();
+  const password=document.getElementById('auth-password').value;
+  const name=document.getElementById('auth-name').value.trim();
+  if(!email||!password){setAuthError('Please fill in all fields');return;}
+  setAuthError('');
+  document.getElementById('auth-submit-btn').textContent='...';
+  if(authMode==='signup'){
+    const{error}=await sb.auth.signUp({
+      email,password,
+      options:{data:{full_name:name||email.split('@')[0]}}
+    });
+    if(error){setAuthError(error.message);document.getElementById('auth-submit-btn').textContent='Create Account';}
+    else setAuthError('Check your email to confirm your account!');
+  }else{
+    const{error}=await sb.auth.signInWithPassword({email,password});
+    if(error){setAuthError(error.message);document.getElementById('auth-submit-btn').textContent='Sign In';}
+  }
+}
+
+function setAuthError(msg){document.getElementById('auth-error').textContent=msg;}
+
+async function signOut(){
+  await sb.auth.signOut();
+  localStorage.removeItem('tmt_progress');
+}
+
+// ── USER PROFILE + STREAK ──
+async function loadUserProfile(){
+  if(!currentUser)return;
+  const{data}=await sb.from('profiles').select('*').eq('id',currentUser.id).single();
+  userProfile=data;
+  userStreak=await calculateStreak();
+}
+
+async function calculateStreak(){
+  if(!currentUser)return 0;
+  const{data}=await sb.from('completions')
+    .select('puzzle_date')
+    .eq('user_id',currentUser.id)
+    .order('puzzle_date',{ascending:false});
+  if(!data||!data.length)return 0;
+  const dates=data.map(d=>d.puzzle_date);
+  let streak=0;
+  const today=getTodayString();
+  const d=new Date();
+  let check=dates.includes(today)?today:null;
+  if(!check){
+    d.setDate(d.getDate()-1);
+    const yesterday=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    if(dates.includes(yesterday))check=yesterday;
+    else return 0;
+  }
+  while(dates.includes(check)){
+    streak++;
+    const cd=new Date(check);
+    cd.setDate(cd.getDate()-1);
+    check=`${cd.getFullYear()}-${String(cd.getMonth()+1).padStart(2,'0')}-${String(cd.getDate()).padStart(2,'0')}`;
+  }
+  return streak;
+}
+
+async function checkAlreadyCompleted(){
+  if(!currentUser)return false;
+  const{data}=await sb.from('completions')
+    .select('id')
+    .eq('user_id',currentUser.id)
+    .eq('puzzle_date',getTodayString())
+    .single();
+  return!!data;
+}
+
+async function saveCompletion(timeSeconds,usedReveal){
+  if(!currentUser)return;
+  await sb.from('completions').insert({
+    user_id:currentUser.id,
+    puzzle_date:getTodayString(),
+    time_seconds:timeSeconds,
+    revealed:usedReveal
+  });
+  userStreak=await calculateStreak();
+}
+
+// ── PUZZLE LOADER ──
+async function loadPuzzle(){
+  const today=getTodayString();
+  try{
+    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`);
+    if(!res.ok)throw new Error('not found');
+    PUZZLE=await res.json();
+    puzzleAlreadyCompleted=await checkAlreadyCompleted();
+    showStartScreen();
+  }catch(e){
+    showNoPuzzle(today);
+  }
+}
+
+function showStartScreen(){
+  document.getElementById('loading').style.display='none';
+  if(countdownInterval)clearInterval(countdownInterval);
+  const d=new Date();
+  document.getElementById('start-date').textContent=
+    d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  document.getElementById('start-topic').textContent=PUZZLE.topic;
+  document.getElementById('start-username').textContent=
+    userProfile?.username||currentUser?.email?.split('@')[0]||'—';
+  document.getElementById('start-streak').textContent=
+    userStreak>0?`${userStreak} day${userStreak>1?'s':''} 🔥`:'Start your streak today!';
+  const bg=document.getElementById('start-bg-grid');
+  if(!bg.children.length){
+    for(let i=0;i<300;i++){
+      const c=document.createElement('div');
+      c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
+      bg.appendChild(c);
+    }
+  }
+  showScreen('start-screen');
+}
+
+function showNoPuzzle(today){
+  document.getElementById('loading').style.display='none';
+  document.getElementById('no-puzzle-date').textContent=today;
+  showScreen('no-puzzle-screen');
+  startCountdown();
 }
 
 // ── COUNTDOWN ──
@@ -415,58 +680,20 @@ function loadProgress(){
   }catch(e){return false;}
 }
 
-// ── LOADER ──
-async function loadPuzzle(){
-  const today=getTodayString();
-  try{
-    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`);
-    if(!res.ok)throw new Error('not found');
-    PUZZLE=await res.json();
-    showStartScreen();
-  }catch(e){
-    showNoPuzzle(today);
-  }
-}
-
-function showStartScreen(){
-  document.getElementById('loading').style.display='none';
-  if(countdownInterval)clearInterval(countdownInterval);
-  const d=new Date();
-  document.getElementById('start-date').textContent=
-    d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
-  document.getElementById('start-topic').textContent=PUZZLE.topic;
-  const bg=document.getElementById('start-bg-grid');
-  if(!bg.children.length){
-    for(let i=0;i<300;i++){
-      const c=document.createElement('div');
-      c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
-      bg.appendChild(c);
-    }
-  }
-  document.getElementById('start-screen').classList.add('active');
-}
-
-function showNoPuzzle(today){
-  document.getElementById('loading').style.display='none';
-  document.getElementById('no-puzzle-date').textContent=today;
-  document.getElementById('no-puzzle-screen').classList.add('active');
-  startCountdown();
-}
-
+// ── NAVIGATION ──
 function startGame(){
-  document.getElementById('start-screen').classList.remove('active');
-  document.getElementById('game-screen').classList.add('active');
+  showScreen('game-screen');
   initGame();
 }
 function goToStart(){
   if(started)saveProgress();
   clearInterval(timerInterval);
   document.getElementById('success-overlay').classList.remove('open');
-  document.getElementById('game-screen').classList.remove('active');
-  document.getElementById('start-screen').classList.add('active');
+  showScreen('start-screen');
 }
 
-// ── INIT ──
+// ── GAME INIT ──
+let usedReveal=false;
 function initGame(){
   const d=new Date();
   document.getElementById('date-label').textContent=
@@ -474,7 +701,7 @@ function initGame(){
   const S=PUZZLE.size;
   userGrid=[];
   for(let r=0;r<S;r++){userGrid[r]=[];for(let c=0;c<S;c++)userGrid[r][c]='';}
-  seconds=0;started=false;completedCells=new Set();
+  seconds=0;started=false;completedCells=new Set();usedReveal=false;
   document.getElementById('timer').textContent='0:00';
   document.getElementById('timer').className='timer';
   buildClueList();
@@ -536,9 +763,7 @@ function jumpToClueIndex(idx,skipComplete=false){
   if(idx>=len)idx=0;
   if(skipComplete){
     let tries=0;
-    while(isClueComplete(allClues[idx])&&tries<len){
-      idx=(idx+1)%len;tries++;
-    }
+    while(isClueComplete(allClues[idx])&&tries<len){idx=(idx+1)%len;tries++;}
   }
   currentClueIndex=idx;
   const cl=allClues[idx];
@@ -609,9 +834,7 @@ function highlightCells(){
 }
 
 // ── KEYBOARD ──
-function isLocked(r,c){
-  return instantCheck&&completedCells.has(`${r},${c}`);
-}
+function isLocked(r,c){return instantCheck&&completedCells.has(`${r},${c}`);}
 function kbInput(letter){
   if(selectedRow===-1)return;
   if(isLocked(selectedRow,selectedCol)){advanceSelection();return;}
@@ -622,15 +845,10 @@ function kbInput(letter){
   if(instantCheck){
     const ok=PUZZLE.solution[selectedRow][selectedCol]===letter;
     cell.classList.add(ok?'correct':'wrong');
-    if(ok){
-      completedCells.add(`${selectedRow},${selectedCol}`);
-    }else{
-      cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);
-    }
+    if(ok){completedCells.add(`${selectedRow},${selectedCol}`);}
+    else{cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
   }
-  saveProgress();
-  advanceSelection();
-  checkCompletion();
+  saveProgress();advanceSelection();checkCompletion();
 }
 function kbDelete(){
   if(selectedRow===-1)return;
@@ -683,18 +901,17 @@ function checkWord(){
 function revealLetter(){
   if(selectedRow===-1)return;
   const sol=PUZZLE.solution[selectedRow][selectedCol];if(sol==='#')return;
+  usedReveal=true;
   userGrid[selectedRow][selectedCol]=sol;
   const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=sol;
   const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
   cell.classList.remove('wrong');cell.classList.add('correct');
   completedCells.add(`${selectedRow},${selectedCol}`);
-  saveProgress();
-  advanceSelection();checkCompletion();
+  saveProgress();advanceSelection();checkCompletion();
 }
 function toggleInstantCheck(val){
   instantCheck=val;
   if(!val){
-    // turning off — clear wrong states only, keep correct
     const S=PUZZLE.size;
     for(let r=0;r<S;r++)for(let c=0;c<S;c++){
       if(PUZZLE.solution[r][c]==='#')continue;
@@ -702,7 +919,6 @@ function toggleInstantCheck(val){
       if(cell.classList.contains('wrong'))cell.classList.remove('wrong');
     }
   }else{
-    // turning on — evaluate all filled cells now
     const S=PUZZLE.size;
     for(let r=0;r<S;r++)for(let c=0;c<S;c++){
       if(PUZZLE.solution[r][c]==='#')continue;
@@ -727,11 +943,15 @@ function checkCompletion(){
   }
   stopTimer();
   localStorage.removeItem('tmt_progress');
-  setTimeout(showSuccess,400);
+  saveCompletion(seconds,usedReveal).then(()=>{
+    setTimeout(showSuccess,400);
+  });
 }
 function showSuccess(){
   spawnConfetti();
   document.getElementById('final-time').textContent=formatTime(seconds);
+  document.getElementById('final-streak').textContent=
+    userStreak>0?`🔥 ${userStreak} day streak`:'';
   document.getElementById('success-overlay').classList.add('open');
 }
 function spawnConfetti(){
@@ -768,7 +988,7 @@ function setTheme(t){
 }
 
 // ── BOOT ──
-loadPuzzle();
+boot();
 </script>
 </body>
 </html>
