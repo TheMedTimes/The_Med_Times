@@ -484,7 +484,7 @@ async function signInWithGoogle(){
   setAuthError('');
   const{error}=await sb.auth.signInWithOAuth({
     provider:'google',
-    options:{redirectTo:'https://themedtimes.github.io/medcross'}
+    options:{redirectTo:'https://themedtimes.github.io/The_Med_Times'}
   });
   if(error)setAuthError(error.message);
 }
