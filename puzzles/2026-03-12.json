@@ -1,0 +1,38 @@
+{
+  "date": "2026-03-12",
+  "topic": "Placeholder",
+  "size": 15,
+  "solution": [
+    ["Y","Y","Y","Y","Y","Y","Y","Y","#","Y","Y","Y","Y","Y","Y"],
+    ["#","#","Y","#","#","#","#","#","#","Y","#","#","#","#","#"],
+    ["#","#","Y","#","#","Y","Y","Y","Y","Y","Y","Y","Y","#","#"],
+    ["#","#","Y","#","#","#","#","#","#","Y","#","#","#","#","#"],
+    ["Y","Y","Y","Y","Y","Y","Y","Y","#","Y","#","#","#","#","#"],
+    ["#","#","Y","#","#","#","#","#","#","Y","#","#","#","#","#"],
+    ["#","#","Y","#","Y","Y","Y","Y","Y","Y","Y","Y","Y","Y","#"],
+    ["#","#","Y","#","#","#","#","#","#","Y","#","#","#","#","#"],
+    ["#","Y","#","#","#","#","#","#","#","Y","#","#","#","#","#"],
+    ["#","Y","Y","Y","Y","Y","Y","Y","#","Y","#","#","#","#","#"],
+    ["#","Y","#","#","#","#","#","#","#","Y","#","#","#","#","#"],
+    ["#","Y","#","Y","Y","Y","Y","Y","Y","Y","#","#","#","#","#"],
+    ["#","Y","#","#","#","#","#","#","#","#","#","#","#","#","#"],
+    ["#","Y","#","#","#","#","#","#","#","#","#","#","#","#","#"],
+    ["#","Y","#","#","#","#","#","#","#","#","#","#","#","#","#"]
+  ],
+  "clues": {
+    "across": [
+      {"number":1,"row":0,"col":0,"len":8,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
+      {"number":2,"row":0,"col":9,"len":6,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
+      {"number":5,"row":2,"col":5,"len":8,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
+      {"number":7,"row":4,"col":0,"len":8,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
+      {"number":9,"row":6,"col":4,"len":10,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
+      {"number":11,"row":9,"col":1,"len":7,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
+      {"number":13,"row":11,"col":3,"len":7,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
+    ],
+    "down": [
+      {"number":3,"row":0,"col":2,"len":10,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
+      {"number":4,"row":0,"col":9,"len":11,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"},
+      {"number":6,"row":1,"col":1,"len":14,"clue":"XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"}
+    ]
+  }
+}
