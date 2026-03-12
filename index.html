@@ -27,7 +27,7 @@
   .auth-logo{font-family:var(--font-display);font-size:clamp(36px,11vw,56px);font-weight:900;color:var(--accent);letter-spacing:-1px;line-height:1;text-align:center;margin-bottom:8px;}
   .auth-tagline{font-size:14px;color:var(--text-muted);text-align:center;margin-bottom:40px;line-height:1.5;}
   .auth-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.07);margin-bottom:16px;}
-  .auth-card-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:6px;text-align:center;}
+  .auth-mode-title{font-family:var(--font-display);font-size:22px;font-weight:700;text-align:center;margin-bottom:4px;}
   .auth-card-sub{font-size:13px;color:var(--text-muted);text-align:center;margin-bottom:24px;}
   .google-btn{width:100%;padding:14px;background:#fff;color:#1a1a1a;border:1.5px solid var(--border);border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;-webkit-appearance:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
   .google-btn:active{transform:scale(0.98);}
@@ -42,7 +42,6 @@
   .auth-switch{font-size:13px;color:var(--text-muted);text-align:center;margin-top:16px;}
   .auth-switch a{color:var(--accent);font-weight:600;cursor:pointer;text-decoration:none;}
   .auth-error{font-size:13px;color:var(--wrong);text-align:center;margin-top:8px;min-height:20px;}
-  .auth-mode-title{font-family:var(--font-display);font-size:22px;font-weight:700;text-align:center;margin-bottom:4px;}
 
   /* START */
   #start-screen{align-items:center;justify-content:center;padding:32px 24px 48px;height:100dvh;position:relative;overflow-y:auto;}
@@ -59,9 +58,11 @@
   .start-card-icon{font-size:20px;width:32px;text-align:center;flex-shrink:0;}
   .start-card-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin-bottom:2px;}
   .start-card-value{font-size:15px;font-weight:600;color:var(--text);}
-  .play-btn{width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:16px;font-size:17px;font-weight:700;font-family:var(--font-display);cursor:pointer;box-shadow:0 6px 24px rgba(200,57,43,0.35);display:flex;align-items:center;justify-content:center;-webkit-appearance:none;}
+  .play-btn{width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:16px;font-size:17px;font-weight:700;font-family:var(--font-display);cursor:pointer;box-shadow:0 6px 24px rgba(200,57,43,0.35);display:flex;align-items:center;justify-content:center;margin-bottom:10px;-webkit-appearance:none;}
   .play-btn:active{transform:scale(0.97);}
   .play-btn.completed{background:var(--correct);box-shadow:0 6px 24px rgba(22,163,74,0.3);}
+  .leaderboard-btn{width:100%;padding:14px;background:none;border:1.5px solid var(--border);border-radius:16px;font-size:15px;font-weight:600;font-family:var(--font-body);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;-webkit-appearance:none;}
+  .leaderboard-btn:active{background:var(--border);}
   .completed-banner{background:var(--correct-bg);border:1px solid var(--correct);border-radius:12px;padding:10px 16px;width:100%;text-align:center;margin-bottom:12px;font-size:13px;color:var(--correct);font-weight:600;}
   .start-rules{margin-top:14px;font-size:12px;color:var(--text-muted);text-align:center;line-height:1.9;}
   .start-signout{margin-top:12px;font-size:12px;color:var(--text-muted);text-align:center;cursor:pointer;text-decoration:underline;}
@@ -157,6 +158,22 @@
   input:checked+.slider:before{transform:translateX(18px);}
   .modal-close{width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);-webkit-appearance:none;}
 
+  /* LEADERBOARD MODAL */
+  .lb-loading{text-align:center;padding:24px;color:var(--text-muted);font-size:14px;}
+  .lb-empty{text-align:center;padding:24px;color:var(--text-muted);font-size:14px;}
+  .lb-list{display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow-y:auto;padding-bottom:8px;}
+  .lb-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border-radius:12px;border:1px solid var(--border);}
+  .lb-row.me{background:var(--accent-light);border-color:var(--accent);}
+  .lb-rank{font-family:var(--font-mono);font-size:16px;font-weight:700;color:var(--text-muted);width:28px;text-align:center;flex-shrink:0;}
+  .lb-rank.gold{color:#f59e0b;}
+  .lb-rank.silver{color:#94a3b8;}
+  .lb-rank.bronze{color:#b45309;}
+  .lb-name{flex:1;font-size:14px;font-weight:600;color:var(--text);}
+  .lb-time{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--accent);}
+  .lb-date{font-size:11px;color:var(--text-muted);text-align:center;margin-bottom:12px;}
+  .lb-your-rank{text-align:center;padding:10px;font-size:13px;color:var(--text-muted);border-top:1px solid var(--border);margin-top:8px;}
+  .lb-your-rank span{color:var(--accent);font-weight:700;}
+
   /* SUCCESS */
   .success-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:300;align-items:center;justify-content:center;padding:24px;}
   .success-overlay.open{display:flex;}
@@ -165,8 +182,9 @@
   .success-emoji{font-size:56px;margin-bottom:12px;}
   .success-title{font-family:var(--font-display);font-size:28px;font-weight:900;color:var(--accent);margin-bottom:6px;}
   .success-time{font-family:var(--font-mono);font-size:36px;color:var(--text);margin:12px 0;}
-  .success-streak{font-size:22px;margin-bottom:4px;}
-  .success-sub{font-size:14px;color:var(--text-muted);margin-bottom:20px;}
+  .success-streak{font-size:20px;margin-bottom:4px;}
+  .success-meta{font-size:13px;color:var(--text-muted);margin-bottom:6px;}
+  .success-rank{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:16px;}
   .success-btn{display:block;width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);margin-bottom:10px;-webkit-appearance:none;}
   .success-btn.outline{background:none;border:1.5px solid var(--border);color:var(--text);}
   .confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;animation:confettiFall linear forwards;z-index:400;pointer-events:none;}
@@ -201,14 +219,12 @@
         <div class="auth-divider-text">or</div>
         <div class="auth-divider-line"></div>
       </div>
-      <div id="auth-email-form">
-        <div id="auth-name-wrap" style="display:none;">
-          <input class="auth-input" type="text" id="auth-name" placeholder="Your name">
-        </div>
-        <input class="auth-input" type="email" id="auth-email" placeholder="Email address">
-        <input class="auth-input" type="password" id="auth-password" placeholder="Password">
-        <button class="auth-submit" id="auth-submit-btn" onclick="handleEmailAuth()">Sign In</button>
+      <div id="auth-name-wrap" style="display:none;">
+        <input class="auth-input" type="text" id="auth-name" placeholder="Your name">
       </div>
+      <input class="auth-input" type="email" id="auth-email" placeholder="Email address">
+      <input class="auth-input" type="password" id="auth-password" placeholder="Password">
+      <button class="auth-submit" id="auth-submit-btn" onclick="handleEmailAuth()">Sign In</button>
       <div class="auth-error" id="auth-error"></div>
     </div>
     <div class="auth-switch" id="auth-switch">
@@ -256,6 +272,7 @@
     </div>
     <div class="completed-banner" id="completed-banner" style="display:none;">✅ You've completed today's puzzle!</div>
     <button class="play-btn" id="play-btn" onclick="startGame()">Play Today's Puzzle</button>
+    <button class="leaderboard-btn" onclick="openLeaderboard()">🏆 Today's Leaderboard</button>
     <div class="start-rules">
       Tap a cell · Tap again to flip direction<br>
       Use arrows to move between clues<br>
@@ -274,20 +291,11 @@
     <div class="countdown-card">
       <div class="countdown-label">Next puzzle in</div>
       <div class="countdown-digits">
-        <div class="countdown-unit">
-          <div class="countdown-num" id="cd-hours">00</div>
-          <div class="countdown-unit-label">Hours</div>
-        </div>
+        <div class="countdown-unit"><div class="countdown-num" id="cd-hours">00</div><div class="countdown-unit-label">Hours</div></div>
         <div class="countdown-sep">:</div>
-        <div class="countdown-unit">
-          <div class="countdown-num" id="cd-mins">00</div>
-          <div class="countdown-unit-label">Mins</div>
-        </div>
+        <div class="countdown-unit"><div class="countdown-num" id="cd-mins">00</div><div class="countdown-unit-label">Mins</div></div>
         <div class="countdown-sep">:</div>
-        <div class="countdown-unit">
-          <div class="countdown-num" id="cd-secs">00</div>
-          <div class="countdown-unit-label">Secs</div>
-        </div>
+        <div class="countdown-unit"><div class="countdown-num" id="cd-secs">00</div><div class="countdown-unit-label">Secs</div></div>
       </div>
     </div>
     <div class="no-puzzle-date-pill" id="no-puzzle-date">—</div>
@@ -319,38 +327,13 @@
   <div class="clue-bar"><div class="clue-bar-text" id="clue-bar-text">Tap a cell to begin</div></div>
   <div class="keyboard">
     <div class="kb-row">
-      <button class="kb-key" onclick="kbInput('Q')">Q</button>
-      <button class="kb-key" onclick="kbInput('W')">W</button>
-      <button class="kb-key" onclick="kbInput('E')">E</button>
-      <button class="kb-key" onclick="kbInput('R')">R</button>
-      <button class="kb-key" onclick="kbInput('T')">T</button>
-      <button class="kb-key" onclick="kbInput('Y')">Y</button>
-      <button class="kb-key" onclick="kbInput('U')">U</button>
-      <button class="kb-key" onclick="kbInput('I')">I</button>
-      <button class="kb-key" onclick="kbInput('O')">O</button>
-      <button class="kb-key" onclick="kbInput('P')">P</button>
+      <button class="kb-key" onclick="kbInput('Q')">Q</button><button class="kb-key" onclick="kbInput('W')">W</button><button class="kb-key" onclick="kbInput('E')">E</button><button class="kb-key" onclick="kbInput('R')">R</button><button class="kb-key" onclick="kbInput('T')">T</button><button class="kb-key" onclick="kbInput('Y')">Y</button><button class="kb-key" onclick="kbInput('U')">U</button><button class="kb-key" onclick="kbInput('I')">I</button><button class="kb-key" onclick="kbInput('O')">O</button><button class="kb-key" onclick="kbInput('P')">P</button>
     </div>
     <div class="kb-row">
-      <button class="kb-key" onclick="kbInput('A')">A</button>
-      <button class="kb-key" onclick="kbInput('S')">S</button>
-      <button class="kb-key" onclick="kbInput('D')">D</button>
-      <button class="kb-key" onclick="kbInput('F')">F</button>
-      <button class="kb-key" onclick="kbInput('G')">G</button>
-      <button class="kb-key" onclick="kbInput('H')">H</button>
-      <button class="kb-key" onclick="kbInput('J')">J</button>
-      <button class="kb-key" onclick="kbInput('K')">K</button>
-      <button class="kb-key" onclick="kbInput('L')">L</button>
+      <button class="kb-key" onclick="kbInput('A')">A</button><button class="kb-key" onclick="kbInput('S')">S</button><button class="kb-key" onclick="kbInput('D')">D</button><button class="kb-key" onclick="kbInput('F')">F</button><button class="kb-key" onclick="kbInput('G')">G</button><button class="kb-key" onclick="kbInput('H')">H</button><button class="kb-key" onclick="kbInput('J')">J</button><button class="kb-key" onclick="kbInput('K')">K</button><button class="kb-key" onclick="kbInput('L')">L</button>
     </div>
     <div class="kb-row">
-      <button class="kb-key wide" onclick="prevClue()">&#8592; Clue</button>
-      <button class="kb-key" onclick="kbInput('Z')">Z</button>
-      <button class="kb-key" onclick="kbInput('X')">X</button>
-      <button class="kb-key" onclick="kbInput('C')">C</button>
-      <button class="kb-key" onclick="kbInput('V')">V</button>
-      <button class="kb-key" onclick="kbInput('B')">B</button>
-      <button class="kb-key" onclick="kbInput('N')">N</button>
-      <button class="kb-key" onclick="kbInput('M')">M</button>
-      <button class="kb-key del" onclick="kbDelete()">⌫</button>
+      <button class="kb-key wide" onclick="prevClue()">&#8592; Clue</button><button class="kb-key" onclick="kbInput('Z')">Z</button><button class="kb-key" onclick="kbInput('X')">X</button><button class="kb-key" onclick="kbInput('C')">C</button><button class="kb-key" onclick="kbInput('V')">V</button><button class="kb-key" onclick="kbInput('B')">B</button><button class="kb-key" onclick="kbInput('N')">N</button><button class="kb-key" onclick="kbInput('M')">M</button><button class="kb-key del" onclick="kbDelete()">⌫</button>
     </div>
   </div>
 </div>
@@ -388,6 +371,18 @@
   </div>
 </div>
 
+<!-- LEADERBOARD MODAL -->
+<div class="modal-overlay" id="lb-modal" onclick="closeLbModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">🏆 Today's Leaderboard</div>
+    <div class="lb-date" id="lb-date"></div>
+    <div id="lb-content"><div class="lb-loading">Loading...</div></div>
+    <div class="lb-your-rank" id="lb-your-rank" style="display:none;">Your rank: <span id="lb-rank-val">—</span></div>
+    <button class="modal-close" style="margin-top:16px;" onclick="closeLbModal()">Close</button>
+  </div>
+</div>
+
 <!-- SUCCESS -->
 <div class="success-overlay" id="success-overlay">
   <div class="success-card">
@@ -395,8 +390,11 @@
     <div class="success-title">Puzzle Complete!</div>
     <div class="success-time" id="final-time">—</div>
     <div class="success-streak" id="final-streak"></div>
-    <div class="success-sub">Topic: <span id="puzzle-topic-end"></span></div>
-    <button class="success-btn" onclick="goToStart()">Back to Home</button>
+    <div class="success-rank" id="final-rank"></div>
+    <div class="success-meta" id="success-date"></div>
+    <div class="success-meta">Topic: <span id="puzzle-topic-end"></span></div>
+    <button class="success-btn" onclick="openLeaderboardFromSuccess()">🏆 View Leaderboard</button>
+    <button class="success-btn outline" onclick="goToStart()">Back to Home</button>
     <button class="success-btn outline" onclick="document.getElementById('success-overlay').classList.remove('open')">View Board</button>
   </div>
 </div>
@@ -437,12 +435,12 @@ function streakDisplay(n){
   const flames=n>=30?'🔥🔥🔥':n>=7?'🔥🔥':'🔥';
   return`${n} day${n>1?'s':''} ${flames}`;
 }
+function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;}
 
 // ── AUTH ──
 async function boot(){
-  // Handle OAuth redirect token in URL hash
   if(window.location.hash&&window.location.hash.includes('access_token')){
-    await sb.auth.exchangeCodeForSession(window.location.href).catch(()=>{});
+    try{await sb.auth.exchangeCodeForSession(window.location.href);}catch(e){}
     window.history.replaceState(null,'',window.location.pathname);
   }
   const{data:{session}}=await sb.auth.getSession();
@@ -536,18 +534,16 @@ async function calculateStreak(){
   const dates=data.map(d=>d.puzzle_date);
   let streak=0;
   const today=getTodayString();
-  const d=new Date();
   let check=dates.includes(today)?today:null;
   if(!check){
-    d.setDate(d.getDate()-1);
+    const d=new Date();d.setDate(d.getDate()-1);
     const yesterday=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     if(dates.includes(yesterday))check=yesterday;
     else return 0;
   }
   while(dates.includes(check)){
     streak++;
-    const cd=new Date(check+'T00:00:00');
-    cd.setDate(cd.getDate()-1);
+    const cd=new Date(check+'T00:00:00');cd.setDate(cd.getDate()-1);
     check=`${cd.getFullYear()}-${String(cd.getMonth()+1).padStart(2,'0')}-${String(cd.getDate()).padStart(2,'0')}`;
   }
   return streak;
@@ -561,12 +557,63 @@ async function checkAlreadyCompleted(){
   }catch(e){return false;}
 }
 
-async function saveCompletion(timeSeconds,usedReveal){
+async function saveCompletion(timeSeconds,didReveal){
   if(!currentUser)return;
   try{
-    await sb.from('completions').insert({user_id:currentUser.id,puzzle_date:getTodayString(),time_seconds:timeSeconds,revealed:usedReveal});
+    await sb.from('completions').insert({user_id:currentUser.id,puzzle_date:getTodayString(),time_seconds:timeSeconds,revealed:didReveal});
     userStreak=await calculateStreak();
-  }catch(e){console.log('Save completion error:',e);}
+  }catch(e){console.log('Save error:',e);}
+}
+
+// ── LEADERBOARD ──
+async function fetchLeaderboard(){
+  const{data}=await sb.from('completions')
+    .select('user_id, time_seconds, profiles(username)')
+    .eq('puzzle_date',getTodayString())
+    .order('time_seconds',{ascending:true})
+    .limit(10);
+  return data||[];
+}
+
+async function openLeaderboard(){
+  document.getElementById('lb-modal').classList.add('open');
+  const d=new Date();
+  document.getElementById('lb-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  document.getElementById('lb-content').innerHTML='<div class="lb-loading">Loading...</div>';
+  document.getElementById('lb-your-rank').style.display='none';
+  const rows=await fetchLeaderboard();
+  if(!rows.length){
+    document.getElementById('lb-content').innerHTML='<div class="lb-empty">No completions yet today — be the first!</div>';
+    return;
+  }
+  let myRank=null;
+  const html=rows.map((r,i)=>{
+    const isMe=r.user_id===currentUser?.id;
+    if(isMe)myRank=i+1;
+    const rankClass=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
+    const name=r.profiles?.username||'Anonymous';
+    return`<div class="lb-row${isMe?' me':''}">
+      <div class="lb-rank ${rankClass}">${medal}</div>
+      <div class="lb-name">${name}${isMe?' (you)':''}</div>
+      <div class="lb-time">${formatTime(r.time_seconds)}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('lb-content').innerHTML=`<div class="lb-list">${html}</div>`;
+  if(myRank){
+    document.getElementById('lb-your-rank').style.display='block';
+    document.getElementById('lb-rank-val').textContent=`#${myRank} today`;
+  }
+}
+
+function closeLbModal(e){
+  if(!e||e.target===document.getElementById('lb-modal'))
+    document.getElementById('lb-modal').classList.remove('open');
+}
+
+function openLeaderboardFromSuccess(){
+  document.getElementById('success-overlay').classList.remove('open');
+  openLeaderboard();
 }
 
 // ── PUZZLE LOADER ──
@@ -673,10 +720,7 @@ function loadProgress(){
 }
 
 // ── NAVIGATION ──
-function startGame(){
-  showScreen('game-screen');
-  initGame();
-}
+function startGame(){showScreen('game-screen');initGame();}
 function goToStart(){
   if(started)saveProgress();
   clearInterval(timerInterval);
@@ -785,7 +829,6 @@ function handleCellClick(r,c){
     else if(!canGo(r,c,'down'))direction='across';
   }
   highlightCells();syncClueIndex();
-  if(!started)startTimer();
 }
 function canGo(r,c,dir){
   if(dir==='across')return acrossLen(r,wordStart(r,c,'across'))>1;
@@ -819,6 +862,7 @@ function highlightCells(){
 function isLocked(r,c){return instantCheck&&completedCells.has(`${r},${c}`);}
 function kbInput(letter){
   if(selectedRow===-1||timerStopped)return;
+  if(!started)startTimer();
   if(isLocked(selectedRow,selectedCol)){advanceSelection();return;}
   userGrid[selectedRow][selectedCol]=letter;
   const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=letter;
@@ -834,6 +878,7 @@ function kbInput(letter){
 }
 function kbDelete(){
   if(selectedRow===-1||timerStopped)return;
+  if(!started)startTimer();
   if(isLocked(selectedRow,selectedCol)){retreatSelection();return;}
   if(userGrid[selectedRow][selectedCol]){
     userGrid[selectedRow][selectedCol]='';
@@ -884,6 +929,7 @@ function revealLetter(){
   if(selectedRow===-1)return;
   const sol=PUZZLE.solution[selectedRow][selectedCol];if(sol==='#')return;
   usedReveal=true;
+  if(!started)startTimer();
   userGrid[selectedRow][selectedCol]=sol;
   const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=sol;
   const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
@@ -922,18 +968,29 @@ function checkCompletion(){
   stopTimer();
   localStorage.removeItem('tmt_progress');
   puzzleAlreadyCompleted=true;
-  saveCompletion(seconds,usedReveal).then(()=>{
-    setTimeout(showSuccess,400);
+  saveCompletion(seconds,usedReveal).then(async()=>{
+    const rows=await fetchLeaderboard();
+    const myRank=rows.findIndex(r=>r.user_id===currentUser?.id)+1;
+    setTimeout(()=>showSuccess(myRank),400);
   });
 }
-function showSuccess(){
+
+function showSuccess(myRank){
   spawnConfetti();
+  const d=new Date();
   document.getElementById('final-time').textContent=formatTime(seconds);
-  document.getElementById('final-streak').textContent=userStreak>0?`🔥 ${userStreak} day streak`:'';
+  document.getElementById('final-streak').textContent=userStreak>0?`${streakDisplay(userStreak)}`:'';
+  document.getElementById('final-rank').textContent=myRank>0?`#${myRank} on today's leaderboard`:'';
+  document.getElementById('success-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  document.getElementById('puzzle-topic-end').textContent=PUZZLE.topic;
   document.getElementById('success-overlay').classList.add('open');
 }
+
 function spawnConfetti(){
-  const colors=['#c8392b','#f59e0b','#16a34a','#2563eb','#9333ea'];
+  const theme=document.body.dataset.theme;
+  const colors=theme==='dark'?['#ff6b5b','#fde68a','#34d399','#60a5fa','#c084fc']:
+    theme==='medical'?['#0d6e52','#34d399','#6ee7b7','#059669','#d1fae5']:
+    ['#c8392b','#f59e0b','#16a34a','#2563eb','#9333ea'];
   for(let i=0;i<60;i++)setTimeout(()=>{
     const el=document.createElement('div');el.className='confetti-piece';
     el.style.left=Math.random()*100+'vw';el.style.top='-10px';
@@ -961,7 +1018,6 @@ function stopTimer(){
   clearInterval(timerInterval);timerInterval=null;
   document.getElementById('timer').className='timer';
 }
-function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;}
 
 // ── VIEW MODAL ──
 function openViewModal(){document.getElementById('view-modal').classList.add('open');}
