@@ -568,7 +568,11 @@ async function saveCompletion(timeSeconds,didReveal){
 // ── LEADERBOARD ──
 async function fetchLeaderboard(){
   const{data}=await sb.from('completions')
-    .select('user_id, time_seconds, profiles(username)')
+    .select(`
+      user_id,
+      time_seconds,
+      profiles!inner(username)
+    `)
     .eq('puzzle_date',getTodayString())
     .order('time_seconds',{ascending:true})
     .limit(10);
@@ -592,7 +596,7 @@ async function openLeaderboard(){
     if(isMe)myRank=i+1;
     const rankClass=i===0?'gold':i===1?'silver':i===2?'bronze':'';
     const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
-    const name=r.profiles?.username||'Anonymous';
+    const name=Array.isArray(r.profiles)?r.profiles[0]?.username:r.profiles?.username||'Anonymous';
     return`<div class="lb-row${isMe?' me':''}">
       <div class="lb-rank ${rankClass}">${medal}</div>
       <div class="lb-name">${name}${isMe?' (you)':''}</div>
