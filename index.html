@@ -969,15 +969,19 @@ function checkCompletion(){
     if(userGrid[r][c]!==PUZZLE.solution[r][c])return;
   }
   completionHandled=true;
-  stopTimer();
-  localStorage.removeItem('tmt_progress');
-  puzzleAlreadyCompleted=true;
-  saveCompletion(seconds,usedReveal).then(async()=>{
-    const rows=await fetchLeaderboard();
+stopTimer();
+localStorage.removeItem('tmt_progress');
+puzzleAlreadyCompleted=true;
+showSuccess(0);
+saveCompletion(seconds,usedReveal).then(async()=>{
+  userStreak=await calculateStreak();
+  fetchLeaderboard().then(rows=>{
     const myRank=rows.findIndex(r=>r.user_id===currentUser?.id)+1;
-    setTimeout(()=>showSuccess(myRank),400);
+    if(myRank>0){
+      document.getElementById('final-rank').textContent=`#${myRank} on today's leaderboard`;
+    }
   });
-}
+});
 
 function showSuccess(myRank){
   spawnConfetti();
