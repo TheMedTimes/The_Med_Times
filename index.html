@@ -463,22 +463,8 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 
 // ── AUTH ──
 async function boot(){
-  if(window.location.hash&&window.location.hash.includes('access_token')){
-    try{await sb.auth.exchangeCodeForSession(window.location.href);}catch(e){}
-    window.history.replaceState(null,'',window.location.pathname);
-  }
-  const{data:{session}}=await sb.auth.getSession();
-  if(session){
-    currentUser=session.user;
-    const profileResult=await loadUserProfile();
-    if(profileResult!=='needs-college') await loadPuzzle();
-  }else{
-    document.getElementById('loading').style.display='none';
-    buildAuthBg();
-    showScreen('auth-screen');
-  }
   sb.auth.onAuthStateChange(async(event,session)=>{
-    if(event==='SIGNED_IN'&&session){
+    if(event==='SIGNED_IN'&&session&&!currentUser){
       currentUser=session.user;
       const profileResult=await loadUserProfile();
       if(profileResult!=='needs-college') await loadPuzzle();
@@ -490,6 +476,16 @@ async function boot(){
       showScreen('auth-screen');
     }
   });
+  const{data:{session}}=await sb.auth.getSession();
+  if(session){
+    currentUser=session.user;
+    const profileResult=await loadUserProfile();
+    if(profileResult!=='needs-college') await loadPuzzle();
+  }else{
+    document.getElementById('loading').style.display='none';
+    buildAuthBg();
+    showScreen('auth-screen');
+  }
 }
 
 function buildAuthBg(){
