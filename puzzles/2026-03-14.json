@@ -40,4 +40,8 @@
       {"number":10,"row":5,"col":5,"len":9,"clue":"Ascaris commonly called"},
       {"number":12,"row":6,"col":1,"len":8,"clue":"Tapeworms"},
       {"number":13,"row":7,"col":3,"len":4,"clue":"Taenia solium - ___ tapeworm"},
-      {"number":14,"row":7,"col":14,"len":7,"clue":"_ larvae found in muscles/organs​​​​​​​​​​​​​​​​
+      {"number":14,"row":7,"col":14,"len":7,"clue":"_ larvae found in muscles/organs"},
+      {"number":15,"row":8,"col":12,"len":5,"clue":"Cestode segment filled with eggs"}
+    ]
+  }
+}
