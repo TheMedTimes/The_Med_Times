@@ -94,6 +94,15 @@
   .timer{font-family:var(--font-mono);font-size:18px;font-weight:500;color:var(--text);min-width:52px;text-align:right;}
   .timer.running{color:var(--accent);}
   .icon-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;color:var(--text);font-size:16px;font-family:var(--font-body);font-weight:600;}
+  /* Live check toggle in header */
+  .header-check-wrap{display:flex;align-items:center;gap:6px;}
+  .header-check-label{font-size:11px;font-weight:600;color:var(--text-muted);}
+  .toggle{position:relative;width:36px;height:20px;flex-shrink:0;}
+  .toggle input{opacity:0;width:0;height:0;}
+  .slider{position:absolute;inset:0;background:var(--border);border-radius:24px;cursor:pointer;transition:background 0.2s;}
+  .slider:before{content:'';position:absolute;height:14px;width:14px;left:3px;top:3px;background:white;border-radius:50%;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.25);}
+  input:checked+.slider{background:var(--accent);}
+  input:checked+.slider:before{transform:translateX(16px);}
 
   /* CLUE NAV */
   .clue-nav-top{display:flex;align-items:center;gap:8px;padding:6px 12px;background:var(--surface);border-bottom:1px solid var(--border);flex-shrink:0;}
@@ -150,15 +159,6 @@
   .theme-opt.selected{border-color:var(--accent);background:var(--accent-light);}
   .theme-swatch{width:36px;height:36px;border-radius:50%;margin:0 auto 8px;}
   .theme-name{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text);}
-  .modal-toggle-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-top:1px solid var(--border);margin-bottom:16px;}
-  .modal-toggle-label{font-size:14px;font-weight:500;color:var(--text);}
-  .modal-toggle-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
-  .toggle{position:relative;width:42px;height:24px;flex-shrink:0;}
-  .toggle input{opacity:0;width:0;height:0;}
-  .slider{position:absolute;inset:0;background:var(--border);border-radius:24px;cursor:pointer;transition:background 0.2s;}
-  .slider:before{content:'';position:absolute;height:18px;width:18px;left:3px;top:3px;background:white;border-radius:50%;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.25);}
-  input:checked+.slider{background:var(--accent);}
-  input:checked+.slider:before{transform:translateX(18px);}
   .modal-close{width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);-webkit-appearance:none;}
 
   /* LEADERBOARD MODAL */
@@ -172,6 +172,7 @@
   .lb-rank.silver{color:#94a3b8;}
   .lb-rank.bronze{color:#b45309;}
   .lb-name{flex:1;font-size:14px;font-weight:600;color:var(--text);}
+  .lb-college{font-size:11px;color:var(--text-muted);font-weight:500;}
   .lb-time{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--accent);}
   .lb-date{font-size:11px;color:var(--text-muted);text-align:center;margin-bottom:12px;}
   .lb-your-rank{text-align:center;padding:10px;font-size:13px;color:var(--text-muted);border-top:1px solid var(--border);margin-top:8px;}
@@ -187,7 +188,9 @@
   .success-time{font-family:var(--font-mono);font-size:36px;color:var(--text);margin:12px 0;}
   .success-streak{font-size:20px;margin-bottom:4px;}
   .success-meta{font-size:13px;color:var(--text-muted);margin-bottom:6px;}
-  .success-rank{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:16px;}
+  .success-rank{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:4px;}
+  .success-next-topic{font-size:13px;color:var(--text-muted);margin-bottom:16px;padding:8px 12px;background:var(--accent-light);border-radius:8px;border:1px solid var(--accent);}
+  .success-next-topic strong{color:var(--accent);}
   .success-btn{display:block;width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);margin-bottom:10px;-webkit-appearance:none;}
   .success-btn.outline{background:none;border:1.5px solid var(--border);color:var(--text);}
   .confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;animation:confettiFall linear forwards;z-index:400;pointer-events:none;}
@@ -225,6 +228,9 @@
       <div id="auth-name-wrap" style="display:none;">
         <input class="auth-input" type="text" id="auth-name" placeholder="Your name">
       </div>
+      <div id="auth-college-wrap" style="display:none;">
+        <input class="auth-input" type="text" id="auth-college" placeholder="College abbreviation (e.g. BJMC)" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+      </div>
       <input class="auth-input" type="email" id="auth-email" placeholder="Email address">
       <input class="auth-input" type="password" id="auth-password" placeholder="Password">
       <button class="auth-submit" id="auth-submit-btn" onclick="handleEmailAuth()">Sign In</button>
@@ -233,6 +239,23 @@
     <div class="auth-switch" id="auth-switch">
       Don't have an account? <a onclick="toggleAuthMode()">Sign up</a>
     </div>
+  </div>
+</div>
+
+<!-- COLLEGE PROMPT SCREEN -->
+<div id="college-screen" class="screen">
+  <div class="start-bg-grid" id="college-bg-grid"></div>
+  <div class="auth-content" style="position:relative;z-index:1;">
+    <div class="auth-logo">TheMedTimes</div>
+    <div class="auth-tagline">One quick thing before you play</div>
+    <div class="auth-card">
+      <div class="auth-mode-title">Your College</div>
+      <div class="auth-card-sub">Enter your college abbreviation so you appear correctly on the leaderboard</div>
+      <input class="auth-input" type="text" id="college-input" placeholder="e.g. BJMC, BAVMC, KEM" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+      <button class="auth-submit" onclick="saveCollegePrompt()">Let's Play →</button>
+      <div class="auth-error" id="college-error"></div>
+    </div>
+    <div class="auth-switch"><a onclick="skipCollegePrompt()">Skip for now</a></div>
   </div>
 </div>
 
@@ -279,7 +302,7 @@
     <div class="start-rules">
       Tap a cell · Tap again to flip direction<br>
       Use arrows to move between clues<br>
-      Tap View to change theme and enable live checking
+      Tap View to change theme
     </div>
     <div class="start-signout" onclick="signOut()">Sign out</div>
   </div>
@@ -313,6 +336,13 @@
       <div class="date-label" id="date-label"></div>
     </div>
     <div class="header-right">
+      <div class="header-check-wrap">
+        <span class="header-check-label">Live</span>
+        <label class="toggle">
+          <input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)">
+          <span class="slider"></span>
+        </label>
+      </div>
       <div class="timer" id="timer">0:00</div>
       <button class="icon-btn" onclick="openViewModal()">View</button>
     </div>
@@ -360,16 +390,6 @@
         <div class="theme-name">Medical</div>
       </div>
     </div>
-    <div class="modal-toggle-row">
-      <div>
-        <div class="modal-toggle-label">Check as you type</div>
-        <div class="modal-toggle-sub">Correct letters lock and can't be deleted</div>
-      </div>
-      <label class="toggle">
-        <input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)">
-        <span class="slider"></span>
-      </label>
-    </div>
     <button class="modal-close" onclick="closeViewModal()">Done</button>
   </div>
 </div>
@@ -396,6 +416,7 @@
     <div class="success-rank" id="final-rank"></div>
     <div class="success-meta" id="success-date"></div>
     <div class="success-meta">Topic: <span id="puzzle-topic-end"></span></div>
+    <div class="success-next-topic" id="success-next-topic" style="display:none;">📅 Tomorrow's topic: <strong id="next-topic-val"></strong></div>
     <button class="success-btn" onclick="openLeaderboardFromSuccess()">🏆 View Leaderboard</button>
     <button class="success-btn outline" onclick="goToStart()">Back to Home</button>
     <button class="success-btn outline" onclick="document.getElementById('success-overlay').classList.remove('open')">View Board</button>
@@ -449,8 +470,8 @@ async function boot(){
   const{data:{session}}=await sb.auth.getSession();
   if(session){
     currentUser=session.user;
-    await loadUserProfile();
-    await loadPuzzle();
+    const profileResult=await loadUserProfile();
+    if(profileResult!=='needs-college') await loadPuzzle();
   }else{
     document.getElementById('loading').style.display='none';
     buildAuthBg();
@@ -459,8 +480,8 @@ async function boot(){
   sb.auth.onAuthStateChange(async(event,session)=>{
     if(event==='SIGNED_IN'&&session&&!currentUser){
       currentUser=session.user;
-      await loadUserProfile();
-      await loadPuzzle();
+      const profileResult=await loadUserProfile();
+      if(profileResult!=='needs-college') await loadPuzzle();
     }
     if(event==='SIGNED_OUT'){
       currentUser=null;userProfile=null;userStreak=0;
@@ -497,6 +518,7 @@ function toggleAuthMode(){
   document.getElementById('auth-sub').textContent=isSignup?'Join TheMedTimes and track your streak':'Sign in to continue your streak';
   document.getElementById('auth-submit-btn').textContent=isSignup?'Create Account':'Sign In';
   document.getElementById('auth-name-wrap').style.display=isSignup?'block':'none';
+  document.getElementById('auth-college-wrap').style.display=isSignup?'block':'none';
   document.getElementById('auth-switch').innerHTML=isSignup?
     'Already have an account? <a onclick="toggleAuthMode()">Sign in</a>':
     'Don\'t have an account? <a onclick="toggleAuthMode()">Sign up</a>';
@@ -507,11 +529,15 @@ async function handleEmailAuth(){
   const email=document.getElementById('auth-email').value.trim();
   const password=document.getElementById('auth-password').value;
   const name=document.getElementById('auth-name').value.trim();
+  const college=document.getElementById('auth-college').value.trim().toUpperCase();
   if(!email||!password){setAuthError('Please fill in all fields');return;}
   setAuthError('');
   document.getElementById('auth-submit-btn').textContent='...';
   if(authMode==='signup'){
-    const{error}=await sb.auth.signUp({email,password,options:{data:{full_name:name||email.split('@')[0]}}});
+    const{error}=await sb.auth.signUp({
+      email,password,
+      options:{data:{full_name:name||email.split('@')[0],college:college||''}}
+    });
     if(error){setAuthError(error.message);document.getElementById('auth-submit-btn').textContent='Create Account';}
     else setAuthError('Check your email to confirm your account!');
   }else{
@@ -528,6 +554,21 @@ async function loadUserProfile(){
   const{data}=await sb.from('profiles').select('*').eq('id',currentUser.id).single();
   userProfile=data;
   userStreak=await calculateStreak();
+  // Show college prompt for users who don't have a college set
+  if(!userProfile?.college){
+    document.getElementById('loading').style.display='none';
+    const bg=document.getElementById('college-bg-grid');
+    if(!bg.children.length){
+      for(let i=0;i<300;i++){
+        const c=document.createElement('div');
+        c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
+        bg.appendChild(c);
+      }
+    }
+    showScreen('college-screen');
+    // Wait for puzzle load to be triggered by saveCollegePrompt or skipCollegePrompt
+    return 'needs-college';
+  }
 }
 
 async function calculateStreak(){
@@ -568,14 +609,30 @@ async function saveCompletion(timeSeconds,didReveal){
   }catch(e){console.log('Save error:',e);}
 }
 
-// ── LEADERBOARD ──
+// ── COLLEGE PROMPT ──
+async function checkCollegePrompt(){
+  if(!currentUser||!userProfile)return false;
+  return!userProfile.college;
+}
+
+async function saveCollegePrompt(){
+  const val=document.getElementById('college-input').value.trim().toUpperCase();
+  if(!val){document.getElementById('college-error').textContent='Please enter your college abbreviation';return;}
+  document.getElementById('college-error').textContent='';
+  const{error}=await sb.from('profiles').update({college:val}).eq('id',currentUser.id);
+  if(error){document.getElementById('college-error').textContent='Something went wrong, try again';return;}
+  userProfile.college=val;
+  await loadPuzzle();
+}
+
+async function skipCollegePrompt(){
+  await loadPuzzle();
+}
+
+
 async function fetchLeaderboard(){
   const{data}=await sb.from('completions')
-    .select(`
-      user_id,
-      time_seconds,
-      profiles!inner(username)
-    `)
+    .select(`user_id,time_seconds,profiles!inner(username,college)`)
     .eq('puzzle_date',getTodayString())
     .order('time_seconds',{ascending:true})
     .limit(10);
@@ -599,10 +656,12 @@ async function openLeaderboard(){
     if(isMe)myRank=i+1;
     const rankClass=i===0?'gold':i===1?'silver':i===2?'bronze':'';
     const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
-    const name=Array.isArray(r.profiles)?r.profiles[0]?.username:r.profiles?.username||'Anonymous';
+    const prof=Array.isArray(r.profiles)?r.profiles[0]:r.profiles;
+    const name=prof?.username||'Anonymous';
+    const college=prof?.college?`<span class="lb-college"> · ${prof.college}</span>`:'';
     return`<div class="lb-row${isMe?' me':''}">
       <div class="lb-rank ${rankClass}">${medal}</div>
-      <div class="lb-name">${name}${isMe?' (you)':''}</div>
+      <div class="lb-name">${name}${isMe?' (you)':''}${college}</div>
       <div class="lb-time">${formatTime(r.time_seconds)}</div>
     </div>`;
   }).join('');
@@ -748,6 +807,13 @@ function initGame(){
   buildClueList();
   buildGrid(computeNumbers());
   document.getElementById('puzzle-topic-end').textContent=PUZZLE.topic;
+  // Show next topic if available
+  if(PUZZLE.next_topic&&PUZZLE.next_topic!=='TBD'){
+    document.getElementById('next-topic-val').textContent=PUZZLE.next_topic;
+    document.getElementById('success-next-topic').style.display='block';
+  }else{
+    document.getElementById('success-next-topic').style.display='none';
+  }
   const restored=loadProgress();
   if(restored){started=true;startTimer();}
   jumpToClueIndex(0);
@@ -972,26 +1038,27 @@ function checkCompletion(){
     if(userGrid[r][c]!==PUZZLE.solution[r][c])return;
   }
   completionHandled=true;
-stopTimer();
-localStorage.removeItem('tmt_progress');
-puzzleAlreadyCompleted=true;
-showSuccess(0);
-saveCompletion(seconds,usedReveal).then(async()=>{
-  userStreak=await calculateStreak();
-  fetchLeaderboard().then(rows=>{
-    const myRank=rows.findIndex(r=>r.user_id===currentUser?.id)+1;
-    if(myRank>0){
-      document.getElementById('final-rank').textContent=`#${myRank} on today's leaderboard`;
-    }
+  stopTimer();
+  localStorage.removeItem('tmt_progress');
+  puzzleAlreadyCompleted=true;
+  showSuccess(0);
+  saveCompletion(seconds,usedReveal).then(async()=>{
+    userStreak=await calculateStreak();
+    document.getElementById('final-streak').textContent=userStreak>0?streakDisplay(userStreak):'';
+    fetchLeaderboard().then(rows=>{
+      const myRank=rows.findIndex(r=>r.user_id===currentUser?.id)+1;
+      if(myRank>0){
+        document.getElementById('final-rank').textContent=`#${myRank} on today's leaderboard`;
+      }
+    });
   });
-});
 }
 
 function showSuccess(myRank){
   spawnConfetti();
   const d=new Date();
   document.getElementById('final-time').textContent=formatTime(seconds);
-  document.getElementById('final-streak').textContent=userStreak>0?`${streakDisplay(userStreak)}`:'';
+  document.getElementById('final-streak').textContent=userStreak>0?streakDisplay(userStreak):'';
   document.getElementById('final-rank').textContent=myRank>0?`#${myRank} on today's leaderboard`:'';
   document.getElementById('success-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
   document.getElementById('puzzle-topic-end').textContent=PUZZLE.topic;
