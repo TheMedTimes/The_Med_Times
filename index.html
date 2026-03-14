@@ -463,7 +463,7 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 
 // ── AUTH ──
 async function boot(){
-  if(window.location.hash&&window.location.hash.includes('access_token')){
+  if((window.location.hash&&window.location.hash.includes('access_token'))||(window.location.search&&window.location.search.includes('code='))){
     try{await sb.auth.exchangeCodeForSession(window.location.href);}catch(e){}
     window.history.replaceState(null,'',window.location.pathname);
   }
@@ -481,11 +481,11 @@ async function boot(){
     }
   });
   const{data:{session}}=await sb.auth.getSession();
-  if(session){
+  if(session&&!currentUser){
     currentUser=session.user;
     const profileResult=await loadUserProfile();
     if(profileResult!=='needs-college') await loadPuzzle();
-  }else{
+  }else if(!session){
     document.getElementById('loading').style.display='none';
     buildAuthBg();
     showScreen('auth-screen');
