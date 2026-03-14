@@ -478,7 +478,7 @@ async function boot(){
     showScreen('auth-screen');
   }
   sb.auth.onAuthStateChange(async(event,session)=>{
-    if(event==='SIGNED_IN'&&session&&!currentUser){
+    if(event==='SIGNED_IN'&&session){
       currentUser=session.user;
       const profileResult=await loadUserProfile();
       if(profileResult!=='needs-college') await loadPuzzle();
