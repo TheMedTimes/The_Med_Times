@@ -463,6 +463,10 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 
 // ── AUTH ──
 async function boot(){
+  if(window.location.hash&&window.location.hash.includes('access_token')){
+    try{await sb.auth.exchangeCodeForSession(window.location.href);}catch(e){}
+    window.history.replaceState(null,'',window.location.pathname);
+  }
   sb.auth.onAuthStateChange(async(event,session)=>{
     if(event==='SIGNED_IN'&&session&&!currentUser){
       currentUser=session.user;
