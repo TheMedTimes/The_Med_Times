@@ -551,37 +551,28 @@ async function signOut(){await sb.auth.signOut();localStorage.removeItem('tmt_pr
 // ── PROFILE + STREAK ──
 async function loadUserProfile(){
   if(!currentUser)return;
-  try{
-    let data=null;
-    // Retry up to 5 times — new users may have a delay before profile row is created
-    for(let i=0;i<5;i++){
-      const res=await sb.from('profiles').select('*').eq('id',currentUser.id).single();
-      if(res.data){data=res.data;break;}
-      await new Promise(r=>setTimeout(r,1000));
-    }
-    userProfile=data;
-    userStreak=await calculateStreak();
-    // Only prompt for college if profile exists and college is missing
-    // Don't prompt if profile doesn't exist yet (brand new user still being created)
-    if(userProfile&&userProfile.username&&!userProfile.college){
-      document.getElementById('loading').style.display='none';
-      const bg=document.getElementById('college-bg-grid');
-      if(!bg.children.length){
-        for(let i=0;i<300;i++){
-          const c=document.createElement('div');
-          c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
-          bg.appendChild(c);
-        }
+  let data=null;
+  for(let i=0;i<5;i++){
+    const res=await sb.from('profiles').select('*').eq('id',currentUser.id).single();
+    if(res.data){data=res.data;break;}
+    await new Promise(r=>setTimeout(r,1000));
+  }
+  userProfile=data;
+  userStreak=await calculateStreak();
+  if(userProfile&&(userProfile.college===null||userProfile.college===''||userProfile.college===undefined)){
+    document.getElementById('loading').style.display='none';
+    const bg=document.getElementById('college-bg-grid');
+    if(!bg.children.length){
+      for(let i=0;i<300;i++){
+        const c=document.createElement('div');
+        c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
+        bg.appendChild(c);
       }
-      showScreen('college-screen');
-      return 'needs-college';
     }
-  }catch(e){
-    console.log('Profile load error:',e);
-    // Don't block on error — just proceed to puzzle
+    showScreen('college-screen');
+    return'needs-college';
   }
 }
-
 async function calculateStreak(){
   if(!currentUser)return 0;
   const{data}=await sb.from('completions').select('puzzle_date').eq('user_id',currentUser.id).order('puzzle_date',{ascending:false});
