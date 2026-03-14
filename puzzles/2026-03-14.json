@@ -1,0 +1,43 @@
+{
+  "date": "2026-03-14",
+  "topic": "Intestinal Helminthic Infections",
+  "next_topic": "Drugs used in the disorders of Clotting",
+  "size": 15,
+  "solution": [
+    ["#","#","M","#","#","#","B","E","E","F","#","#","D","#","#"],
+    ["A","D","U","L","T","#","#","#","#","I","#","S","O","I","L"],
+    ["#","#","S","#","#","#","#","#","#","S","#","#","G","#","U"],
+    ["#","#","C","L","O","N","O","R","C","H","I","S","#","#","N"],
+    ["#","#","L","#","#","#","#","#","E","#","#","#","#","#","G"],
+    ["#","#","E","#","#","R","#","P","R","U","R","I","T","I","S"],
+    ["#","C","#","#","#","O","#","#","C","#","#","#","#","#","#"],
+    ["#","E","#","P","H","U","L","W","A","R","I","A","#","#","S"],
+    ["#","S","#","O","#","N","#","#","R","#","#","#","G","#","O"],
+    ["#","T","#","R","#","D","#","#","I","#","#","#","R","#","M"],
+    ["#","O","#","K","#","W","#","K","A","T","A","Y","A","M","A"],
+    ["#","D","#","#","#","O","#","#","#","#","#","#","V","#","T"],
+    ["P","E","N","E","T","R","A","T","I","O","N","#","I","#","I"],
+    ["#","S","#","#","#","M","#","#","#","#","#","#","D","#","C"],
+    ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"]
+  ],
+  "clues": {
+    "across": [
+      {"number":2,"row":0,"col":6,"len":4,"clue":"Taenia saginata - ___ tapeworm"},
+      {"number":5,"row":1,"col":0,"len":5,"clue":"Hookworm differentiated by morphology of"},
+      {"number":6,"row":1,"col":11,"len":4,"clue":"Ascaris is ___ transmitted helminth"},
+      {"number":8,"row":3,"col":2,"len":10,"clue":"Bile duct fluke"},
+      {"number":11,"row":5,"col":7,"len":8,"clue":"Felt when proglottids discharged"},
+      {"number":13,"row":7,"col":3,"len":9,"clue":"Fasciolopsiasis endemic region in India"},
+      {"number":16,"row":10,"col":7,"len":8,"clue":"Fever in acute Schistosomiasis"},
+      {"number":17,"row":12,"col":0,"len":11,"clue":"Hookworm infection route"}
+    ],
+    "down": [
+      {"number":1,"row":0,"col":2,"len":6,"clue":"Where Taenia eggs transform into larvae"},
+      {"number":3,"row":0,"col":9,"len":4,"clue":"Second intermediate host in D. latum"},
+      {"number":4,"row":0,"col":12,"len":3,"clue":"Definitive host - Echinococcus"},
+      {"number":7,"row":1,"col":14,"len":7,"clue":"Where Ascaris L4 form is made"},
+      {"number":9,"row":6,"col":8,"len":7,"clue":"Schistosoma infective form"},
+      {"number":10,"row":5,"col":5,"len":9,"clue":"Ascaris commonly called"},
+      {"number":12,"row":6,"col":1,"len":8,"clue":"Tapeworms"},
+      {"number":13,"row":7,"col":3,"len":4,"clue":"Taenia solium - ___ tapeworm"},
+      {"number":14,"row":7,"col":14,"len":7,"clue":"_ larvae found in muscles/organs​​​​​​​​​​​​​​​​
