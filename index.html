@@ -546,28 +546,63 @@ async function signOut(){await sb.auth.signOut();localStorage.removeItem('tmt_pr
 
 // ── PROFILE + STREAK ──
 async function loadUserProfile(){
-  if(!currentUser)return;
-  let data=null;
-  for(let i=0;i<5;i++){
-    const res=await sb.from('profiles').select('*').eq('id',currentUser.id).single();
-    if(res.data){data=res.data;break;}
-    await new Promise(r=>setTimeout(r,1000));
+  if (!currentUser) return;
+
+  // 1) Try to fetch existing profile
+  let { data, error } = await sb
+    .from('profiles')
+    .select('*')
+    .eq('id', currentUser.id)
+    .single();
+
+  // 2) If no row yet, create one
+  if (!data) {
+    const username =
+      currentUser.user_metadata?.full_name ||
+      currentUser.user_metadata?.name ||
+      (currentUser.email ? currentUser.email.split('@')[0] : 'Player');
+
+    const insertRes = await sb
+      .from('profiles')
+      .insert({
+        id: currentUser.id,
+        username,
+        college: ''        // empty so we can prompt
+      })
+      .select('*')
+      .single();
+
+    if (insertRes.error) {
+      console.log('Error creating profile:', insertRes.error);
+    } else {
+      data = insertRes.data;
+    }
   }
-  userProfile=data;
-  userStreak=await calculateStreak();
-  if(userProfile&&(userProfile.college===null||userProfile.college===''||userProfile.college===undefined)){
-    document.getElementById('loading').style.display='none';
-    const bg=document.getElementById('college-bg-grid');
-    if(!bg.children.length){
-      for(let i=0;i<300;i++){
-        const c=document.createElement('div');
-        c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
+
+  userProfile = data || null;
+  userStreak = await calculateStreak();
+
+  // 3) If we now have a profile but no college, show the college screen
+  if (
+    userProfile &&
+    (!userProfile.college || userProfile.college === null || userProfile.college === '')
+  ) {
+    document.getElementById('loading').style.display = 'none';
+
+    const bg = document.getElementById('college-bg-grid');
+    if (!bg.children.length) {
+      for (let i = 0; i < 300; i++) {
+        const c = document.createElement('div');
+        c.className = 'start-bg-cell' + (Math.random() < 0.18 ? ' filled' : '');
         bg.appendChild(c);
       }
     }
+
     showScreen('college-screen');
-    return'needs-college';
+    return 'needs-college';
   }
+
+  return 'ok';
 }
 async function calculateStreak(){
   if(!currentUser)return 0;
