@@ -476,22 +476,12 @@ async function boot(){
       showScreen('auth-screen');
     }
   });
-  if(window.location.search&&window.location.search.includes('code=')){
-    try{await sb.auth.exchangeCodeForSession(window.location.href);}catch(e){console.log(e);}
-    window.history.replaceState(null,'',window.location.pathname);
-    return;
-  }
-  if(window.location.hash&&window.location.hash.includes('access_token')){
-    try{await sb.auth.exchangeCodeForSession(window.location.href);}catch(e){}
-    window.history.replaceState(null,'',window.location.pathname);
-    return;
-  }
   const{data:{session}}=await sb.auth.getSession();
-  if(session&&!currentUser){
+  if(session){
     currentUser=session.user;
     const profileResult=await loadUserProfile();
     if(profileResult!=='needs-college') await loadPuzzle();
-  }else if(!session){
+  }else{
     document.getElementById('loading').style.display='none';
     buildAuthBg();
     showScreen('auth-screen');
