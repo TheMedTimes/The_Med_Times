@@ -6,7 +6,7 @@
 <title>TheMedTimes — MBBS Daily Crossword</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
   :root {
@@ -85,7 +85,6 @@
   .timer{font-family:var(--font-mono);font-size:18px;font-weight:500;color:var(--text);min-width:52px;text-align:right;}
   .timer.running{color:var(--accent);}
   .icon-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;color:var(--text);font-size:16px;font-family:var(--font-body);font-weight:600;}
-  /* Live check toggle in header */
   .header-check-wrap{display:flex;align-items:center;gap:6px;}
   .header-check-label{font-size:11px;font-weight:600;color:var(--text-muted);}
   .toggle{position:relative;width:36px;height:20px;flex-shrink:0;}
@@ -188,6 +187,27 @@
   @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
   @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
   .cell.shaking{animation:shake 0.3s ease;}
+
+  /* College screen layout + consent */
+  #college-screen{
+    align-items:center;
+    justify-content:center;
+    padding:32px 24px 48px;
+    height:100dvh;
+    position:relative;
+    overflow-y:auto;
+  }
+  .consent-row{
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    font-size:12px;
+    color:var(--text-muted);
+    margin:8px 0 12px;
+  }
+  .consent-row input{
+    margin-top:3px;
+  }
 </style>
 </head>
 <body data-theme="light">
@@ -228,10 +248,13 @@
       <div class="auth-mode-title">Your College</div>
       <div class="auth-card-sub">Enter your college abbreviation so you appear correctly on the leaderboard</div>
       <input class="auth-input" type="text" id="college-input" placeholder="e.g. BJMC, BAVMC, KEM" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+      <label class="consent-row">
+        <input type="checkbox" id="lb-consent" checked>
+        <span>Show my name and college on the public leaderboard</span>
+      </label>
       <button class="auth-submit" onclick="saveCollegePrompt()">Let's Play →</button>
       <div class="auth-error" id="college-error"></div>
     </div>
-    <div class="auth-switch"><a onclick="skipCollegePrompt()">Skip for now</a></div>
   </div>
 </div>
 
@@ -476,8 +499,7 @@ function buildAuthBg(){
 async function signInWithGoogle(){
   setAuthError('');
   const{error}=await sb.auth.signInWithOAuth({
-    provider:'google',
-    options:{redirectTo:'https://themedtimes.github.io/The_Med_Times'}
+    provider:'google'
   });
   if(error)setAuthError(error.message);
 }
@@ -488,14 +510,12 @@ function setAuthError(msg){document.getElementById('auth-error').textContent=msg
 async function loadUserProfile(){
   if (!currentUser) return;
 
-  // 1) Try to fetch existing profile
   let { data, error } = await sb
     .from('profiles')
     .select('*')
     .eq('id', currentUser.id)
     .single();
 
-  // 2) If no row yet, create one
   if (!data) {
     const username =
       currentUser.user_metadata?.full_name ||
@@ -507,7 +527,8 @@ async function loadUserProfile(){
       .insert({
         id: currentUser.id,
         username,
-        college: ''
+        college: '',
+        show_on_leaderboard: true
       })
       .select('*')
       .single();
@@ -522,7 +543,6 @@ async function loadUserProfile(){
   userProfile = data || null;
   userStreak = await calculateStreak();
 
-  // 3) If we now have a profile but no college, show the college screen
   if (
     userProfile &&
     (!userProfile.college || userProfile.college === null || userProfile.college === '')
@@ -586,22 +606,36 @@ async function signOut(){await sb.auth.signOut();localStorage.removeItem('tmt_pr
 // ── COLLEGE PROMPT ──
 async function saveCollegePrompt(){
   const val=document.getElementById('college-input').value.trim().toUpperCase();
-  if(!val){document.getElementById('college-error').textContent='Please enter your college abbreviation';return;}
-  document.getElementById('college-error').textContent='';
-  const{error}=await sb.from('profiles').update({college:val}).eq('id',currentUser.id);
-  if(error){document.getElementById('college-error').textContent='Something went wrong, try again';return;}
-  userProfile.college=val;
-  await loadPuzzle();
-}
+  const consent=document.getElementById('lb-consent').checked;
 
-async function skipCollegePrompt(){
+  if(!val){
+    document.getElementById('college-error').textContent='Please enter your college abbreviation';
+    return;
+  }
+  document.getElementById('college-error').textContent='';
+
+  const { error } = await sb
+    .from('profiles')
+    .update({
+      college: val,
+      show_on_leaderboard: consent
+    })
+    .eq('id', currentUser.id);
+
+  if(error){
+    document.getElementById('college-error').textContent='Something went wrong, try again';
+    return;
+  }
+
+  userProfile.college = val;
+  userProfile.show_on_leaderboard = consent;
   await loadPuzzle();
 }
 
 // ── LEADERBOARD ──
 async function fetchLeaderboard(){
   const{data}=await sb.from('completions')
-    .select(`user_id,time_seconds,profiles!inner(username,college)`)
+    .select(`user_id,time_seconds,profiles!inner(username,college,show_on_leaderboard)`)
     .eq('puzzle_date',getTodayString())
     .order('time_seconds',{ascending:true})
     .limit(10);
@@ -626,8 +660,9 @@ async function openLeaderboard(){
     const rankClass=i===0?'gold':i===1?'silver':i===2?'bronze':'';
     const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
     const prof=Array.isArray(r.profiles)?r.profiles[0]:r.profiles;
-    const name=prof?.username||'Anonymous';
-    const college=prof?.college?`<span class="lb-college"> · ${prof.college}</span>`:'';
+    const show = prof?.show_on_leaderboard !== false;
+    const name = show ? (prof?.username || 'Anonymous') : 'Anonymous';
+    const college = show && prof?.college ? `<span class="lb-college"> · ${prof.college}</span>` : '';
     return`<div class="lb-row${isMe?' me':''}">
       <div class="lb-rank ${rankClass}">${medal}</div>
       <div class="lb-name">${name}${isMe?' (you)':''}${college}</div>
@@ -961,8 +996,7 @@ function checkWord(){
     cell.classList.remove('correct','wrong');
     const ok=PUZZLE.solution[r][c]===userGrid[r][c];
     cell.classList.add(ok?'correct':'wrong');
-    if(ok)completedCells.add(`${r},${c}`);
-    else{cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
+    if(ok)completedCells.add(`${r}`,`${c}`);
   });
   saveProgress();
 }
@@ -975,7 +1009,7 @@ function revealLetter(){
   const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=sol;
   const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
   cell.classList.remove('wrong');cell.classList.add('correct');
-  completedCells.add(`${selectedRow},${selectedCol}`);
+  completedCells.add(`${selectedRow}`,`${selectedCol}`);
   saveProgress();advanceSelection();checkCompletion();
 }
 function toggleInstantCheck(val){
