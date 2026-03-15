@@ -463,10 +463,6 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 
 // ── AUTH ──
 async function boot(){
-  if((window.location.hash&&window.location.hash.includes('access_token'))||(window.location.search&&window.location.search.includes('code='))){
-    try{await sb.auth.exchangeCodeForSession(window.location.href);}catch(e){}
-    window.history.replaceState(null,'',window.location.pathname);
-  }
   sb.auth.onAuthStateChange(async(event,session)=>{
     if(event==='SIGNED_IN'&&session&&!currentUser){
       currentUser=session.user;
@@ -480,6 +476,16 @@ async function boot(){
       showScreen('auth-screen');
     }
   });
+  if(window.location.search&&window.location.search.includes('code=')){
+    try{await sb.auth.exchangeCodeForSession(window.location.href);}catch(e){console.log(e);}
+    window.history.replaceState(null,'',window.location.pathname);
+    return;
+  }
+  if(window.location.hash&&window.location.hash.includes('access_token')){
+    try{await sb.auth.exchangeCodeForSession(window.location.href);}catch(e){}
+    window.history.replaceState(null,'',window.location.pathname);
+    return;
+  }
   const{data:{session}}=await sb.auth.getSession();
   if(session&&!currentUser){
     currentUser=session.user;
