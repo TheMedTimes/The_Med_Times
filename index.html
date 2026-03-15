@@ -32,18 +32,9 @@
   .auth-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.07);margin-bottom:16px;}
   .auth-mode-title{font-family:var(--font-display);font-size:22px;font-weight:700;text-align:center;margin-bottom:4px;}
   .auth-card-sub{font-size:13px;color:var(--text-muted);text-align:center;margin-bottom:24px;}
-  .google-btn{width:100%;padding:14px;background:#fff;color:#1a1a1a;border:1.5px solid var(--border);border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;-webkit-appearance:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
+  .google-btn{width:100%;padding:14px;background:#fff;color:#1a1a1a;border:1.5px solid var(--border);border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;-webkit-appearance:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
   .google-btn:active{transform:scale(0.98);}
   .google-icon{width:20px;height:20px;flex-shrink:0;}
-  .auth-divider{display:flex;align-items:center;gap:12px;margin:4px 0 16px;}
-  .auth-divider-line{flex:1;height:1px;background:var(--border);}
-  .auth-divider-text{font-size:12px;color:var(--text-muted);font-weight:500;}
-  .auth-input{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:12px;font-size:16px;font-family:var(--font-body);color:var(--text);background:var(--bg);margin-bottom:10px;outline:none;}
-  .auth-input:focus{border-color:var(--accent);}
-  .auth-submit{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font-display);-webkit-appearance:none;margin-top:4px;}
-  .auth-submit:active{transform:scale(0.98);}
-  .auth-switch{font-size:13px;color:var(--text-muted);text-align:center;margin-top:16px;}
-  .auth-switch a{color:var(--accent);font-weight:600;cursor:pointer;text-decoration:none;}
   .auth-error{font-size:13px;color:var(--wrong);text-align:center;margin-top:8px;min-height:20px;}
 
   /* START */
@@ -207,7 +198,7 @@
   <div class="loading-spinner"></div>
 </div>
 
-<!-- AUTH SCREEN -->
+<!-- AUTH SCREEN (Google only) -->
 <div id="auth-screen" class="screen">
   <div class="start-bg-grid" id="auth-bg-grid"></div>
   <div class="auth-content">
@@ -215,29 +206,14 @@
     <div class="auth-tagline">The daily crossword built for<br>2nd Year MBBS students</div>
     <div class="auth-card">
       <div class="auth-mode-title" id="auth-title">Welcome</div>
-      <div class="auth-card-sub" id="auth-sub">Sign in to track your streak and compete</div>
+      <div class="auth-card-sub" id="auth-sub">
+        Sign in with Google to track your streak and compete on today's leaderboard.
+      </div>
       <button class="google-btn" onclick="signInWithGoogle()">
         <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
         Continue with Google
       </button>
-      <div class="auth-divider">
-        <div class="auth-divider-line"></div>
-        <div class="auth-divider-text">or</div>
-        <div class="auth-divider-line"></div>
-      </div>
-      <div id="auth-name-wrap" style="display:none;">
-        <input class="auth-input" type="text" id="auth-name" placeholder="Your name">
-      </div>
-      <div id="auth-college-wrap" style="display:none;">
-        <input class="auth-input" type="text" id="auth-college" placeholder="College abbreviation (e.g. BJMC)" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
-      </div>
-      <input class="auth-input" type="email" id="auth-email" placeholder="Email address">
-      <input class="auth-input" type="password" id="auth-password" placeholder="Password">
-      <button class="auth-submit" id="auth-submit-btn" onclick="handleEmailAuth()">Sign In</button>
       <div class="auth-error" id="auth-error"></div>
-    </div>
-    <div class="auth-switch" id="auth-switch">
-      Don't have an account? <a onclick="toggleAuthMode()">Sign up</a>
     </div>
   </div>
 </div>
@@ -436,7 +412,6 @@ let timerInterval=null,seconds=0,started=false,timerStopped=false;
 let instantCheck=false,completedCells=new Set();
 let allClues=[],currentClueIndex=0;
 let countdownInterval=null;
-let authMode='signin';
 let puzzleAlreadyCompleted=false;
 let usedReveal=false;
 let completionHandled=false;
@@ -507,42 +482,7 @@ async function signInWithGoogle(){
   if(error)setAuthError(error.message);
 }
 
-function toggleAuthMode(){
-  authMode=authMode==='signin'?'signup':'signin';
-  const isSignup=authMode==='signup';
-  document.getElementById('auth-title').textContent=isSignup?'Create Account':'Welcome Back';
-  document.getElementById('auth-sub').textContent=isSignup?'Join TheMedTimes and track your streak':'Sign in to continue your streak';
-  document.getElementById('auth-submit-btn').textContent=isSignup?'Create Account':'Sign In';
-  document.getElementById('auth-name-wrap').style.display=isSignup?'block':'none';
-  document.getElementById('auth-college-wrap').style.display=isSignup?'block':'none';
-  document.getElementById('auth-switch').innerHTML=isSignup?
-    'Already have an account? <a onclick="toggleAuthMode()">Sign in</a>':
-    'Don\'t have an account? <a onclick="toggleAuthMode()">Sign up</a>';
-  setAuthError('');
-}
-
-async function handleEmailAuth(){
-  const email=document.getElementById('auth-email').value.trim();
-  const password=document.getElementById('auth-password').value;
-  const name=document.getElementById('auth-name').value.trim();
-  const college=document.getElementById('auth-college').value.trim().toUpperCase();
-  if(!email||!password){setAuthError('Please fill in all fields');return;}
-  setAuthError('');
-  document.getElementById('auth-submit-btn').textContent='...';
-  if(authMode==='signup'){
-    const{error}=await sb.auth.signUp({
-      email,password,
-      options:{data:{full_name:name||email.split('@')[0],college:college||''}}
-    });
-    if(error){setAuthError(error.message);document.getElementById('auth-submit-btn').textContent='Create Account';}
-    else setAuthError('Check your email to confirm your account!');
-  }else{
-    const{error}=await sb.auth.signInWithPassword({email,password});
-    if(error){setAuthError(error.message);document.getElementById('auth-submit-btn').textContent='Sign In';}
-  }
-}
 function setAuthError(msg){document.getElementById('auth-error').textContent=msg;}
-async function signOut(){await sb.auth.signOut();localStorage.removeItem('tmt_progress');}
 
 // ── PROFILE + STREAK ──
 async function loadUserProfile(){
@@ -567,7 +507,7 @@ async function loadUserProfile(){
       .insert({
         id: currentUser.id,
         username,
-        college: ''        // empty so we can prompt
+        college: ''
       })
       .select('*')
       .single();
@@ -587,23 +527,22 @@ async function loadUserProfile(){
     userProfile &&
     (!userProfile.college || userProfile.college === null || userProfile.college === '')
   ) {
-    document.getElementById('loading').style.display = 'none';
-
-    const bg = document.getElementById('college-bg-grid');
-    if (!bg.children.length) {
-      for (let i = 0; i < 300; i++) {
-        const c = document.createElement('div');
-        c.className = 'start-bg-cell' + (Math.random() < 0.18 ? ' filled' : '');
+    document.getElementById('loading').style.display='none';
+    const bg=document.getElementById('college-bg-grid');
+    if(!bg.children.length){
+      for(let i=0;i<300;i++){
+        const c=document.createElement('div');
+        c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
         bg.appendChild(c);
       }
     }
-
     showScreen('college-screen');
-    return 'needs-college';
+    return'needs-college';
   }
 
   return 'ok';
 }
+
 async function calculateStreak(){
   if(!currentUser)return 0;
   const{data}=await sb.from('completions').select('puzzle_date').eq('user_id',currentUser.id).order('puzzle_date',{ascending:false});
@@ -642,12 +581,9 @@ async function saveCompletion(timeSeconds,didReveal){
   }catch(e){console.log('Save error:',e);}
 }
 
-// ── COLLEGE PROMPT ──
-async function checkCollegePrompt(){
-  if(!currentUser||!userProfile)return false;
-  return!userProfile.college;
-}
+async function signOut(){await sb.auth.signOut();localStorage.removeItem('tmt_progress');}
 
+// ── COLLEGE PROMPT ──
 async function saveCollegePrompt(){
   const val=document.getElementById('college-input').value.trim().toUpperCase();
   if(!val){document.getElementById('college-error').textContent='Please enter your college abbreviation';return;}
@@ -662,7 +598,7 @@ async function skipCollegePrompt(){
   await loadPuzzle();
 }
 
-
+// ── LEADERBOARD ──
 async function fetchLeaderboard(){
   const{data}=await sb.from('completions')
     .select(`user_id,time_seconds,profiles!inner(username,college)`)
@@ -840,7 +776,6 @@ function initGame(){
   buildClueList();
   buildGrid(computeNumbers());
   document.getElementById('puzzle-topic-end').textContent=PUZZLE.topic;
-  // Show next topic if available
   if(PUZZLE.next_topic&&PUZZLE.next_topic!=='TBD'){
     document.getElementById('next-topic-val').textContent=PUZZLE.next_topic;
     document.getElementById('success-next-topic').style.display='block';
