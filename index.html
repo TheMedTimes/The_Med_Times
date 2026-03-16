@@ -434,7 +434,7 @@
 <script>
 const SUPABASE_URL='https://ojxzzfjapjwpxitnruqa.supabase.co';
 const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeHp6ZmphcGp3cHhpdG5ydXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDQ5MDksImV4cCI6MjA4ODcyMDkwOX0.yTq0aXLd6L8Grjsc4IWAbJ3TTnIGOnJdM3ciFz7JJe4';
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON);
+const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON):null;
 
 let PUZZLE=null,currentUser=null,userProfile=null,userStreak=0;
 let userGrid=[],selectedRow=-1,selectedCol=-1;
@@ -469,28 +469,43 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 
 // ── AUTH ──
 async function boot(){
-  sb.auth.onAuthStateChange(async(event,session)=>{
-    if(event==='SIGNED_IN'&&session&&!currentUser){
+  if(!sb){
+    document.getElementById('loading').style.display='none';
+    buildAuthBg();
+    showScreen('auth-screen');
+    setAuthError('Connection issue loading auth. Please refresh.');
+    return;
+  }
+  try{
+    sb.auth.onAuthStateChange(async(event,session)=>{
+      if(event==='SIGNED_IN'&&session&&!currentUser){
+        currentUser=session.user;
+        const profileResult=await loadUserProfile();
+        if(profileResult!=='needs-college') await loadPuzzle();
+      }
+      if(event==='SIGNED_OUT'){
+        currentUser=null;userProfile=null;userStreak=0;
+        document.getElementById('loading').style.display='none';
+        buildAuthBg();
+        showScreen('auth-screen');
+      }
+    });
+    const{data:{session}}=await sb.auth.getSession();
+    if(session){
       currentUser=session.user;
       const profileResult=await loadUserProfile();
       if(profileResult!=='needs-college') await loadPuzzle();
-    }
-    if(event==='SIGNED_OUT'){
-      currentUser=null;userProfile=null;userStreak=0;
+    }else{
       document.getElementById('loading').style.display='none';
       buildAuthBg();
       showScreen('auth-screen');
     }
-  });
-  const{data:{session}}=await sb.auth.getSession();
-  if(session){
-    currentUser=session.user;
-    const profileResult=await loadUserProfile();
-    if(profileResult!=='needs-college') await loadPuzzle();
-  }else{
+  }catch(err){
+    console.error('Boot error:',err);
     document.getElementById('loading').style.display='none';
     buildAuthBg();
     showScreen('auth-screen');
+    setAuthError('Could not connect. Check internet and refresh.');
   }
 }
 
@@ -506,8 +521,11 @@ function buildAuthBg(){
 
 async function signInWithGoogle(){
   setAuthError('');
+  if(!sb){setAuthError('Auth unavailable. Please refresh.');return;}
+  const redirectTo = `${window.location.origin}${window.location.pathname}`;
   const{error}=await sb.auth.signInWithOAuth({
-    provider:'google'
+    provider:'google',
+    options:{redirectTo}
   });
   if(error)setAuthError(error.message);
 }
