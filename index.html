@@ -20,18 +20,21 @@
   [data-theme="medical"]{--bg:#f0f7f4;--surface:#ffffff;--border:#b8d8cc;--text:#0f2d24;--text-muted:#5a8a78;--accent:#0d6e52;--accent-light:#e0f2ec;--highlight:#d1fae5;--highlight-active:#6ee7b7;--correct:#059669;--correct-bg:#d1fae5;--wrong:#dc2626;--wrong-bg:#fee2e2;--black:#0f2d24;}
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior:none;}
-  body{font-family:var(--font-body);background:var(--bg);color:var(--text);height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:background 0.3s,color 0.3s;overscroll-behavior:none;}
+  body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100svh;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:background 0.3s,color 0.3s;overscroll-behavior:none;}
   .screen{display:none;flex-direction:column;flex:1;overflow:hidden;}
   .screen.active{display:flex;}
 
   /* AUTH */
-  #auth-screen{align-items:center;justify-content:center;padding:32px 24px 48px;height:100dvh;position:relative;overflow-y:auto;}
+  #auth-screen{align-items:center;justify-content:center;padding:32px 24px 48px;min-height:100svh;min-height:100dvh;position:relative;overflow-y:auto;}
   .auth-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;max-width:360px;}
   .auth-logo{font-family:var(--font-display);font-size:clamp(36px,11vw,56px);font-weight:900;color:var(--accent);letter-spacing:-1px;line-height:1;text-align:center;margin-bottom:8px;}
   .auth-tagline{font-size:14px;color:var(--text-muted);text-align:center;margin-bottom:40px;line-height:1.5;}
   .auth-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.07);margin-bottom:16px;}
   .auth-mode-title{font-family:var(--font-display);font-size:22px;font-weight:700;text-align:center;margin-bottom:4px;}
   .auth-card-sub{font-size:13px;color:var(--text-muted);text-align:center;margin-bottom:24px;}
+  .auth-input{width:100%;display:block;margin:0 auto 12px;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:15px;font-family:var(--font-body);text-align:center;}
+  .auth-input::placeholder{color:var(--text-muted);}
+  .auth-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,57,43,0.18);}
   .auth-submit{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font-display);-webkit-appearance:none;margin-top:4px;text-align:center;   /* add this line */}
   .google-btn{width:100%;padding:14px;background:#fff;color:#1a1a1a;border:1.5px solid var(--border);border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;-webkit-appearance:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
   .google-btn:active{transform:scale(0.98);}
@@ -39,7 +42,7 @@
   .auth-error{font-size:13px;color:var(--wrong);text-align:center;margin-top:8px;min-height:20px;}
 
   /* START */
-  #start-screen{align-items:center;justify-content:center;padding:32px 24px 48px;height:100dvh;position:relative;overflow-y:auto;}
+  #start-screen{align-items:center;justify-content:center;padding:32px 24px 48px;min-height:100svh;min-height:100dvh;position:relative;overflow-y:auto;}
   .start-bg-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(20,1fr);opacity:0.055;pointer-events:none;}
   .start-bg-cell{border:1px solid var(--text);}
   .start-bg-cell.filled{background:var(--text);}
@@ -194,7 +197,8 @@
     align-items:center;
     justify-content:center;
     padding:32px 24px 48px;
-    height:100dvh;
+    min-height:100svh;
+    min-height:100dvh;
     position:relative;
     overflow-y:auto;
   }
@@ -430,7 +434,7 @@
 <script>
 const SUPABASE_URL='https://ojxzzfjapjwpxitnruqa.supabase.co';
 const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeHp6ZmphcGp3cHhpdG5ydXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDQ5MDksImV4cCI6MjA4ODcyMDkwOX0.yTq0aXLd6L8Grjsc4IWAbJ3TTnIGOnJdM3ciFz7JJe4';
-const sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON);
+const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON):null;
 
 let PUZZLE=null,currentUser=null,userProfile=null,userStreak=0;
 let userGrid=[],selectedRow=-1,selectedCol=-1;
@@ -465,28 +469,43 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 
 // ── AUTH ──
 async function boot(){
-  sb.auth.onAuthStateChange(async(event,session)=>{
-    if(event==='SIGNED_IN'&&session&&!currentUser){
+  if(!sb){
+    document.getElementById('loading').style.display='none';
+    buildAuthBg();
+    showScreen('auth-screen');
+    setAuthError('Connection issue loading auth. Please refresh.');
+    return;
+  }
+  try{
+    sb.auth.onAuthStateChange(async(event,session)=>{
+      if(event==='SIGNED_IN'&&session&&!currentUser){
+        currentUser=session.user;
+        const profileResult=await loadUserProfile();
+        if(profileResult!=='needs-college') await loadPuzzle();
+      }
+      if(event==='SIGNED_OUT'){
+        currentUser=null;userProfile=null;userStreak=0;
+        document.getElementById('loading').style.display='none';
+        buildAuthBg();
+        showScreen('auth-screen');
+      }
+    });
+    const{data:{session}}=await sb.auth.getSession();
+    if(session){
       currentUser=session.user;
       const profileResult=await loadUserProfile();
       if(profileResult!=='needs-college') await loadPuzzle();
-    }
-    if(event==='SIGNED_OUT'){
-      currentUser=null;userProfile=null;userStreak=0;
+    }else{
       document.getElementById('loading').style.display='none';
       buildAuthBg();
       showScreen('auth-screen');
     }
-  });
-  const{data:{session}}=await sb.auth.getSession();
-  if(session){
-    currentUser=session.user;
-    const profileResult=await loadUserProfile();
-    if(profileResult!=='needs-college') await loadPuzzle();
-  }else{
+  }catch(err){
+    console.error('Boot error:',err);
     document.getElementById('loading').style.display='none';
     buildAuthBg();
     showScreen('auth-screen');
+    setAuthError('Could not connect. Check internet and refresh.');
   }
 }
 
@@ -502,8 +521,11 @@ function buildAuthBg(){
 
 async function signInWithGoogle(){
   setAuthError('');
+  if(!sb){setAuthError('Auth unavailable. Please refresh.');return;}
+  const redirectTo = `${window.location.origin}${window.location.pathname}`;
   const{error}=await sb.auth.signInWithOAuth({
-    provider:'google'
+    provider:'google',
+    options:{redirectTo}
   });
   if(error)setAuthError(error.message);
 }
