@@ -1,0 +1,52 @@
+{
+  "date": "2026-03-17",
+  "topic": "Hematinics",
+  "next_topic": "Disorders of Leucocytes and Lymphoreticular Tissues",
+  "size": 15,
+  "solution": [
+    ["#","#","#","L","I","V","E","R","#","#","#","#","L","#","#"],
+    ["#","#","#","#","R","#","#","#","#","#","#","H","I","T","#"],
+    ["#","#","#","#","O","#","#","#","#","#","L","#","P","#","#"],
+    ["#","#","H","#","N","O","T","#","E","D","E","M","A","#","#"],
+    ["#","#","E","#","#","S","#","P","#","#","V","#","S","#","#"],
+    ["#","#","M","#","#","T","#","L","#","M","O","R","E","#","#"],
+    ["B","#","A","#","#","E","#","U","#","C","#","E","#","A","#"],
+    ["A","N","T","I","C","O","A","G","U","L","A","N","T","S","#"],
+    ["S","#","O","#","#","P","#","#","#","E","#","A","#","P","#"],
+    ["I","#","M","#","D","O","S","E","#","A","#","L","#","I","#"],
+    ["C","#","A","#","#","R","#","#","#","N","#","#","#","R","#"],
+    ["#","#","S","#","#","O","R","A","L","#","#","#","#","I","#"],
+    ["#","#","#","C","#","S","#","#","#","L","Y","S","I","N","E"],
+    ["A","P","R","O","T","I","N","I","N","#","E","#","#","#","#"],
+    ["#","#","#","X","#","S","#","#","#","#","S","P","E","R","M"]
+  ],
+  "clues": {
+    "across": [
+      {"number":1,"row":0,"col":3,"len":5,"clue":"Clotting factors are synthesized by the"},
+      {"number":4,"row":1,"col":11,"len":3,"clue":"Paradoxical complication of Heparin"},
+      {"number":7,"row":3,"col":4,"len":3,"clue":"Heparin is __ effective orally"},
+      {"number":9,"row":3,"col":8,"len":5,"clue":"Fluid accumulation sign of hypoproteinemia"},
+      {"number":11,"row":5,"col":9,"len":4,"clue":"Colloids are _ potent than Crystalloids"},
+      {"number":15,"row":7,"col":0,"len":14,"clue":"Drugs reducing blood coagulability"},
+      {"number":16,"row":9,"col":4,"len":4,"clue":"Heparin adjusted by APTT monitoring"},
+      {"number":17,"row":11,"col":5,"len":4,"clue":"Anticoagulants classified as Parenteral and"},
+      {"number":19,"row":12,"col":9,"len":6,"clue":"EACA is an analog of the amino acid"},
+      {"number":21,"row":13,"col":0,"len":9,"clue":"Inhibits kallikrein plasmin trypsin and chymotrypsin"},
+      {"number":22,"row":14,"col":10,"len":5,"clue":"Protamine sulphate in the __ of certain fish"}
+    ],
+    "down": [
+      {"number":2,"row":0,"col":4,"len":4,"clue":"Element deficient in microcytic anaemia"},
+      {"number":3,"row":0,"col":12,"len":6,"clue":"How does heparin clear plasma of lipids"},
+      {"number":5,"row":2,"col":10,"len":4,"clue":"Which form of warfarin is more potent"},
+      {"number":6,"row":3,"col":2,"len":9,"clue":"Heparin given through IM may cause"},
+      {"number":8,"row":3,"col":5,"len":12,"clue":"Long term heparin use may cause"},
+      {"number":10,"row":4,"col":7,"len":4,"clue":"Following vessel injury platelets form a"},
+      {"number":11,"row":5,"col":9,"len":6,"clue":"Heparin was discovered by"},
+      {"number":12,"row":5,"col":11,"len":5,"clue":"Route of excretion for lepirudin"},
+      {"number":13,"row":6,"col":0,"len":5,"clue":"Protamine sulphate is strongly _"},
+      {"number":14,"row":6,"col":13,"len":7,"clue":"Irreversible COX inhibitor antiplatelet drug"},
+      {"number":18,"row":12,"col":3,"len":3,"clue":"Aspirin inactivates _ by irreversible acetylation"},
+      {"number":20,"row":12,"col":10,"len":3,"clue":"Can Heparin be used during pregnancy"}
+    ]
+  }
+}
