@@ -5,37 +5,42 @@
   "size": 15,
   "solution": [
     ["#","#","F","A","T","T","Y","S","T","R","E","A","K","#","#"],
-    ["#","#","O","#","#","#","D","#","#","#","#","#","N","#","#"],
-    ["#","#","A","#","D","Y","S","L","I","P","I","D","E","M","I"],
-    ["#","#","M","#","#","#","A","#","#","#","#","#","G","#","#"],
-    ["#","#","C","E","L","L","#","#","#","#","#","#","I","#","#"],
-    ["#","#","#","#","#","#","#","#","#","#","#","#","N","#","#"],
-    ["#","#","S","T","E","N","O","S","I","S","#","#","A","#","#"],
+    ["#","S","M","O","K","I","N","G","#","A","N","G","I","N","A"],
+    ["#","#","O","#","#","#","D","#","#","#","#","#","#","#","#"],
+    ["O","B","E","S","I","T","Y","#","D","Y","S","L","I","P","I"],
+    ["#","#","A","#","#","#","A","#","#","#","#","#","#","#","#"],
+    ["#","#","M","#","I","S","C","H","E","M","I","A","#","#","#"],
+    ["#","#","C","#","#","#","E","#","#","#","#","#","#","#","#"],
     ["#","E","M","B","O","L","I","S","M","#","#","#","#","#","#"],
+    ["#","#","E","#","#","#","T","#","#","#","#","#","#","#","#"],
+    ["#","#","L","#","S","T","E","N","O","S","I","S","#","#","#"],
+    ["#","#","L","#","#","#","S","#","#","#","#","#","#","#","#"],
+    ["#","#","#","#","I","N","F","A","R","C","T","#","#","#","#"],
     ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"],
-    ["#","#","I","N","F","A","R","C","T","#","#","#","#","#","#"],
-    ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"],
-    ["#","#","#","#","H","D","L","#","#","#","#","#","#","#","#"],
-    ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"],
-    ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"],
-    ["#","#","#","#","#","N","O","#","#","#","#","#","#","#","#"]
+    ["#","#","#","#","#","H","D","L","#","M","I","#","#","#","#"],
+    ["#","#","#","#","#","#","N","O","#","R","O","S","#","#","#"]
   ],
   "clues": {
     "across": [
-      {"number":1,"row":0,"col":2,"len":11,"clue":"Earliest visible lesion in atherosclerosis"},
-      {"number":4,"row":2,"col":4,"len":11,"clue":"Abnormal lipid profile increasing cardiovascular risk"},
-      {"number":5,"row":4,"col":2,"len":8,"clue":"Lipid-laden macrophage found in early atherosclerotic plaques"},
-      {"number":6,"row":6,"col":2,"len":8,"clue":"Pathological narrowing of a vessel lumen"},
-      {"number":7,"row":7,"col":1,"len":8,"clue":"Obstruction of a vessel by a traveling clot"},
-      {"number":8,"row":9,"col":2,"len":7,"clue":"Area of tissue necrosis caused by prolonged ischemia"},
-      {"number":9,"row":11,"col":4,"len":3,"clue":"\"Good\" cholesterol involved in reverse cholesterol transport"},
-      {"number":10,"row":14,"col":5,"len":2,"clue":"Endothelium-derived vasodilator molecule"}
+      {"number":1,"row":0,"col":2,"len":11,"clue":"Earliest visible atherosclerotic lesion composed of lipid-laden macrophages"},
+      {"number":2,"row":1,"col":1,"len":7,"clue":"Major modifiable cardiovascular risk factor causing endothelial dysfunction"},
+      {"number":3,"row":1,"col":9,"len":6,"clue":"Chest pain due to transient myocardial ischemia without infarction"},
+      {"number":4,"row":3,"col":0,"len":7,"clue":"Excess body fat associated with metabolic and cardiovascular risk"},
+      {"number":5,"row":3,"col":8,"len":8,"clue":"Atherogenic lipid abnormality involving elevated LDL or reduced HDL"},
+      {"number":6,"row":5,"col":4,"len":8,"clue":"Reduced blood supply leading to oxygen deprivation of tissue"},
+      {"number":7,"row":7,"col":1,"len":8,"clue":"Vascular occlusion caused by a traveling intravascular clot"},
+      {"number":8,"row":9,"col":4,"len":8,"clue":"Hemodynamically significant narrowing of an arterial lumen"},
+      {"number":9,"row":11,"col":4,"len":7,"clue":"Area of coagulative necrosis produced by prolonged ischemia"},
+      {"number":10,"row":13,"col":5,"len":3,"clue":"Lipoprotein mediating reverse cholesterol transport"},
+      {"number":11,"row":13,"col":9,"len":2,"clue":"Abbreviation for myocardial infarction"},
+      {"number":12,"row":14,"col":6,"len":2,"clue":"Endothelium-derived relaxing factor"},
+      {"number":13,"row":14,"col":9,"len":3,"clue":"Reactive oxygen species contributing to endothelial injury"}
     ],
     "down": [
-      {"number":1,"row":0,"col":2,"len":5,"clue":"Macrophage filled with lipid droplets in fatty streaks"},
-      {"number":2,"row":0,"col":6,"len":4,"clue":"Low-density lipoprotein abbreviation"},
-      {"number":3,"row":0,"col":12,"len":7,"clue":"Chest pain due to transient myocardial ischemia"},
-      {"number":4,"row":2,"col":6,"len":8,"clue":"Chronic metabolic disease that accelerates atherosclerosis"}
+      {"number":1,"row":0,"col":2,"len":11,"clue":"Macrophage phenotype formed after uptake of oxidized LDL"},
+      {"number":2,"row":0,"col":6,"len":12,"clue":"Chronic metabolic disorder accelerating atherosclerosis"},
+      {"number":3,"row":0,"col":12,"len":7,"clue":"Transient myocardial ischemic pain syndrome"},
+      {"number":4,"row":7,"col":2,"len":4,"clue":"Atherogenic lipoprotein particle depositing cholesterol in arteries"}
     ]
   }
 }
