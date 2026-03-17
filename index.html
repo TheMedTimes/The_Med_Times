@@ -454,6 +454,7 @@ let countdownInterval=null;
 let puzzleAlreadyCompleted=false;
 let usedReveal=false;
 let completionHandled=false;
+let startupFailsafeTimer=null;
 
 function getTodayString(){
   const d=new Date();
@@ -475,8 +476,27 @@ function streakDisplay(n){
 }
 function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;}
 
+function clearStartupFailsafe(){
+  if(startupFailsafeTimer){
+    clearTimeout(startupFailsafeTimer);
+    startupFailsafeTimer=null;
+  }
+}
+
+function armStartupFailsafe(){
+  clearStartupFailsafe();
+  startupFailsafeTimer=setTimeout(()=>{
+    const loadingEl=document.getElementById('loading');
+    if(loadingEl&&loadingEl.style.display!=='none'){
+      console.warn('Startup failsafe triggered. Exiting loading screen.');
+      showAuthScreen('App startup timed out. Please refresh and try again.');
+    }
+  },15000);
+}
+
 // ── AUTH ──
 function showAuthScreen(errorMsg=''){
+  clearStartupFailsafe();
   document.getElementById('loading').style.display='none';
   buildAuthBg();
   showScreen('auth-screen');
@@ -751,6 +771,7 @@ async function loadPuzzle(){
 }
 
 function showStartScreen(){
+  clearStartupFailsafe();
   document.getElementById('loading').style.display='none';
   if(countdownInterval)clearInterval(countdownInterval);
   const d=new Date();
@@ -781,6 +802,7 @@ function showStartScreen(){
 }
 
 function showNoPuzzle(today){
+  clearStartupFailsafe();
   document.getElementById('loading').style.display='none';
   document.getElementById('no-puzzle-date').textContent=today;
   showScreen('no-puzzle-screen');
@@ -1160,6 +1182,7 @@ function setTheme(t){
   ['light','dark','medical'].forEach(n=>document.getElementById(`opt-${n}`).classList.toggle('selected',n===t));
 }
 
+armStartupFailsafe();
 boot();
 </script>
 </body>
