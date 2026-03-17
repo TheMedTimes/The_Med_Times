@@ -1,6 +1,7 @@
 {
   "date": "2026-03-17",
   "topic": "Cardiovascular Pathology",
+  "next_topic": "Drugs for Coagulation Disorders",
   "size": 15,
   "solution": [
     ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "M", "A", "L", "E", "#"],
@@ -19,20 +20,22 @@
     ["#", "#", "B", "E", "R", "R", "Y", "#", "#", "#", "#", "#", "#", "#", "#"],
     ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"]
   ],
-  "across": [
-    {"number": 2, "row": 0, "col": 10, "len": 4, "clue": "Atherosclerosis is more prevalent in which gender"},
-    {"number": 5, "row": 1, "col": 0, "len": 13, "clue": "Main feature of pancarditis in RF"},
-    {"number": 8, "row": 3, "col": 3, "len": 8, "clue": "Post-myocardial infarction syndrome"},
-    {"number": 10, "row": 5, "col": 2, "len": 9, "clue": "Atherosclerotic plaque"},
-    {"number": 12, "row": 7, "col": 2, "len": 7, "clue": "Plaques are prone to"},
-    {"number": 14, "row": 9, "col": 0, "len": 8, "clue": "Plaques obstructing lumen lead to"},
-    {"number": 15, "row": 10, "col": 11, "len": 3, "clue": "Most common congenital heart defect"},
-    {"number": 16, "row": 11, "col": 3, "len": 4, "clue": "Lipid accumulation in the macrophages"},
-    {"number": 17, "row": 12, "col": 8, "len": 5, "clue": "Aschoff bodies develop through _ stages"},
-    {"number": 18, "row": 13, "col": 2, "len": 5, "clue": "Common aneurysm in Circle of Willis"}
-  ],
-  "down": [
-    {"number": 1, "row": 0, "col": 10, "len": 9, "clue": "Polyarthritis in RF"},
-    {"number": 3, "row": 4, "col": 14, "len": 5, "clue": "Common aneurysm in Circle of Willis"}
-  ]
+  "clues": {
+    "across": [
+      {"number": 2, "row": 0, "col": 10, "len": 4, "clue": "Atherosclerosis is more prevalent in which gender"},
+      {"number": 5, "row": 1, "col": 0, "len": 13, "clue": "Main feature of pancarditis in RF"},
+      {"number": 8, "row": 3, "col": 3, "len": 8, "clue": "Post-myocardial infarction syndrome"},
+      {"number": 10, "row": 5, "col": 2, "len": 9, "clue": "Atherosclerotic plaque"},
+      {"number": 12, "row": 7, "col": 2, "len": 7, "clue": "Plaques are prone to"},
+      {"number": 14, "row": 9, "col": 0, "len": 8, "clue": "Plaques obstructing lumen lead to"},
+      {"number": 15, "row": 10, "col": 11, "len": 3, "clue": "Most common congenital heart defect"},
+      {"number": 16, "row": 11, "col": 3, "len": 4, "clue": "Lipid accumulation in the macrophages"},
+      {"number": 17, "row": 12, "col": 8, "len": 5, "clue": "Aschoff bodies develop through _ stages"},
+      {"number": 18, "row": 13, "col": 2, "len": 5, "clue": "Common aneurysm in Circle of Willis"}
+    ],
+    "down": [
+      {"number": 1, "row": 0, "col": 10, "len": 9, "clue": "Polyarthritis in RF"},
+      {"number": 3, "row": 4, "col": 14, "len": 5, "clue": "Common aneurysm in Circle of Willis"}
+    ]
+  }
 }
