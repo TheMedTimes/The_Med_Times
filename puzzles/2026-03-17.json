@@ -1,0 +1,41 @@
+{
+  "date": "2026-03-17",
+  "topic": "Heart Disorders",
+  "next_topic": "Drugs Used in Disorders of Coagulation",
+  "size": 15,
+  "solution": [
+    ["#","#","F","A","T","T","Y","S","T","R","E","A","K","#","#"],
+    ["#","#","O","#","#","#","D","#","#","#","#","#","N","#","#"],
+    ["#","#","A","#","D","Y","S","L","I","P","I","D","E","M","I"],
+    ["#","#","M","#","#","#","A","#","#","#","#","#","G","#","#"],
+    ["#","#","C","E","L","L","#","#","#","#","#","#","I","#","#"],
+    ["#","#","#","#","#","#","#","#","#","#","#","#","N","#","#"],
+    ["#","#","S","T","E","N","O","S","I","S","#","#","A","#","#"],
+    ["#","E","M","B","O","L","I","S","M","#","#","#","#","#","#"],
+    ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"],
+    ["#","#","I","N","F","A","R","C","T","#","#","#","#","#","#"],
+    ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"],
+    ["#","#","#","#","H","D","L","#","#","#","#","#","#","#","#"],
+    ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"],
+    ["#","#","#","#","#","#","#","#","#","#","#","#","#","#","#"],
+    ["#","#","#","#","#","N","O","#","#","#","#","#","#","#","#"]
+  ],
+  "clues": {
+    "across": [
+      {"number":1,"row":0,"col":2,"len":11,"clue":"Earliest visible lesion in atherosclerosis"},
+      {"number":4,"row":2,"col":4,"len":11,"clue":"Abnormal lipid profile increasing cardiovascular risk"},
+      {"number":5,"row":4,"col":2,"len":8,"clue":"Lipid-laden macrophage found in early atherosclerotic plaques"},
+      {"number":6,"row":6,"col":2,"len":8,"clue":"Pathological narrowing of a vessel lumen"},
+      {"number":7,"row":7,"col":1,"len":8,"clue":"Obstruction of a vessel by a traveling clot"},
+      {"number":8,"row":9,"col":2,"len":7,"clue":"Area of tissue necrosis caused by prolonged ischemia"},
+      {"number":9,"row":11,"col":4,"len":3,"clue":"\"Good\" cholesterol involved in reverse cholesterol transport"},
+      {"number":10,"row":14,"col":5,"len":2,"clue":"Endothelium-derived vasodilator molecule"}
+    ],
+    "down": [
+      {"number":1,"row":0,"col":2,"len":5,"clue":"Macrophage filled with lipid droplets in fatty streaks"},
+      {"number":2,"row":0,"col":6,"len":4,"clue":"Low-density lipoprotein abbreviation"},
+      {"number":3,"row":0,"col":12,"len":7,"clue":"Chest pain due to transient myocardial ischemia"},
+      {"number":4,"row":2,"col":6,"len":8,"clue":"Chronic metabolic disease that accelerates atherosclerosis"}
+    ]
+  }
+}
