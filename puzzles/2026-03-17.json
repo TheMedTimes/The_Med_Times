@@ -5,38 +5,40 @@
   "size": 13,
   "solution": [
     ["#","F","A","T","T","Y","S","T","R","E","A","K","#"],
-    ["#","#","#","#","M","#","#","#","#","#","N","#","#"],
+    ["S","M","O","K","I","N","G","#","A","N","G","I","N"],
+    ["#","#","A","#","#","#","D","#","#","#","#","#","A"],
     ["D","Y","S","L","I","P","I","D","E","M","I","A","#"],
-    ["#","#","#","#","N","#","#","#","#","#","G","#","#"],
-    ["O","B","E","S","I","T","Y","#","S","M","O","K","I"],
-    ["#","#","#","#","A","#","#","#","#","#","N","#","#"],
-    ["F","O","A","M","C","E","L","L","#","I","G","I","N"],
-    ["#","#","#","#","T","#","#","#","#","#","#","#","#"],
-    ["S","T","E","N","O","S","I","S","#","E","M","B","O"],
-    ["#","#","#","#","N","#","#","#","#","#","#","#","#"],
+    ["#","#","M","#","#","#","A","#","#","#","#","#","#"],
+    ["O","B","E","S","I","T","Y","#","P","L","A","Q","U"],
+    ["#","#","C","#","#","#","E","#","#","#","#","#","E"],
+    ["F","O","A","M","C","E","L","L","#","A","T","H","E"],
+    ["#","#","L","#","#","#","E","#","#","#","#","#","M"],
+    ["S","T","E","N","O","S","I","S","#","T","H","R","O"],
+    ["#","#","L","#","#","#","S","#","#","#","#","#","M"],
     ["I","S","C","H","E","M","I","A","#","H","D","L","#"],
-    ["#","#","#","#","#","#","#","#","#","#","#","#","#"],
-    ["#","I","N","F","A","R","C","T","#","R","O","S","#"]
+    ["#","#","#","I","N","F","A","R","C","T","#","#","#"]
   ],
   "clues": {
     "across": [
-      {"number":1,"row":0,"col":1,"len":11,"clue":"Earliest visible atherosclerotic lesion composed of lipid-laden macrophages"},
-      {"number":2,"row":2,"col":0,"len":11,"clue":"Atherogenic lipid disorder involving elevated LDL or low HDL"},
-      {"number":3,"row":4,"col":0,"len":7,"clue":"Excess adiposity associated with cardiovascular risk"},
-      {"number":4,"row":4,"col":8,"len":5,"clue":"Major modifiable cardiovascular risk factor damaging endothelium"},
-      {"number":5,"row":6,"col":0,"len":8,"clue":"Macrophage filled with oxidized LDL in fatty streaks"},
-      {"number":6,"row":8,"col":0,"len":8,"clue":"Hemodynamically significant narrowing of an arterial lumen"},
-      {"number":7,"row":8,"col":9,"len":4,"clue":"Vascular obstruction by a traveling clot"},
-      {"number":8,"row":10,"col":0,"len":8,"clue":"Reduced blood supply causing oxygen deprivation in tissues"},
-      {"number":9,"row":10,"col":9,"len":3,"clue":"Lipoprotein mediating reverse cholesterol transport"},
-      {"number":10,"row":12,"col":1,"len":7,"clue":"Area of coagulative necrosis due to prolonged ischemia"},
-      {"number":11,"row":12,"col":9,"len":3,"clue":"Reactive oxygen species contributing to endothelial injury"}
+      {"number":1,"row":0,"col":1,"len":11,"clue":"Earliest visible lesion of atherosclerosis composed of lipid-laden macrophages"},
+      {"number":2,"row":1,"col":0,"len":7,"clue":"Major modifiable cardiovascular risk factor causing endothelial dysfunction"},
+      {"number":3,"row":1,"col":8,"len":5,"clue":"Chest pain due to transient myocardial ischemia"},
+      {"number":4,"row":3,"col":0,"len":11,"clue":"Atherogenic lipid disorder involving elevated LDL or reduced HDL"},
+      {"number":5,"row":5,"col":0,"len":7,"clue":"Excess adiposity associated with increased cardiovascular risk"},
+      {"number":6,"row":5,"col":8,"len":6,"clue":"Atherosclerotic lesion composed of lipid core and fibrous cap"},
+      {"number":7,"row":7,"col":0,"len":8,"clue":"Macrophage engorged with oxidized LDL in fatty streaks"},
+      {"number":8,"row":7,"col":9,"len":4,"clue":"Lipid-rich plaque within arterial wall"},
+      {"number":9,"row":9,"col":0,"len":8,"clue":"Pathological narrowing of a vessel lumen"},
+      {"number":10,"row":9,"col":9,"len":4,"clue":"Intravascular clot formed in situ"},
+      {"number":11,"row":11,"col":0,"len":8,"clue":"Reduced blood supply resulting in tissue hypoxia"},
+      {"number":12,"row":11,"col":9,"len":3,"clue":"Lipoprotein mediating reverse cholesterol transport"},
+      {"number":13,"row":12,"col":3,"len":7,"clue":"Area of coagulative necrosis caused by prolonged ischemia"}
     ],
     "down": [
-      {"number":1,"row":0,"col":4,"len":11,"clue":"Clinical syndrome of myocardial ischemia producing chest discomfort"},
-      {"number":2,"row":0,"col":10,"len":7,"clue":"Chronic metabolic disorder strongly accelerating atherosclerosis"},
-      {"number":3,"row":4,"col":4,"len":6,"clue":"Transient myocardial ischemic pain syndrome"},
-      {"number":4,"row":6,"col":9,"len":5,"clue":"Vascular occlusion caused by embolic material"}
+      {"number":1,"row":0,"col":2,"len":11,"clue":"Macrophage phenotype central to fatty streak formation"},
+      {"number":2,"row":0,"col":6,"len":12,"clue":"Chronic metabolic disease strongly accelerating atherosclerosis"},
+      {"number":3,"row":0,"col":9,"len":6,"clue":"Clinical syndrome of myocardial ischemia producing chest discomfort"},
+      {"number":4,"row":7,"col":10,"len":3,"clue":"Atherogenic lipoprotein depositing cholesterol in arterial walls"}
     ]
   }
 }
