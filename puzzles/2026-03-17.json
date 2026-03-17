@@ -1,44 +1,38 @@
 {
   "date": "2026-03-17",
-  "topic": "Heart Disorders",
-  "next_topic": "Drugs Used in Disorders of Coagulation",
-  "size": 13,
+  "topic": "Cardiovascular Pathology",
+  "size": 15,
   "solution": [
-    ["#","F","A","T","T","Y","S","T","R","E","A","K","#"],
-    ["S","M","O","K","I","N","G","#","A","N","G","I","N"],
-    ["#","#","A","#","#","#","D","#","#","#","#","#","A"],
-    ["D","Y","S","L","I","P","I","D","E","M","I","A","#"],
-    ["#","#","M","#","#","#","A","#","#","#","#","#","#"],
-    ["O","B","E","S","I","T","Y","#","P","L","A","Q","U"],
-    ["#","#","C","#","#","#","E","#","#","#","#","#","E"],
-    ["F","O","A","M","C","E","L","L","#","A","T","H","E"],
-    ["#","#","L","#","#","#","E","#","#","#","#","#","M"],
-    ["S","T","E","N","O","S","I","S","#","T","H","R","O"],
-    ["#","#","L","#","#","#","S","#","#","#","#","#","M"],
-    ["I","S","C","H","E","M","I","A","#","H","D","L","#"],
-    ["#","#","#","I","N","F","A","R","C","T","#","#","#"]
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "M", "A", "L", "E", "#"],
+    ["A", "S", "C", "H", "O", "F", "F", "B", "O", "D", "I", "E", "S", "#", "#"],
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "G", "#", "#", "#", "#"],
+    ["#", "#", "#", "D", "R", "E", "S", "S", "L", "E", "R", "S", "#", "#", "#"],
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "A", "#", "#", "#", "B"],
+    ["#", "#", "A", "T", "H", "E", "R", "O", "M", "A", "S", "#", "#", "#", "E"],
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "T", "#", "#", "#", "R"],
+    ["#", "#", "R", "U", "P", "T", "U", "R", "E", "#", "O", "#", "#", "#", "R"],
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "R", "#", "#", "#", "Y"],
+    ["S", "T", "E", "N", "O", "S", "I", "S", "#", "#", "Y", "#", "#", "#", "#"],
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "V", "S", "D", "#"],
+    ["#", "#", "#", "F", "O", "A", "M", "#", "#", "#", "#", "#", "#", "#", "#"],
+    ["#", "#", "#", "#", "#", "#", "#", "#", "T", "H", "R", "E", "E", "#", "#"],
+    ["#", "#", "B", "E", "R", "R", "Y", "#", "#", "#", "#", "#", "#", "#", "#"],
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"]
   ],
-  "clues": {
-    "across": [
-      {"number":1,"row":0,"col":1,"len":11,"clue":"Earliest visible lesion of atherosclerosis composed of lipid-laden macrophages"},
-      {"number":2,"row":1,"col":0,"len":7,"clue":"Major modifiable cardiovascular risk factor causing endothelial dysfunction"},
-      {"number":3,"row":1,"col":8,"len":5,"clue":"Chest pain due to transient myocardial ischemia"},
-      {"number":4,"row":3,"col":0,"len":11,"clue":"Atherogenic lipid disorder involving elevated LDL or reduced HDL"},
-      {"number":5,"row":5,"col":0,"len":7,"clue":"Excess adiposity associated with increased cardiovascular risk"},
-      {"number":6,"row":5,"col":8,"len":6,"clue":"Atherosclerotic lesion composed of lipid core and fibrous cap"},
-      {"number":7,"row":7,"col":0,"len":8,"clue":"Macrophage engorged with oxidized LDL in fatty streaks"},
-      {"number":8,"row":7,"col":9,"len":4,"clue":"Lipid-rich plaque within arterial wall"},
-      {"number":9,"row":9,"col":0,"len":8,"clue":"Pathological narrowing of a vessel lumen"},
-      {"number":10,"row":9,"col":9,"len":4,"clue":"Intravascular clot formed in situ"},
-      {"number":11,"row":11,"col":0,"len":8,"clue":"Reduced blood supply resulting in tissue hypoxia"},
-      {"number":12,"row":11,"col":9,"len":3,"clue":"Lipoprotein mediating reverse cholesterol transport"},
-      {"number":13,"row":12,"col":3,"len":7,"clue":"Area of coagulative necrosis caused by prolonged ischemia"}
-    ],
-    "down": [
-      {"number":1,"row":0,"col":2,"len":11,"clue":"Macrophage phenotype central to fatty streak formation"},
-      {"number":2,"row":0,"col":6,"len":12,"clue":"Chronic metabolic disease strongly accelerating atherosclerosis"},
-      {"number":3,"row":0,"col":9,"len":6,"clue":"Clinical syndrome of myocardial ischemia producing chest discomfort"},
-      {"number":4,"row":7,"col":10,"len":3,"clue":"Atherogenic lipoprotein depositing cholesterol in arterial walls"}
-    ]
-  }
+  "across": [
+    {"number": 2, "row": 0, "col": 10, "len": 4, "clue": "Atherosclerosis is more prevalent in which gender"},
+    {"number": 5, "row": 1, "col": 0, "len": 13, "clue": "Main feature of pancarditis in RF"},
+    {"number": 8, "row": 3, "col": 3, "len": 8, "clue": "Post-myocardial infarction syndrome"},
+    {"number": 10, "row": 5, "col": 2, "len": 9, "clue": "Atherosclerotic plaque"},
+    {"number": 12, "row": 7, "col": 2, "len": 7, "clue": "Plaques are prone to"},
+    {"number": 14, "row": 9, "col": 0, "len": 8, "clue": "Plaques obstructing lumen lead to"},
+    {"number": 15, "row": 10, "col": 11, "len": 3, "clue": "Most common congenital heart defect"},
+    {"number": 16, "row": 11, "col": 3, "len": 4, "clue": "Lipid accumulation in the macrophages"},
+    {"number": 17, "row": 12, "col": 8, "len": 5, "clue": "Aschoff bodies develop through _ stages"},
+    {"number": 18, "row": 13, "col": 2, "len": 5, "clue": "Common aneurysm in Circle of Willis"}
+  ],
+  "down": [
+    {"number": 1, "row": 0, "col": 10, "len": 9, "clue": "Polyarthritis in RF"},
+    {"number": 3, "row": 4, "col": 14, "len": 5, "clue": "Common aneurysm in Circle of Willis"}
+  ]
 }
