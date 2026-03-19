@@ -1,4 +1,4 @@
-const CACHE_NAME = 'themedtimes-v1';
+const CACHE_NAME = 'themedtimes-v2';
 const ASSETS = [
   '/The_Med_Times/',
   '/The_Med_Times/index.html',
