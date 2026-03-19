@@ -463,13 +463,6 @@ function hideLoading() {
   clearTimeout(_bootTimer);
   document.getElementById('loading').style.display = 'none';
 }
-```
-
-Then do a find-and-replace across the whole file:
-```
-document.getElementById('loading').style.display='none'
-→
-hideLoading()
 
 function getTodayString(){
   const d=new Date();
