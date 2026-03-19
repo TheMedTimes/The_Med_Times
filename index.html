@@ -487,7 +487,7 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 // ── AUTH ──
 async function boot(){
   if(!sb){
-    document.getElementById('loading').style.display='none';
+    hideLoading();
     buildAuthBg();
     showScreen('auth-screen');
     setAuthError('Connection issue loading auth. Please refresh.');
@@ -502,7 +502,7 @@ async function boot(){
       }
       if(event==='SIGNED_OUT'){
         currentUser=null;userProfile=null;userStreak=0;
-        document.getElementById('loading').style.display='none';
+        hideLoading();
         buildAuthBg();
         showScreen('auth-screen');
       }
@@ -513,13 +513,13 @@ async function boot(){
       const profileResult=await loadUserProfile();
       if(profileResult!=='needs-college') await loadPuzzle();
     }else{
-      document.getElementById('loading').style.display='none';
+      hideLoading();
       buildAuthBg();
       showScreen('auth-screen');
     }
   }catch(err){
     console.error('Boot error:',err);
-    document.getElementById('loading').style.display='none';
+    hideLoading();
     buildAuthBg();
     showScreen('auth-screen');
     setAuthError('Could not connect. Check internet and refresh.');
@@ -590,7 +590,7 @@ async function loadUserProfile(){
     userProfile &&
     (!userProfile.college || userProfile.college === null || userProfile.college === '')
   ) {
-    document.getElementById('loading').style.display='none';
+    hideLoading();
     const bg=document.getElementById('college-bg-grid');
     if(!bg.children.length){
       for(let i=0;i<300;i++){
@@ -745,7 +745,7 @@ async function loadPuzzle(){
 }
 
 function showStartScreen(){
-  document.getElementById('loading').style.display='none';
+  hideLoading();
   if(countdownInterval)clearInterval(countdownInterval);
   const d=new Date();
   document.getElementById('start-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
@@ -775,7 +775,7 @@ function showStartScreen(){
 }
 
 function showNoPuzzle(today){
-  document.getElementById('loading').style.display='none';
+  hideLoading();
   document.getElementById('no-puzzle-date').textContent=today;
   showScreen('no-puzzle-screen');
   startCountdown();
