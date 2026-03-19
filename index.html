@@ -525,7 +525,7 @@ async function boot(){
     hideLoading();
     buildAuthBg();
     showScreen('auth-screen');
-    setAuthError('Could not connect. Check internet and refresh.');
+    if(err.message!=='session timeout') setAuthError('Could not connect. Check internet and refresh.');
   }
 }
 
