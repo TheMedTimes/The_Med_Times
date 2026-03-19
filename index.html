@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="icons/icon-192x192.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>TheMedTimes — MBBS Daily Crossword</title>
@@ -193,6 +192,17 @@
   @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
   .cell.shaking{animation:shake 0.3s ease;}
 
+  /* CLUE LIST MODAL */
+  .clue-list-section{margin-bottom:16px;}
+  .clue-list-heading{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--accent);margin-bottom:8px;padding:0 2px;}
+  .clue-list-items{display:flex;flex-direction:column;gap:4px;}
+  .clue-list-item{display:flex;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer;border:1px solid transparent;align-items:flex-start;-webkit-tap-highlight-color:transparent;}
+  .clue-list-item:active{background:var(--accent-light);}
+  .clue-list-item.active-clue{background:var(--accent-light);border-color:var(--accent);}
+  .clue-num{font-family:var(--font-mono);font-size:12px;font-weight:700;color:var(--accent);min-width:28px;padding-top:1px;flex-shrink:0;}
+  .clue-text{font-size:13px;color:var(--text);line-height:1.4;}
+  .clue-list-scroll{max-height:65vh;overflow-y:auto;padding-bottom:4px;}
+
   /* College screen layout + consent */
   #college-screen{
     align-items:center;
@@ -224,11 +234,7 @@
 <!-- LOADING -->
 <div class="loading-wrap" id="loading">
   <div class="loading-logo">TheMedTimes</div>
-  <div class="loading-spinner" id="loading-spinner"></div>
-  <div id="loading-stuck" style="display:none;text-align:center;padding:0 24px;">
-    <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">Taking longer than usual…</div>
-    <button onclick="location.reload()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body);">Tap to Refresh</button>
-  </div>
+  <div class="loading-spinner"></div>
 </div>
 
 <!-- AUTH SCREEN (Google only) -->
@@ -260,7 +266,7 @@
     <div class="auth-card">
       <div class="auth-mode-title">Your College</div>
       <div class="auth-card-sub">Enter your college abbreviation so you appear correctly on the leaderboard</div>
-      <input class="auth-input" type="text" id="college-input" placeholder="e.g. BJMC, BAVMC, KEM" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+      <input class="auth-input" type="text" id="college-input" placeholder="e.g. BJMC, BAVMC, KEM" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()" autofocus>
       <label class="consent-row">
         <input type="checkbox" id="lb-consent" checked>
         <span>Show my name and college on the leaderboard</span>
@@ -337,6 +343,9 @@
       </div>
     </div>
     <div class="no-puzzle-date-pill" id="no-puzzle-date">—</div>
+    <div id="no-puzzle-topic-wrap" style="display:none;margin-top:14px;width:100%;">
+      <div id="no-puzzle-next-topic" style="font-size:13px;color:var(--accent);font-weight:600;padding:10px 16px;background:var(--accent-light);border-radius:12px;border:1px solid var(--accent);text-align:center;line-height:1.5;"></div>
+    </div>
   </div>
 </div>
 
@@ -356,6 +365,7 @@
         </label>
       </div>
       <div class="timer" id="timer">0:00</div>
+      <button class="icon-btn" onclick="openClueList()">Clues</button>
       <button class="icon-btn" onclick="openViewModal()">View</button>
     </div>
   </header>
@@ -418,6 +428,16 @@
   </div>
 </div>
 
+<!-- CLUE LIST MODAL -->
+<div class="modal-overlay" id="clue-list-modal" onclick="closeClueList(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">All Clues</div>
+    <div class="clue-list-scroll" id="clue-list-content"></div>
+    <button class="modal-close" style="margin-top:16px;" onclick="closeClueList()">Close</button>
+  </div>
+</div>
+
 <!-- SUCCESS -->
 <div class="success-overlay" id="success-overlay">
   <div class="success-card">
@@ -452,19 +472,6 @@ let puzzleAlreadyCompleted=false;
 let usedReveal=false;
 let completionHandled=false;
 
-// Safety net: if loading hangs >10s, show refresh prompt
-const _bootTimer = setTimeout(() => {
-  if (document.getElementById('loading').style.display !== 'none') {
-    document.getElementById('loading-spinner').style.display = 'none';
-    document.getElementById('loading-stuck').style.display = 'block';
-  }
-}, 10000);
-
-function hideLoading() {
-  clearTimeout(_bootTimer);
-  document.getElementById('loading').style.display = 'none';
-}
-
 function getTodayString(){
   const d=new Date();
   return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -488,7 +495,7 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 // ── AUTH ──
 async function boot(){
   if(!sb){
-    hideLoading();
+    document.getElementById('loading').style.display='none';
     buildAuthBg();
     showScreen('auth-screen');
     setAuthError('Connection issue loading auth. Please refresh.');
@@ -503,29 +510,27 @@ async function boot(){
       }
       if(event==='SIGNED_OUT'){
         currentUser=null;userProfile=null;userStreak=0;
-        hideLoading();
+        document.getElementById('loading').style.display='none';
         buildAuthBg();
         showScreen('auth-screen');
       }
     });
-    const sessionPromise = sb.auth.getSession();
-    const timeoutPromise = new Promise((_,reject) => setTimeout(()=>reject(new Error('session timeout')),8000));
-    const {data:{session}} = await Promise.race([sessionPromise, timeoutPromise]);
+    const{data:{session}}=await sb.auth.getSession();
     if(session){
       currentUser=session.user;
       const profileResult=await loadUserProfile();
       if(profileResult!=='needs-college') await loadPuzzle();
     }else{
-      hideLoading();
+      document.getElementById('loading').style.display='none';
       buildAuthBg();
       showScreen('auth-screen');
     }
   }catch(err){
     console.error('Boot error:',err);
-    hideLoading();
+    document.getElementById('loading').style.display='none';
     buildAuthBg();
     showScreen('auth-screen');
-    if(err.message!=='session timeout') setAuthError('Could not connect. Check internet and refresh.');
+    setAuthError('Could not connect. Check internet and refresh.');
   }
 }
 
@@ -593,7 +598,7 @@ async function loadUserProfile(){
     userProfile &&
     (!userProfile.college || userProfile.college === null || userProfile.college === '')
   ) {
-    hideLoading();
+    document.getElementById('loading').style.display='none';
     const bg=document.getElementById('college-bg-grid');
     if(!bg.children.length){
       for(let i=0;i<300;i++){
@@ -603,6 +608,7 @@ async function loadUserProfile(){
       }
     }
     showScreen('college-screen');
+    setTimeout(()=>document.getElementById('college-input').focus(),300);
     return'needs-college';
   }
 
@@ -736,10 +742,7 @@ function openLeaderboardFromSuccess(){
 async function loadPuzzle(){
   const today=getTodayString();
   try{
-    const controller=new AbortController();
-    const fetchTimer=setTimeout(()=>controller.abort(),8000);
-    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`,{signal:controller.signal});
-    clearTimeout(fetchTimer);
+    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`);
     if(!res.ok)throw new Error('not found');
     PUZZLE=await res.json();
     puzzleAlreadyCompleted=await checkAlreadyCompleted();
@@ -748,7 +751,7 @@ async function loadPuzzle(){
 }
 
 function showStartScreen(){
-  hideLoading();
+  document.getElementById('loading').style.display='none';
   if(countdownInterval)clearInterval(countdownInterval);
   const d=new Date();
   document.getElementById('start-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
@@ -777,11 +780,24 @@ function showStartScreen(){
   showScreen('start-screen');
 }
 
-function showNoPuzzle(today){
+async function showNoPuzzle(today){
   hideLoading();
   document.getElementById('no-puzzle-date').textContent=today;
+  document.getElementById('no-puzzle-topic-wrap').style.display='none';
   showScreen('no-puzzle-screen');
   startCountdown();
+  try{
+    const d=new Date();d.setDate(d.getDate()-1);
+    const yesterday=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const res=await fetch(`puzzles/${yesterday}.json`);
+    if(res.ok){
+      const yp=await res.json();
+      if(yp.next_topic&&yp.next_topic!=='TBD'){
+        document.getElementById('no-puzzle-next-topic').textContent=`📚 Today's topic: ${yp.next_topic}`;
+        document.getElementById('no-puzzle-topic-wrap').style.display='block';
+      }
+    }
+  }catch(e){}
 }
 
 function startCountdown(){
@@ -1015,7 +1031,9 @@ function kbDelete(){
 function advanceSelection(){
   const wc=getCurrentWordCells();
   const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);
-  if(idx<wc.length-1){[selectedRow,selectedCol]=wc[idx+1];highlightCells();}
+  let next=idx+1;
+  if(instantCheck){while(next<wc.length&&isLocked(wc[next][0],wc[next][1]))next++;}
+  if(next<wc.length){[selectedRow,selectedCol]=wc[next];highlightCells();}
   else{jumpToClueIndex(currentClueIndex+1,true);}
 }
 function retreatSelection(){
@@ -1147,6 +1165,59 @@ function stopTimer(){
   timerStopped=true;
   clearInterval(timerInterval);timerInterval=null;
   document.getElementById('timer').className='timer';
+}
+
+// ── PAUSE ON HIDE ──
+document.addEventListener('visibilitychange',()=>{
+  if(!started||timerStopped)return;
+  if(document.hidden){
+    clearInterval(timerInterval);timerInterval=null;
+  }else{
+    if(!timerInterval){
+      timerInterval=setInterval(()=>{
+        if(timerStopped){clearInterval(timerInterval);timerInterval=null;return;}
+        seconds++;
+        document.getElementById('timer').textContent=formatTime(seconds);
+        document.getElementById('timer').className='timer running';
+        if(seconds%10===0)saveProgress();
+      },1000);
+    }
+  }
+});
+
+// ── CLUE LIST ──
+function openClueList(){
+  if(!PUZZLE)return;
+  const content=document.getElementById('clue-list-content');
+  const currentClue=allClues[currentClueIndex];
+  const renderSection=(clues,dir)=>`
+    <div class="clue-list-section">
+      <div class="clue-list-heading">${dir==='across'?'Across':'Down'}</div>
+      <div class="clue-list-items">
+        ${clues.map(cl=>{
+          const isActive=currentClue&&currentClue.number===cl.number&&currentClue.dir===dir;
+          return`<div class="clue-list-item${isActive?' active-clue':''}" onclick="jumpToClueFromList(${cl.number},'${dir}')">
+            <div class="clue-num">${cl.number}</div>
+            <div class="clue-text">${cl.clue}</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  content.innerHTML=renderSection(PUZZLE.clues.across,'across')+renderSection(PUZZLE.clues.down,'down');
+  document.getElementById('clue-list-modal').classList.add('open');
+  setTimeout(()=>{
+    const active=content.querySelector('.active-clue');
+    if(active)active.scrollIntoView({block:'center',behavior:'smooth'});
+  },50);
+}
+function closeClueList(e){
+  if(!e||e.target===document.getElementById('clue-list-modal'))
+    document.getElementById('clue-list-modal').classList.remove('open');
+}
+function jumpToClueFromList(number,dir){
+  const idx=allClues.findIndex(cl=>cl.number===number&&cl.dir===dir);
+  if(idx!==-1)jumpToClueIndex(idx);
+  closeClueList();
 }
 
 // ── VIEW MODAL ──
