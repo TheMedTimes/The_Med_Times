@@ -223,7 +223,11 @@
 <!-- LOADING -->
 <div class="loading-wrap" id="loading">
   <div class="loading-logo">TheMedTimes</div>
-  <div class="loading-spinner"></div>
+  <div class="loading-spinner" id="loading-spinner"></div>
+  <div id="loading-stuck" style="display:none;text-align:center;padding:0 24px;">
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">Taking longer than usual…</div>
+    <button onclick="location.reload()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body);">Tap to Refresh</button>
+  </div>
 </div>
 
 <!-- AUTH SCREEN (Google only) -->
@@ -446,6 +450,26 @@ let countdownInterval=null;
 let puzzleAlreadyCompleted=false;
 let usedReveal=false;
 let completionHandled=false;
+
+// Safety net: if loading hangs >10s, show refresh prompt
+const _bootTimer = setTimeout(() => {
+  if (document.getElementById('loading').style.display !== 'none') {
+    document.getElementById('loading-spinner').style.display = 'none';
+    document.getElementById('loading-stuck').style.display = 'block';
+  }
+}, 10000);
+
+function hideLoading() {
+  clearTimeout(_bootTimer);
+  document.getElementById('loading').style.display = 'none';
+}
+```
+
+Then do a find-and-replace across the whole file:
+```
+document.getElementById('loading').style.display='none'
+→
+hideLoading()
 
 function getTodayString(){
   const d=new Date();
