@@ -6,7 +6,6 @@
 <title>TheMedTimes — MBBS Daily Crossword</title>
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
-<link rel="icon" href="icons/icon-192x192.png">
 <meta name="mobile-web-app-capable" content="yes">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
@@ -15,7 +14,7 @@
     --accent:#c8392b;--accent-light:#f5e6e4;--highlight:#fef3c7;--highlight-active:#fde68a;
     --correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--black:#1a1a1a;
     --font-display:'Playfair Display',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;--font-mono:'DM Mono',monospace;
-    --cell-size:min(6.1vw,40px);
+    --cell-size:min(calc((100vw - 41px) / 15),40px);
   }
   [data-theme="dark"]{--bg:#0f0f0f;--surface:#1c1c1e;--border:#3a3a3c;--text:#f5f5f0;--text-muted:#8e8e93;--accent:#ff6b5b;--accent-light:#2d1a18;--highlight:#2d2810;--highlight-active:#4a3f0a;--correct:#34d399;--correct-bg:#052e16;--wrong:#f87171;--wrong-bg:#2d0a0a;--black:#000;}
   [data-theme="medical"]{--bg:#f0f7f4;--surface:#ffffff;--border:#b8d8cc;--text:#0f2d24;--text-muted:#5a8a78;--accent:#0d6e52;--accent-light:#e0f2ec;--highlight:#d1fae5;--highlight-active:#6ee7b7;--correct:#059669;--correct-bg:#d1fae5;--wrong:#dc2626;--wrong-bg:#fee2e2;--black:#0f2d24;}
@@ -235,11 +234,7 @@
 <!-- LOADING -->
 <div class="loading-wrap" id="loading">
   <div class="loading-logo">TheMedTimes</div>
-  <div class="loading-spinner" id="loading-spinner"></div>
-  <div id="loading-stuck" style="display:none;text-align:center;padding:0 24px;">
-    <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">Taking longer than usual…</div>
-    <button onclick="location.reload()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body);">Tap to Refresh</button>
-  </div>
+  <div class="loading-spinner"></div>
 </div>
 
 <!-- AUTH SCREEN (Google only) -->
@@ -477,18 +472,6 @@ let puzzleAlreadyCompleted=false;
 let usedReveal=false;
 let completionHandled=false;
 
-// ── LOADING SAFETY NET ──
-const _bootTimer=setTimeout(()=>{
-  if(document.getElementById('loading').style.display!=='none'){
-    document.getElementById('loading-spinner').style.display='none';
-    document.getElementById('loading-stuck').style.display='block';
-  }
-},10000);
-function hideLoading(){
-  clearTimeout(_bootTimer);
-  document.getElementById('loading').style.display='none';
-}
-
 function getTodayString(){
   const d=new Date();
   return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -512,7 +495,7 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 // ── AUTH ──
 async function boot(){
   if(!sb){
-    hideLoading();
+    document.getElementById('loading').style.display='none';
     buildAuthBg();
     showScreen('auth-screen');
     setAuthError('Connection issue loading auth. Please refresh.');
@@ -527,29 +510,27 @@ async function boot(){
       }
       if(event==='SIGNED_OUT'){
         currentUser=null;userProfile=null;userStreak=0;
-        hideLoading();
+        document.getElementById('loading').style.display='none';
         buildAuthBg();
         showScreen('auth-screen');
       }
     });
-    const sessionPromise=sb.auth.getSession();
-    const timeoutPromise=new Promise((_,reject)=>setTimeout(()=>reject(new Error('session timeout')),8000));
-    const{data:{session}}=await Promise.race([sessionPromise,timeoutPromise]);
+    const{data:{session}}=await sb.auth.getSession();
     if(session){
       currentUser=session.user;
       const profileResult=await loadUserProfile();
       if(profileResult!=='needs-college') await loadPuzzle();
     }else{
-      hideLoading();
+      document.getElementById('loading').style.display='none';
       buildAuthBg();
       showScreen('auth-screen');
     }
   }catch(err){
-    if(err.message!=='session timeout') console.error('Boot error:',err);
-    hideLoading();
+    console.error('Boot error:',err);
+    document.getElementById('loading').style.display='none';
     buildAuthBg();
     showScreen('auth-screen');
-    if(err.message!=='session timeout') setAuthError('Could not connect. Check internet and refresh.');
+    setAuthError('Could not connect. Check internet and refresh.');
   }
 }
 
@@ -617,7 +598,7 @@ async function loadUserProfile(){
     userProfile &&
     (!userProfile.college || userProfile.college === null || userProfile.college === '')
   ) {
-    hideLoading();
+    document.getElementById('loading').style.display='none';
     const bg=document.getElementById('college-bg-grid');
     if(!bg.children.length){
       for(let i=0;i<300;i++){
@@ -761,10 +742,7 @@ function openLeaderboardFromSuccess(){
 async function loadPuzzle(){
   const today=getTodayString();
   try{
-    const controller=new AbortController();
-    const fetchTimer=setTimeout(()=>controller.abort(),8000);
-    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`,{signal:controller.signal});
-    clearTimeout(fetchTimer);
+    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`);
     if(!res.ok)throw new Error('not found');
     PUZZLE=await res.json();
     puzzleAlreadyCompleted=await checkAlreadyCompleted();
@@ -773,7 +751,7 @@ async function loadPuzzle(){
 }
 
 function showStartScreen(){
-  hideLoading();
+  document.getElementById('loading').style.display='none';
   if(countdownInterval)clearInterval(countdownInterval);
   const d=new Date();
   document.getElementById('start-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
@@ -880,7 +858,7 @@ function loadProgress(){
 function startGame(){showScreen('game-screen');initGame();}
 function goToStart(){
   if(started)saveProgress();
-  clearInterval(timerInterval);
+  clearInterval(timerInterval);timerInterval=null;
   document.getElementById('success-overlay').classList.remove('open');
   showScreen('start-screen');
 }
