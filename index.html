@@ -234,7 +234,11 @@
 <!-- LOADING -->
 <div class="loading-wrap" id="loading">
   <div class="loading-logo">TheMedTimes</div>
-  <div class="loading-spinner"></div>
+  <div class="loading-spinner" id="loading-spinner"></div>
+  <div id="loading-stuck" style="display:none;text-align:center;padding:0 24px;">
+    <div style="font-size:13px;color:var(--text-muted);margin-bottom:14px;">Taking longer than usual…</div>
+    <button onclick="location.reload()" style="padding:10px 24px;background:var(--accent);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font-body);">Tap to Refresh</button>
+  </div>
 </div>
 
 <!-- AUTH SCREEN (Google only) -->
@@ -472,6 +476,18 @@ let puzzleAlreadyCompleted=false;
 let usedReveal=false;
 let completionHandled=false;
 
+// ── LOADING SAFETY NET ──
+const _bootTimer=setTimeout(()=>{
+  if(document.getElementById('loading').style.display!=='none'){
+    document.getElementById('loading-spinner').style.display='none';
+    document.getElementById('loading-stuck').style.display='block';
+  }
+},10000);
+function hideLoading(){
+  clearTimeout(_bootTimer);
+  document.getElementById('loading').style.display='none';
+}
+
 function getTodayString(){
   const d=new Date();
   return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -495,7 +511,7 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 // ── AUTH ──
 async function boot(){
   if(!sb){
-    document.getElementById('loading').style.display='none';
+    hideLoading();
     buildAuthBg();
     showScreen('auth-screen');
     setAuthError('Connection issue loading auth. Please refresh.');
@@ -510,27 +526,29 @@ async function boot(){
       }
       if(event==='SIGNED_OUT'){
         currentUser=null;userProfile=null;userStreak=0;
-        document.getElementById('loading').style.display='none';
+        hideLoading();
         buildAuthBg();
         showScreen('auth-screen');
       }
     });
-    const{data:{session}}=await sb.auth.getSession();
+    const sessionPromise=sb.auth.getSession();
+    const timeoutPromise=new Promise((_,reject)=>setTimeout(()=>reject(new Error('session timeout')),8000));
+    const{data:{session}}=await Promise.race([sessionPromise,timeoutPromise]);
     if(session){
       currentUser=session.user;
       const profileResult=await loadUserProfile();
       if(profileResult!=='needs-college') await loadPuzzle();
     }else{
-      document.getElementById('loading').style.display='none';
+      hideLoading();
       buildAuthBg();
       showScreen('auth-screen');
     }
   }catch(err){
-    console.error('Boot error:',err);
-    document.getElementById('loading').style.display='none';
+    if(err.message!=='session timeout') console.error('Boot error:',err);
+    hideLoading();
     buildAuthBg();
     showScreen('auth-screen');
-    setAuthError('Could not connect. Check internet and refresh.');
+    if(err.message!=='session timeout') setAuthError('Could not connect. Check internet and refresh.');
   }
 }
 
@@ -598,7 +616,7 @@ async function loadUserProfile(){
     userProfile &&
     (!userProfile.college || userProfile.college === null || userProfile.college === '')
   ) {
-    document.getElementById('loading').style.display='none';
+    hideLoading();
     const bg=document.getElementById('college-bg-grid');
     if(!bg.children.length){
       for(let i=0;i<300;i++){
@@ -742,7 +760,10 @@ function openLeaderboardFromSuccess(){
 async function loadPuzzle(){
   const today=getTodayString();
   try{
-    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`);
+    const controller=new AbortController();
+    const fetchTimer=setTimeout(()=>controller.abort(),8000);
+    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`,{signal:controller.signal});
+    clearTimeout(fetchTimer);
     if(!res.ok)throw new Error('not found');
     PUZZLE=await res.json();
     puzzleAlreadyCompleted=await checkAlreadyCompleted();
@@ -751,7 +772,7 @@ async function loadPuzzle(){
 }
 
 function showStartScreen(){
-  document.getElementById('loading').style.display='none';
+  hideLoading();
   if(countdownInterval)clearInterval(countdownInterval);
   const d=new Date();
   document.getElementById('start-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
