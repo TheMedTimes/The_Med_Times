@@ -116,6 +116,7 @@
   .cell.correct .cell-letter{color:var(--correct);}
   .cell.wrong{background:var(--wrong-bg);}
   .cell.wrong .cell-letter{color:var(--wrong);}
+  .cell.active{background:var(--highlight-active) !important;outline:2.5px solid var(--accent);outline-offset:-2px;z-index:1;}
   .cell.active .cell-letter{color:var(--text) !important;}
   .cell-num{position:absolute;top:1px;left:2px;font-size:calc(var(--cell-size)*0.22);font-weight:600;color:var(--text);line-height:1;pointer-events:none;}
   .cell-letter{font-size:calc(var(--cell-size)*0.50);font-weight:600;color:var(--text);text-transform:uppercase;line-height:1;pointer-events:none;}
@@ -131,8 +132,8 @@
   .kb-key:active{background:var(--border);transform:translateY(1px);box-shadow:none;}
   .kb-key.wide{max-width:52px;font-size:12px;}
   .kb-key.del{max-width:52px;font-size:16px;}
-  [data-theme="dark"] .kb-key{background:#2c2c2e;box-shadow:0 2px 0 #000;}
-  [data-theme="dark"] .kb-key:active{background:#3a3a3c;}
+  .kb-key:active,.kb-key.pressed{background:var(--border);transform:scale(0.88);box-shadow:none;}
+  [data-theme="dark"] .kb-key:active,[data-theme="dark"] .kb-key.pressed{background:#3a3a3c;}
 
   /* LOADING */
   .loading-wrap{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:500;gap:16px;}
@@ -190,11 +191,6 @@
   @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
   @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
   .cell.shaking{animation:shake 0.3s ease;}
-  @keyframes letterPop{0%{transform:scale(0.4);opacity:0}60%{transform:scale(1.25)}100%{transform:scale(1);opacity:1}}
-  .cell-letter.popping{animation:letterPop 0.12s ease-out;}
-  @keyframes cellActivePop{0%{transform:scale(1.06)}100%{transform:scale(1)}}
-  .cell.active{background:var(--highlight-active) !important;outline:2.5px solid var(--accent);outline-offset:-2px;z-index:1;animation:cellActivePop 0.1s ease-out;}
-  .kb-key:active{background:var(--border);transform:scale(0.88);box-shadow:none;transition:transform 0.06s;}
 
   /* CLUE LIST MODAL */
   .clue-list-section{margin-bottom:16px;}
@@ -303,7 +299,7 @@
       <div class="start-card-row">
         <div class="start-card-icon">🧬</div>
         <div>
-          <div class="start-card-label">Today's Topic</div>
+          <div class="start-card-label" id="start-topic-label">Today's Topic</div>
           <div class="start-card-value" id="start-topic">—</div>
         </div>
       </div>
@@ -366,7 +362,7 @@
     </div>
     <div class="header-right">
       <div class="header-check-wrap">
-        <span class="header-check-label">Check</span>
+        <span class="header-check-label">Live</span>
         <label class="toggle">
           <input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)">
           <span class="slider"></span>
@@ -377,8 +373,6 @@
       <button class="icon-btn" onclick="openViewModal()">View</button>
     </div>
   </header>
-  <div class="grid-wrap"><div class="crossword-grid" id="grid"></div></div>
-  <div class="clue-bar"><div class="clue-bar-text" id="clue-bar-text">Tap a cell to begin</div></div>
   <div class="clue-nav-top">
     <button class="clue-nav-btn" onclick="prevClue()">&#8592;</button>
     <span class="clue-nav-label" id="clue-nav-label">—</span>
@@ -388,6 +382,8 @@
       <button class="action-btn" onclick="revealLetter()">Reveal</button>
     </div>
   </div>
+  <div class="grid-wrap"><div class="crossword-grid" id="grid"></div></div>
+  <div class="clue-bar"><div class="clue-bar-text" id="clue-bar-text">Tap a cell to begin</div></div>
   <div class="keyboard">
     <div class="kb-row">
       <button class="kb-key" onclick="kbInput('Q')">Q</button><button class="kb-key" onclick="kbInput('W')">W</button><button class="kb-key" onclick="kbInput('E')">E</button><button class="kb-key" onclick="kbInput('R')">R</button><button class="kb-key" onclick="kbInput('T')">T</button><button class="kb-key" onclick="kbInput('Y')">Y</button><button class="kb-key" onclick="kbInput('U')">U</button><button class="kb-key" onclick="kbInput('I')">I</button><button class="kb-key" onclick="kbInput('O')">O</button><button class="kb-key" onclick="kbInput('P')">P</button>
@@ -780,6 +776,11 @@ function showStartScreen(){
   const d=new Date();
   document.getElementById('start-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
   document.getElementById('start-topic').textContent=PUZZLE.topic;
+  document.getElementById('start-topic-label').textContent="Today's Topic";
+  if(puzzleAlreadyCompleted&&PUZZLE.next_topic&&PUZZLE.next_topic!=='TBD'){
+    document.getElementById('start-topic').textContent=PUZZLE.next_topic;
+    document.getElementById('start-topic-label').textContent="Tomorrow's Topic";
+  }
   document.getElementById('start-username').textContent=userProfile?.username||currentUser?.email?.split('@')[0]||'—';
   document.getElementById('start-streak').textContent=streakDisplay(userStreak);
   const banner=document.getElementById('completed-banner');
@@ -879,12 +880,22 @@ function loadProgress(){
 }
 
 // ── NAVIGATION ──
-function startGame(){showScreen('game-screen');initGame();}
+function startGame(){
+  showScreen('game-screen');
+  initGame();
+}
+
+// iOS keyboard press highlight
+document.querySelectorAll('.kb-key').forEach(btn=>{
+  btn.addEventListener('touchstart',()=>{btn.classList.add('pressed');},{passive:true});
+  btn.addEventListener('touchend',()=>{setTimeout(()=>btn.classList.remove('pressed'),120);},{passive:true});
+  btn.addEventListener('touchcancel',()=>{btn.classList.remove('pressed');},{passive:true});
+});
 function goToStart(){
   if(started)saveProgress();
   clearInterval(timerInterval);timerInterval=null;
   document.getElementById('success-overlay').classList.remove('open');
-  showStartScreen();
+  showScreen('start-screen');
 }
 
 // ── GAME INIT ──
@@ -899,7 +910,6 @@ function initGame(){
   document.getElementById('timer').className='timer';
   buildClueList();
   buildGrid(computeNumbers());
-  document.getElementById('puzzle-topic-end').textContent=PUZZLE.topic;
   if(PUZZLE.next_topic&&PUZZLE.next_topic!=='TBD'){
     document.getElementById('next-topic-val').textContent=PUZZLE.next_topic;
     document.getElementById('success-next-topic').style.display='block';
@@ -908,7 +918,7 @@ function initGame(){
   }
   const restored=loadProgress();
   if(restored){started=true;startTimer();}
-  jumpToClueIndex(0);
+  requestAnimationFrame(()=>jumpToClueIndex(0));
 }
 
 function buildClueList(){
@@ -1030,29 +1040,14 @@ function kbInput(letter){
   if(!started)startTimer();
   if(isLocked(selectedRow,selectedCol)){advanceSelection();return;}
   userGrid[selectedRow][selectedCol]=letter;
-  const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);
-  if(lt){
-    lt.textContent=letter;
-    lt.classList.remove('popping');
-    void lt.offsetWidth; // reflow to restart animation
-    lt.classList.add('popping');
-    setTimeout(()=>lt.classList.remove('popping'),150);
-  }
+  const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=letter;
   const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
   cell.classList.remove('correct','wrong');
   if(instantCheck){
     const ok=PUZZLE.solution[selectedRow][selectedCol]===letter;
     cell.classList.add(ok?'correct':'wrong');
-    if(ok){
-      completedCells.add(`${selectedRow},${selectedCol}`);
-      if(navigator.vibrate)navigator.vibrate(8);
-    }else{
-      cell.classList.add('shaking');
-      setTimeout(()=>cell.classList.remove('shaking'),300);
-      if(navigator.vibrate)navigator.vibrate([10,10,10]);
-    }
-  }else{
-    if(navigator.vibrate)navigator.vibrate(6);
+    if(ok)completedCells.add(`${selectedRow},${selectedCol}`);
+    else{cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
   }
   saveProgress();advanceSelection();checkCompletion();
 }
@@ -1147,7 +1142,6 @@ function checkCompletion(){
   }
   completionHandled=true;
   stopTimer();
-  if(navigator.vibrate)navigator.vibrate([40,30,40,30,80]);
   localStorage.removeItem('tmt_progress');
   puzzleAlreadyCompleted=true;
   showSuccess(0);
