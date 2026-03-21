@@ -116,7 +116,6 @@
   .cell.correct .cell-letter{color:var(--correct);}
   .cell.wrong{background:var(--wrong-bg);}
   .cell.wrong .cell-letter{color:var(--wrong);}
-  .cell.active{background:var(--highlight-active) !important;outline:2.5px solid var(--accent);outline-offset:-2px;z-index:1;}
   .cell.active .cell-letter{color:var(--text) !important;}
   .cell-num{position:absolute;top:1px;left:2px;font-size:calc(var(--cell-size)*0.22);font-weight:600;color:var(--text);line-height:1;pointer-events:none;}
   .cell-letter{font-size:calc(var(--cell-size)*0.50);font-weight:600;color:var(--text);text-transform:uppercase;line-height:1;pointer-events:none;}
@@ -191,6 +190,11 @@
   @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
   @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
   .cell.shaking{animation:shake 0.3s ease;}
+  @keyframes letterPop{0%{transform:scale(0.4);opacity:0}60%{transform:scale(1.25)}100%{transform:scale(1);opacity:1}}
+  .cell-letter.popping{animation:letterPop 0.12s ease-out;}
+  @keyframes cellActivePop{0%{transform:scale(1.06)}100%{transform:scale(1)}}
+  .cell.active{background:var(--highlight-active) !important;outline:2.5px solid var(--accent);outline-offset:-2px;z-index:1;animation:cellActivePop 0.1s ease-out;}
+  .kb-key:active{background:var(--border);transform:scale(0.88);box-shadow:none;transition:transform 0.06s;}
 
   /* CLUE LIST MODAL */
   .clue-list-section{margin-bottom:16px;}
@@ -362,7 +366,7 @@
     </div>
     <div class="header-right">
       <div class="header-check-wrap">
-        <span class="header-check-label">Live</span>
+        <span class="header-check-label">Check</span>
         <label class="toggle">
           <input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)">
           <span class="slider"></span>
@@ -373,6 +377,8 @@
       <button class="icon-btn" onclick="openViewModal()">View</button>
     </div>
   </header>
+  <div class="grid-wrap"><div class="crossword-grid" id="grid"></div></div>
+  <div class="clue-bar"><div class="clue-bar-text" id="clue-bar-text">Tap a cell to begin</div></div>
   <div class="clue-nav-top">
     <button class="clue-nav-btn" onclick="prevClue()">&#8592;</button>
     <span class="clue-nav-label" id="clue-nav-label">—</span>
@@ -382,8 +388,6 @@
       <button class="action-btn" onclick="revealLetter()">Reveal</button>
     </div>
   </div>
-  <div class="grid-wrap"><div class="crossword-grid" id="grid"></div></div>
-  <div class="clue-bar"><div class="clue-bar-text" id="clue-bar-text">Tap a cell to begin</div></div>
   <div class="keyboard">
     <div class="kb-row">
       <button class="kb-key" onclick="kbInput('Q')">Q</button><button class="kb-key" onclick="kbInput('W')">W</button><button class="kb-key" onclick="kbInput('E')">E</button><button class="kb-key" onclick="kbInput('R')">R</button><button class="kb-key" onclick="kbInput('T')">T</button><button class="kb-key" onclick="kbInput('Y')">Y</button><button class="kb-key" onclick="kbInput('U')">U</button><button class="kb-key" onclick="kbInput('I')">I</button><button class="kb-key" onclick="kbInput('O')">O</button><button class="kb-key" onclick="kbInput('P')">P</button>
@@ -451,7 +455,6 @@
     <div class="success-streak" id="final-streak"></div>
     <div class="success-rank" id="final-rank"></div>
     <div class="success-meta" id="success-date"></div>
-    <div class="success-meta">Topic: <span id="puzzle-topic-end"></span></div>
     <div class="success-next-topic" id="success-next-topic" style="display:none;">📅 Tomorrow's topic: <strong id="next-topic-val"></strong></div>
     <button class="success-btn" onclick="openLeaderboardFromSuccess()">🏆 View Leaderboard</button>
     <button class="success-btn outline" onclick="goToStart()">Back to Home</button>
@@ -881,7 +884,7 @@ function goToStart(){
   if(started)saveProgress();
   clearInterval(timerInterval);timerInterval=null;
   document.getElementById('success-overlay').classList.remove('open');
-  showScreen('start-screen');
+  showStartScreen();
 }
 
 // ── GAME INIT ──
@@ -1027,14 +1030,29 @@ function kbInput(letter){
   if(!started)startTimer();
   if(isLocked(selectedRow,selectedCol)){advanceSelection();return;}
   userGrid[selectedRow][selectedCol]=letter;
-  const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=letter;
+  const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);
+  if(lt){
+    lt.textContent=letter;
+    lt.classList.remove('popping');
+    void lt.offsetWidth; // reflow to restart animation
+    lt.classList.add('popping');
+    setTimeout(()=>lt.classList.remove('popping'),150);
+  }
   const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
   cell.classList.remove('correct','wrong');
   if(instantCheck){
     const ok=PUZZLE.solution[selectedRow][selectedCol]===letter;
     cell.classList.add(ok?'correct':'wrong');
-    if(ok)completedCells.add(`${selectedRow},${selectedCol}`);
-    else{cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
+    if(ok){
+      completedCells.add(`${selectedRow},${selectedCol}`);
+      if(navigator.vibrate)navigator.vibrate(8);
+    }else{
+      cell.classList.add('shaking');
+      setTimeout(()=>cell.classList.remove('shaking'),300);
+      if(navigator.vibrate)navigator.vibrate([10,10,10]);
+    }
+  }else{
+    if(navigator.vibrate)navigator.vibrate(6);
   }
   saveProgress();advanceSelection();checkCompletion();
 }
@@ -1129,6 +1147,7 @@ function checkCompletion(){
   }
   completionHandled=true;
   stopTimer();
+  if(navigator.vibrate)navigator.vibrate([40,30,40,30,80]);
   localStorage.removeItem('tmt_progress');
   puzzleAlreadyCompleted=true;
   showSuccess(0);
@@ -1151,7 +1170,6 @@ function showSuccess(myRank){
   document.getElementById('final-streak').textContent=userStreak>0?streakDisplay(userStreak):'';
   document.getElementById('final-rank').textContent=myRank>0?`#${myRank} on today's leaderboard`:'';
   document.getElementById('success-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
-  document.getElementById('puzzle-topic-end').textContent=PUZZLE.topic;
   document.getElementById('success-overlay').classList.add('open');
 }
 
