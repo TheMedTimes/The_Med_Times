@@ -361,13 +361,6 @@
       <div class="date-label" id="date-label"></div>
     </div>
     <div class="header-right">
-      <div class="header-check-wrap">
-        <span class="header-check-label">Live</span>
-        <label class="toggle">
-          <input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)">
-          <span class="slider"></span>
-        </label>
-      </div>
       <div class="timer" id="timer">0:00</div>
       <button class="icon-btn" onclick="openClueList()">Clues</button>
       <button class="icon-btn" onclick="openViewModal()">View</button>
@@ -402,6 +395,16 @@
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title">Settings</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border);margin-bottom:16px;">
+      <div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);">Live Check</div>
+        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Instantly marks correct / wrong letters</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
     <div class="theme-options">
       <div class="theme-opt selected" onclick="setTheme('light')" id="opt-light">
         <div class="theme-swatch" style="background:linear-gradient(135deg,#f7f4ef,#c8392b)"></div>
@@ -468,7 +471,7 @@ let PUZZLE=null,currentUser=null,userProfile=null,userStreak=0;
 let userGrid=[],selectedRow=-1,selectedCol=-1;
 let direction='across';
 let timerInterval=null,seconds=0,started=false,timerStopped=false;
-let instantCheck=false,completedCells=new Set();
+let instantCheck=true,completedCells=new Set();
 let allClues=[],currentClueIndex=0;
 let countdownInterval=null;
 let puzzleAlreadyCompleted=false;
@@ -863,9 +866,10 @@ function loadProgress(){
     if(state.date!==getTodayString())return false;
     const S=PUZZLE.size;
     userGrid=state.grid;seconds=state.seconds||0;
-    instantCheck=state.instantCheck||false;
+    instantCheck=state.instantCheck!==undefined?state.instantCheck:true;
     completedCells=new Set(state.completedCells||[]);
-    document.getElementById('instant-check-toggle').checked=instantCheck;
+    const toggle=document.getElementById('instant-check-toggle');
+    if(toggle)toggle.checked=instantCheck;
     for(let r=0;r<S;r++)for(let c=0;c<S;c++){
       if(PUZZLE.solution[r][c]==='#')continue;
       const lt=document.getElementById(`letter-${r}-${c}`);
@@ -895,7 +899,7 @@ function goToStart(){
   if(started)saveProgress();
   clearInterval(timerInterval);timerInterval=null;
   document.getElementById('success-overlay').classList.remove('open');
-  showScreen('start-screen');
+  showStartScreen();
 }
 
 // ── GAME INIT ──
@@ -917,7 +921,7 @@ function initGame(){
     document.getElementById('success-next-topic').style.display='none';
   }
   const restored=loadProgress();
-  if(restored){started=true;startTimer();}
+  if(restored&&!puzzleAlreadyCompleted){started=true;startTimer();}
   requestAnimationFrame(()=>jumpToClueIndex(0));
 }
 
