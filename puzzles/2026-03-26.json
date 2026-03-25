@@ -1,0 +1,416 @@
+{
+  "date": "2026-03-26",
+  "topic": "Bloodstream and Cardiovascular System Infections",
+  "next_topic": "GIT Pharmacology",
+  "size": 15,
+  "solution": [
+    [
+      "L",
+      "Y",
+      "M",
+      "E",
+      "#",
+      "P",
+      "#",
+      "#",
+      "A",
+      "#",
+      "S",
+      "A",
+      "N",
+      "D",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "Y",
+      "#",
+      "#",
+      "R",
+      "#",
+      "#",
+      "B",
+      "#",
+      "T",
+      "#",
+      "#",
+      "U",
+      "#"
+    ],
+    [
+      "T",
+      "R",
+      "O",
+      "P",
+      "H",
+      "O",
+      "Z",
+      "O",
+      "I",
+      "T",
+      "E",
+      "S",
+      "#",
+      "K",
+      "#"
+    ],
+    [
+      "S",
+      "#",
+      "C",
+      "#",
+      "#",
+      "L",
+      "#",
+      "#",
+      "O",
+      "#",
+      "P",
+      "#",
+      "#",
+      "E",
+      "#"
+    ],
+    [
+      "U",
+      "#",
+      "A",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "T",
+      "#",
+      "L",
+      "D",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "T",
+      "#",
+      "R",
+      "#",
+      "#",
+      "N",
+      "#",
+      "#",
+      "R",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "S",
+      "#",
+      "D",
+      "#",
+      "#",
+      "G",
+      "#",
+      "#",
+      "O",
+      "#",
+      "D",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "U",
+      "#",
+      "I",
+      "#",
+      "Y",
+      "E",
+      "S",
+      "#",
+      "P",
+      "#",
+      "D",
+      "#",
+      "T",
+      "W",
+      "O"
+    ],
+    [
+      "G",
+      "#",
+      "T",
+      "#",
+      "#",
+      "D",
+      "#",
+      "#",
+      "H",
+      "#",
+      "E",
+      "#",
+      "#",
+      "E",
+      "#"
+    ],
+    [
+      "A",
+      "#",
+      "I",
+      "#",
+      "B",
+      "#",
+      "T",
+      "#",
+      "I",
+      "#",
+      "R",
+      "A",
+      "P",
+      "I",
+      "D"
+    ],
+    [
+      "M",
+      "#",
+      "S",
+      "#",
+      "R",
+      "#",
+      "S",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "#",
+      "L",
+      "#"
+    ],
+    [
+      "U",
+      "#",
+      "#",
+      "#",
+      "U",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "C",
+      "O",
+      "N",
+      "S",
+      "#"
+    ],
+    [
+      "S",
+      "U",
+      "B",
+      "A",
+      "C",
+      "U",
+      "T",
+      "E",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "H",
+      "#",
+      "H",
+      "#",
+      "E",
+      "#",
+      "S",
+      "#",
+      "W",
+      "I",
+      "D",
+      "A",
+      "L",
+      "#",
+      "#"
+    ],
+    [
+      "I",
+      "#",
+      "I",
+      "#",
+      "I",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "L",
+      "#",
+      "#",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 4,
+        "clue": "Borrelia burgdorferi causes _ disease"
+      },
+      {
+        "number": 5,
+        "row": 0,
+        "col": 10,
+        "len": 4,
+        "clue": "Vector of Leishmaniasis is _ fly"
+      },
+      {
+        "number": 7,
+        "row": 2,
+        "col": 0,
+        "len": 12,
+        "clue": "Inside RBCs hepatic merozoites transform into _"
+      },
+      {
+        "number": 8,
+        "row": 4,
+        "col": 10,
+        "len": 2,
+        "clue": "Amastigotes inside macrophages are _ bodies"
+      },
+      {
+        "number": 9,
+        "row": 7,
+        "col": 4,
+        "len": 3,
+        "clue": "Is S. typhi infection more common than paratyphi"
+      },
+      {
+        "number": 10,
+        "row": 7,
+        "col": 12,
+        "len": 3,
+        "clue": "In a blood culture set _ bottles are collected"
+      },
+      {
+        "number": 14,
+        "row": 9,
+        "col": 10,
+        "len": 5,
+        "clue": "Evolution of acute endocarditis is"
+      },
+      {
+        "number": 15,
+        "row": 11,
+        "col": 10,
+        "len": 4,
+        "clue": "Early prosthetic valve endocarditis causative"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 0,
+        "len": 8,
+        "clue": "IE is classified into acute and _"
+      },
+      {
+        "number": 19,
+        "row": 13,
+        "col": 8,
+        "len": 5,
+        "clue": "Test for typhoid"
+      }
+    ],
+    "down": [
+      {
+        "number": 2,
+        "row": 0,
+        "col": 2,
+        "len": 11,
+        "clue": "Infection of the myocardium"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 5,
+        "len": 9,
+        "clue": "PR interval is _ in ARF"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 8,
+        "len": 11,
+        "clue": "Nutritionally variant streptococci"
+      },
+      {
+        "number": 5,
+        "row": 0,
+        "col": 10,
+        "len": 10,
+        "clue": "Fever pattern seen in enteric fever"
+      },
+      {
+        "number": 6,
+        "row": 0,
+        "col": 13,
+        "len": 4,
+        "clue": "Diagnostic criteria for IE"
+      },
+      {
+        "number": 7,
+        "row": 2,
+        "col": 0,
+        "len": 13,
+        "clue": "Scrub typhus - Orientia _"
+      },
+      {
+        "number": 11,
+        "row": 7,
+        "col": 13,
+        "len": 5,
+        "clue": "L. interrogans causes leptospirosis or _ disease"
+      },
+      {
+        "number": 12,
+        "row": 9,
+        "col": 4,
+        "len": 6,
+        "clue": "African sleeping sickness caused by Trypanosoma _"
+      },
+      {
+        "number": 13,
+        "row": 9,
+        "col": 6,
+        "len": 6,
+        "clue": "Vector of T. brucei is _ fly"
+      },
+      {
+        "number": 16,
+        "row": 11,
+        "col": 11,
+        "len": 4,
+        "clue": "Salmonella is transmitted via _ route"
+      },
+      {
+        "number": 18,
+        "row": 12,
+        "col": 2,
+        "len": 3,
+        "clue": "Conventional blood culture broth"
+      }
+    ]
+  }
+}
