@@ -1,0 +1,451 @@
+{
+  "date": "2026-03-27",
+  "topic": "GIT Pharmacology",
+  "next_topic": "TBD",
+  "size": 15,
+  "solution": [
+    [
+      "S",
+      "Y",
+      "S",
+      "T",
+      "E",
+      "M",
+      "I",
+      "C",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "U",
+      "#",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#",
+      "S",
+      "O",
+      "L",
+      "U",
+      "B",
+      "L",
+      "E"
+    ],
+    [
+      "L",
+      "#",
+      "#",
+      "#",
+      "#",
+      "G",
+      "#",
+      "#",
+      "U",
+      "#",
+      "#",
+      "#",
+      "L",
+      "#",
+      "M"
+    ],
+    [
+      "F",
+      "#",
+      "#",
+      "P",
+      "A",
+      "N",
+      "T",
+      "O",
+      "P",
+      "R",
+      "A",
+      "Z",
+      "O",
+      "L",
+      "E"
+    ],
+    [
+      "E",
+      "#",
+      "#",
+      "A",
+      "#",
+      "E",
+      "#",
+      "#",
+      "E",
+      "#",
+      "V",
+      "#",
+      "C",
+      "#",
+      "T"
+    ],
+    [
+      "N",
+      "#",
+      "#",
+      "L",
+      "#",
+      "S",
+      "#",
+      "#",
+      "R",
+      "#",
+      "O",
+      "#",
+      "K",
+      "#",
+      "I"
+    ],
+    [
+      "A",
+      "N",
+      "T",
+      "A",
+      "C",
+      "I",
+      "D",
+      "S",
+      "#",
+      "#",
+      "I",
+      "#",
+      "#",
+      "#",
+      "C"
+    ],
+    [
+      "M",
+      "#",
+      "#",
+      "N",
+      "#",
+      "A",
+      "#",
+      "I",
+      "V",
+      "#",
+      "D",
+      "R",
+      "Y",
+      "#",
+      "S"
+    ],
+    [
+      "I",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "L",
+      "#",
+      "#",
+      "E",
+      "#",
+      "E",
+      "#",
+      "#"
+    ],
+    [
+      "D",
+      "#",
+      "#",
+      "S",
+      "I",
+      "X",
+      "#",
+      "I",
+      "#",
+      "#",
+      "D",
+      "#",
+      "S",
+      "#",
+      "T"
+    ],
+    [
+      "E",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "C",
+      "#",
+      "W",
+      "#",
+      "S",
+      "#",
+      "#",
+      "W"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "T",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "A",
+      "#",
+      "H",
+      "#",
+      "#",
+      "E"
+    ],
+    [
+      "F",
+      "O",
+      "U",
+      "R",
+      "#",
+      "#",
+      "#",
+      "N",
+      "O",
+      "T",
+      "#",
+      "O",
+      "R",
+      "A",
+      "L"
+    ],
+    [
+      "#",
+      "R",
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "E",
+      "A",
+      "R",
+      "#",
+      "#",
+      "V"
+    ],
+    [
+      "#",
+      "S",
+      "#",
+      "N",
+      "E",
+      "E",
+      "D",
+      "#",
+      "#",
+      "R",
+      "#",
+      "T",
+      "R",
+      "U",
+      "E"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 8,
+        "clue": "Antacids are __ or nonsystemic"
+      },
+      {
+        "number": 3,
+        "row": 1,
+        "col": 8,
+        "len": 7,
+        "clue": "Proton pump inhibitors are lipid __"
+      },
+      {
+        "number": 6,
+        "row": 3,
+        "col": 3,
+        "len": 12,
+        "clue": "__ and esomeprazole can also be given IV"
+      },
+      {
+        "number": 8,
+        "row": 6,
+        "col": 0,
+        "len": 8,
+        "clue": "Drugs that neutralize gastric acid"
+      },
+      {
+        "number": 10,
+        "row": 7,
+        "col": 7,
+        "len": 2,
+        "clue": "5-HT3 Antagonist can be given orally, IM and"
+      },
+      {
+        "number": 11,
+        "row": 7,
+        "col": 10,
+        "len": 3,
+        "clue": "Sedation and _ mouth are side effects of hyoscine"
+      },
+      {
+        "number": 13,
+        "row": 9,
+        "col": 3,
+        "len": 3,
+        "clue": "Hyoscine (0.4-0.6 mg) acts for _ hours"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 0,
+        "len": 4,
+        "clue": "Pepsin is active only below a pH of"
+      },
+      {
+        "number": 19,
+        "row": 12,
+        "col": 7,
+        "len": 3,
+        "clue": "Chemoreceptor trigger zone is _ protected by BBB"
+      },
+      {
+        "number": 20,
+        "row": 12,
+        "col": 11,
+        "len": 4,
+        "clue": "Route of administration of antacids"
+      },
+      {
+        "number": 21,
+        "row": 13,
+        "col": 9,
+        "len": 3,
+        "clue": "Transdermal hyoscine patch is applied behind __"
+      },
+      {
+        "number": 22,
+        "row": 14,
+        "col": 3,
+        "len": 4,
+        "clue": "Proton pump inhibitors __ acid for activation"
+      },
+      {
+        "number": 23,
+        "row": 14,
+        "col": 11,
+        "len": 4,
+        "clue": "T or F - H2 Receptor Blockers can cross placenta"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 11,
+        "clue": "Omeprazole is activated into"
+      },
+      {
+        "number": 2,
+        "row": 0,
+        "col": 5,
+        "len": 8,
+        "clue": "Aq. Suspension of magnesium hydroxide is milk of _"
+      },
+      {
+        "number": 3,
+        "row": 1,
+        "col": 8,
+        "len": 5,
+        "clue": "ORS with added amino acids is __ ORS"
+      },
+      {
+        "number": 4,
+        "row": 1,
+        "col": 12,
+        "len": 5,
+        "clue": "Neuroleptics _ D2 receptors in the CTZ"
+      },
+      {
+        "number": 5,
+        "row": 1,
+        "col": 14,
+        "len": 7,
+        "clue": "Drugs that produce vomiting"
+      },
+      {
+        "number": 6,
+        "row": 3,
+        "col": 3,
+        "len": 12,
+        "clue": "5-HT3 Antagonist with longest half life"
+      },
+      {
+        "number": 7,
+        "row": 3,
+        "col": 10,
+        "len": 7,
+        "clue": "H2 Receptor blockers should be __ in pregnancy"
+      },
+      {
+        "number": 9,
+        "row": 6,
+        "col": 7,
+        "len": 8,
+        "clue": "Simethicone is a __ polymer"
+      },
+      {
+        "number": 12,
+        "row": 7,
+        "col": 12,
+        "len": 3,
+        "clue": "Can antacids cause rebound hyperacidity"
+      },
+      {
+        "number": 14,
+        "row": 9,
+        "col": 14,
+        "len": 6,
+        "clue": "Ranitidine acts for _ hours"
+      },
+      {
+        "number": 15,
+        "row": 10,
+        "col": 9,
+        "len": 5,
+        "clue": "Adequate _ intake is important with bulk laxatives"
+      },
+      {
+        "number": 16,
+        "row": 10,
+        "col": 11,
+        "len": 5,
+        "clue": "Duration of sodium bicarbonate action is"
+      },
+      {
+        "number": 18,
+        "row": 12,
+        "col": 1,
+        "len": 3,
+        "clue": "Used in replacement of fluid and electrolytes"
+      }
+    ]
+  }
+}
