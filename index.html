@@ -97,6 +97,7 @@
   .header-left{display:flex;flex-direction:column;}
   .logo{font-family:var(--font-display);font-size:18px;font-weight:900;color:var(--accent);cursor:pointer;line-height:1;}
   .archive-back-btn{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--accent);background:none;border:none;cursor:pointer;padding:0;line-height:1;display:none;}
+  .date-label{font-size:10px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;}
   .archive-badge{display:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--highlight-active);color:#92400e;padding:2px 8px;border-radius:6px;margin-top:3px;width:fit-content;}
   [data-archive="true"] .archive-back-btn{display:block;}
   [data-archive="true"] .logo{display:none;}
@@ -416,6 +417,7 @@
     <div class="header-left">
       <button class="archive-back-btn" onclick="exitArchiveMode()">← Back</button>
       <div class="logo" onclick="goToStart()">TheMedTimes</div>
+      <div class="date-label" id="date-label"></div>
       <div class="archive-badge">Yesterday's Puzzle</div>
     </div>
     <div class="header-right">
