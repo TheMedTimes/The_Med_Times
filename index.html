@@ -7,6 +7,8 @@
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="mobile-web-app-capable" content="yes">
+<!-- Lucide icons -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
   :root {
@@ -24,6 +26,11 @@
   .screen{display:none;flex-direction:column;flex:1;overflow:hidden;}
   .screen.active{display:flex;}
 
+  /* LUCIDE ICON HELPERS */
+  .ic{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .ic svg{stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+  .start-card-icon .ic svg{stroke:var(--accent);}
+
   /* AUTH */
   #auth-screen{align-items:center;justify-content:center;padding:32px 24px 48px;min-height:100svh;min-height:100dvh;position:relative;overflow-y:auto;}
   .auth-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;max-width:360px;}
@@ -35,7 +42,9 @@
   .auth-input{width:100%;display:block;margin:0 auto 12px;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:15px;font-family:var(--font-body);text-align:center;}
   .auth-input::placeholder{color:var(--text-muted);}
   .auth-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,57,43,0.18);}
-  .auth-submit{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font-display);-webkit-appearance:none;margin-top:4px;text-align:center;   /* add this line */}
+  .auth-select{width:100%;display:block;margin:0 auto 12px;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:15px;font-family:var(--font-body);text-align:center;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237a7570' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+  .auth-select:focus{outline:none;border-color:var(--accent);}
+  .auth-submit{width:100%;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:var(--font-display);-webkit-appearance:none;margin-top:4px;text-align:center;}
   .google-btn{width:100%;padding:14px;background:#fff;color:#1a1a1a;border:1.5px solid var(--border);border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px;-webkit-appearance:none;box-shadow:0 2px 8px rgba(0,0,0,0.08);}
   .google-btn:active{transform:scale(0.98);}
   .google-icon{width:20px;height:20px;flex-shrink:0;}
@@ -46,6 +55,10 @@
   .start-bg-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(15,1fr);grid-template-rows:repeat(20,1fr);opacity:0.055;pointer-events:none;}
   .start-bg-cell{border:1px solid var(--text);}
   .start-bg-cell.filled{background:var(--text);}
+  .start-topbar{position:absolute;top:16px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 20px;z-index:2;}
+  .start-icon-btn{background:var(--surface);border:1px solid var(--border);border-radius:10px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.07);-webkit-appearance:none;color:var(--text);}
+  .start-icon-btn:active{background:var(--border);}
+  .start-icon-btn.hidden{visibility:hidden;pointer-events:none;}
   .start-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;max-width:400px;}
   .start-badge{background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:14px;border:1px solid var(--accent);}
   .start-logo{font-family:var(--font-display);font-size:clamp(36px,11vw,60px);font-weight:900;color:var(--accent);letter-spacing:-1px;line-height:1;text-align:center;margin-bottom:6px;}
@@ -53,22 +66,21 @@
   .start-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4px 20px;width:100%;margin-bottom:20px;box-shadow:0 4px 24px rgba(0,0,0,0.07);}
   .start-card-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
   .start-card-row:last-child{border-bottom:none;}
-  .start-card-icon{font-size:20px;width:32px;text-align:center;flex-shrink:0;}
+  .start-card-icon{width:32px;text-align:center;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:var(--accent);}
   .start-card-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin-bottom:2px;}
   .start-card-value{font-size:15px;font-weight:600;color:var(--text);}
-  .play-btn{width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:16px;font-size:17px;font-weight:700;font-family:var(--font-display);cursor:pointer;box-shadow:0 6px 24px rgba(200,57,43,0.35);display:flex;align-items:center;justify-content:center;margin-bottom:10px;-webkit-appearance:none;}
+  .play-btn{width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:16px;font-size:17px;font-weight:700;font-family:var(--font-display);cursor:pointer;box-shadow:0 6px 24px rgba(200,57,43,0.35);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;-webkit-appearance:none;}
   .play-btn:active{transform:scale(0.97);}
   .play-btn.completed{background:var(--correct);box-shadow:0 6px 24px rgba(22,163,74,0.3);}
   .leaderboard-btn{width:100%;padding:14px;background:none;border:1.5px solid var(--border);border-radius:16px;font-size:15px;font-weight:600;font-family:var(--font-body);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;-webkit-appearance:none;}
   .leaderboard-btn:active{background:var(--border);}
-  .completed-banner{background:var(--correct-bg);border:1px solid var(--correct);border-radius:12px;padding:10px 16px;width:100%;text-align:center;margin-bottom:12px;font-size:13px;color:var(--correct);font-weight:600;}
+  .completed-banner{background:var(--correct-bg);border:1px solid var(--correct);border-radius:12px;padding:10px 16px;width:100%;text-align:center;margin-bottom:12px;font-size:13px;color:var(--correct);font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;}
   .start-rules{margin-top:14px;font-size:12px;color:var(--text-muted);text-align:center;line-height:1.9;}
-  .start-signout{margin-top:12px;font-size:12px;color:var(--text-muted);text-align:center;cursor:pointer;text-decoration:underline;}
 
   /* NO PUZZLE */
   #no-puzzle-screen{align-items:center;justify-content:center;text-align:center;padding:40px 24px;}
   .no-puzzle-inner{display:flex;flex-direction:column;align-items:center;max-width:340px;margin:auto;}
-  .no-puzzle-emoji{font-size:64px;margin-bottom:16px;}
+  .no-puzzle-icon{color:var(--accent);margin-bottom:16px;}
   .no-puzzle-title{font-family:var(--font-display);font-size:30px;font-weight:900;color:var(--accent);margin-bottom:10px;}
   .no-puzzle-sub{font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:28px;}
   .countdown-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px 28px;box-shadow:0 4px 24px rgba(0,0,0,0.07);margin-bottom:16px;width:100%;}
@@ -84,11 +96,16 @@
   header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 8px;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;}
   .header-left{display:flex;flex-direction:column;}
   .logo{font-family:var(--font-display);font-size:18px;font-weight:900;color:var(--accent);cursor:pointer;line-height:1;}
-  .date-label{font-size:10px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;}
+  .archive-back-btn{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--accent);background:none;border:none;cursor:pointer;padding:0;line-height:1;display:none;}
+  .archive-badge{display:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--highlight-active);color:#92400e;padding:2px 8px;border-radius:6px;margin-top:3px;width:fit-content;}
+  [data-archive="true"] .archive-back-btn{display:block;}
+  [data-archive="true"] .logo{display:none;}
+  [data-archive="true"] .archive-badge{display:block;}
+  [data-archive="true"] #timer{visibility:hidden;}
   .header-right{display:flex;align-items:center;gap:8px;}
   .timer{font-family:var(--font-mono);font-size:18px;font-weight:500;color:var(--text);min-width:52px;text-align:right;}
   .timer.running{color:var(--accent);}
-  .icon-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;color:var(--text);font-size:16px;font-family:var(--font-body);font-weight:600;}
+  .icon-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;color:var(--text);font-size:14px;font-family:var(--font-body);font-weight:600;display:flex;align-items:center;gap:5px;}
   .header-check-wrap{display:flex;align-items:center;gap:6px;}
   .header-check-label{font-size:11px;font-weight:600;color:var(--text-muted);}
   .toggle{position:relative;width:36px;height:20px;flex-shrink:0;}
@@ -104,7 +121,7 @@
   .clue-nav-btn:active{background:var(--border);}
   .clue-nav-label{font-size:12px;font-weight:700;color:var(--accent);white-space:nowrap;font-family:var(--font-mono);}
   .check-actions{display:flex;gap:6px;margin-left:auto;flex-shrink:0;}
-  .action-btn{background:none;border:1.5px solid var(--wrong);border-radius:20px;padding:4px 11px;font-size:16px;font-weight:600;cursor:pointer;color:var(--wrong);font-family:var(--font-body);white-space:nowrap;-webkit-appearance:none;}
+  .action-btn{background:none;border:1.5px solid var(--wrong);border-radius:20px;padding:4px 11px;font-size:14px;font-weight:600;cursor:pointer;color:var(--wrong);font-family:var(--font-body);white-space:nowrap;-webkit-appearance:none;display:flex;align-items:center;gap:4px;}
 
   /* GRID */
   .grid-wrap{display:flex;justify-content:center;align-items:flex-start;padding:8px 4px 6px;background:var(--bg);flex-shrink:0;}
@@ -147,13 +164,43 @@
   .modal{background:var(--surface);border-radius:20px 20px 0 0;padding:20px 20px 48px;width:100%;max-width:480px;animation:slideUp 0.25s ease;}
   @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
   .modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
-  .modal-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:16px;text-align:center;}
+  .modal-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:16px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;}
   .theme-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
   .theme-opt{border:2px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;background:var(--bg);}
   .theme-opt.selected{border-color:var(--accent);background:var(--accent-light);}
   .theme-swatch{width:36px;height:36px;border-radius:50%;margin:0 auto 8px;}
   .theme-name{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text);}
   .modal-close{width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);-webkit-appearance:none;}
+
+  /* SETTINGS MODAL */
+  .settings-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:16px 0 10px;}
+  .settings-row{display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border);}
+  .settings-row:last-of-type{border-bottom:none;}
+  .settings-row-left{display:flex;flex-direction:column;}
+  .settings-row-label{font-size:14px;font-weight:600;color:var(--text);}
+  .settings-row-value{font-size:12px;color:var(--text-muted);margin-top:2px;}
+  .settings-row-sub{font-size:12px;color:var(--text-muted);margin-top:2px;}
+  .settings-edit-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:600;color:var(--accent);cursor:pointer;font-family:var(--font-body);}
+  .settings-signout{width:100%;padding:13px;background:none;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-weight:600;color:var(--text-muted);cursor:pointer;font-family:var(--font-body);margin-top:8px;-webkit-appearance:none;display:flex;align-items:center;justify-content:center;gap:8px;}
+  .settings-signout:active{background:var(--border);}
+
+  /* CONFIRM DIALOG */
+  .confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:400;align-items:center;justify-content:center;padding:24px;}
+  .confirm-overlay.open{display:flex;}
+  .confirm-card{background:var(--surface);border-radius:20px;padding:28px 24px;width:100%;max-width:320px;text-align:center;}
+  .confirm-title{font-family:var(--font-display);font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px;}
+  .confirm-sub{font-size:14px;color:var(--text-muted);margin-bottom:24px;line-height:1.5;}
+  .confirm-actions{display:flex;gap:10px;}
+  .confirm-btn{flex:1;padding:13px;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:var(--font-body);-webkit-appearance:none;}
+  .confirm-btn.primary{background:var(--accent);color:#fff;}
+  .confirm-btn.secondary{background:var(--bg);border:1.5px solid var(--border);color:var(--text);}
+
+  /* ARCHIVE PICKER MODAL */
+  .archive-option{display:flex;align-items:center;gap:14px;padding:16px;border:1.5px solid var(--border);border-radius:14px;cursor:pointer;margin-bottom:10px;background:var(--bg);}
+  .archive-option:active{background:var(--accent-light);border-color:var(--accent);}
+  .archive-option-icon{width:44px;height:44px;border-radius:12px;background:var(--accent-light);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent);}
+  .archive-option-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:2px;}
+  .archive-option-sub{font-size:12px;color:var(--text-muted);}
 
   /* LEADERBOARD MODAL */
   .lb-loading{text-align:center;padding:24px;color:var(--text-muted);font-size:14px;}
@@ -177,20 +224,26 @@
   .success-overlay.open{display:flex;}
   .success-card{background:var(--surface);border-radius:20px;padding:32px 24px;width:100%;max-width:360px;text-align:center;animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);}
   @keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-  .success-emoji{font-size:56px;margin-bottom:12px;}
+  .success-icon{margin-bottom:12px;display:flex;justify-content:center;}
   .success-title{font-family:var(--font-display);font-size:28px;font-weight:900;color:var(--accent);margin-bottom:6px;}
   .success-time{font-family:var(--font-mono);font-size:36px;color:var(--text);margin:12px 0;}
-  .success-streak{font-size:20px;margin-bottom:4px;}
+  .success-streak{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:6px;}
   .success-meta{font-size:13px;color:var(--text-muted);margin-bottom:6px;}
   .success-rank{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:4px;}
+  .success-penalty{font-size:13px;color:var(--wrong);font-weight:600;margin-bottom:4px;display:none;}
   .success-next-topic{font-size:13px;color:var(--text-muted);margin-bottom:16px;padding:8px 12px;background:var(--accent-light);border-radius:8px;border:1px solid var(--accent);}
   .success-next-topic strong{color:var(--accent);}
-  .success-btn{display:block;width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);margin-bottom:10px;-webkit-appearance:none;}
+  .success-archive-note{font-size:13px;color:var(--text-muted);margin-bottom:16px;padding:10px 14px;background:var(--highlight);border-radius:10px;line-height:1.5;display:none;}
+  .success-btn{display:block;width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);margin-bottom:10px;-webkit-appearance:none;display:flex;align-items:center;justify-content:center;gap:8px;}
   .success-btn.outline{background:none;border:1.5px solid var(--border);color:var(--text);}
   .confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;animation:confettiFall linear forwards;z-index:400;pointer-events:none;}
   @keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
   @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}40%{transform:translateX(3px)}60%{transform:translateX(-2px)}80%{transform:translateX(2px)}}
   .cell.shaking{animation:shake 0.3s ease;}
+
+  /* REVEAL PENALTY ANIMATION */
+  .penalty-pop{position:fixed;font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--wrong);pointer-events:none;z-index:600;animation:penaltyFloat 1.2s ease-out forwards;}
+  @keyframes penaltyFloat{0%{opacity:1;transform:translateY(0) scale(1)}60%{opacity:1;transform:translateY(-28px) scale(1.1)}100%{opacity:0;transform:translateY(-48px) scale(0.9)}}
 
   /* CLUE LIST MODAL */
   .clue-list-section{margin-bottom:16px;}
@@ -203,60 +256,11 @@
   .clue-text{font-size:13px;color:var(--text);line-height:1.4;}
   .clue-list-scroll{max-height:65vh;overflow-y:auto;padding-bottom:4px;}
 
-  /* START SCREEN TOP BAR */
-  .start-topbar{position:absolute;top:16px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 20px;z-index:2;}
-  .start-icon-btn{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:18px;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,0.07);-webkit-appearance:none;}
-  .start-icon-btn:active{background:var(--border);}
-  .start-icon-btn.hidden{visibility:hidden;pointer-events:none;}
-
-  /* ARCHIVE MODE BANNER in game header */
-  .archive-badge{display:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--highlight-active);color:#92400e;padding:2px 8px;border-radius:6px;margin-top:2px;}
-  [data-archive="true"] .archive-badge{display:inline-block;}
-  [data-archive="true"] #timer{visibility:hidden;}
-  .archive-back-btn{display:none;font-size:13px;font-weight:600;color:var(--accent);background:none;border:none;cursor:pointer;padding:0;font-family:var(--font-body);}
-  [data-archive="true"] .archive-back-btn{display:block;}
-  [data-archive="true"] .logo{display:none;}
-
-  /* REVEAL PENALTY ANIMATION */
-  .penalty-pop{position:fixed;font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--wrong);pointer-events:none;z-index:600;animation:penaltyFloat 1.2s ease-out forwards;}
-  @keyframes penaltyFloat{0%{opacity:1;transform:translateY(0) scale(1)}60%{opacity:1;transform:translateY(-28px) scale(1.1)}100%{opacity:0;transform:translateY(-48px) scale(0.9)}}
-
-  /* SETTINGS MODAL extras */
-  .settings-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:16px 0 10px;}
-  .settings-row{display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border);}
-  .settings-row:last-of-type{border-bottom:none;}
-  .settings-row-label{font-size:14px;font-weight:600;color:var(--text);}
-  .settings-row-sub{font-size:12px;color:var(--text-muted);margin-top:2px;}
-  .settings-signout{width:100%;padding:13px;background:none;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-weight:600;color:var(--text-muted);cursor:pointer;font-family:var(--font-body);margin-top:8px;-webkit-appearance:none;}
-  .settings-signout:active{background:var(--border);}
-
-  /* ARCHIVE SUCCESS overlay variant */
-  .success-archive-note{font-size:13px;color:var(--text-muted);margin-bottom:16px;padding:10px 14px;background:var(--highlight);border-radius:10px;line-height:1.5;}
-
-  /* College screen layout + consent */
-  #college-screen{
-    align-items:center;
-    justify-content:center;
-    padding:32px 24px 48px;
-    min-height:100svh;
-    min-height:100dvh;
-    position:relative;
-    overflow-y:auto;
-  }
-  .consent-row{
-    display:flex;
-    align-items:center;
-    gap:8px;
-    font-size:12px;
-    color:var(--text-muted);
-    margin:8px 0 12px;
-  }
-  .consent-row input{
-    margin-top:0px;
-  }
-  .consent-row span{
-    white-space:nowrap;
-  }
+  /* COLLEGE/YEAR SCREEN */
+  #college-screen{align-items:center;justify-content:center;padding:32px 24px 48px;min-height:100svh;min-height:100dvh;position:relative;overflow-y:auto;}
+  .consent-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted);margin:8px 0 12px;}
+  .consent-row input{margin-top:0;}
+  .year-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin:4px 0 8px;text-align:left;width:100%;}
 </style>
 </head>
 <body data-theme="light">
@@ -271,17 +275,15 @@
   </div>
 </div>
 
-<!-- AUTH SCREEN (Google only) -->
+<!-- AUTH SCREEN -->
 <div id="auth-screen" class="screen">
   <div class="start-bg-grid" id="auth-bg-grid"></div>
   <div class="auth-content">
     <div class="auth-logo">TheMedTimes</div>
-    <div class="auth-tagline">The daily crossword built for<br>2nd Year MBBS students</div>
+    <div class="auth-tagline">The daily crossword for MBBS students</div>
     <div class="auth-card">
       <div class="auth-mode-title" id="auth-title">Welcome</div>
-      <div class="auth-card-sub" id="auth-sub">
-        Sign in with Google to track your streak and compete on today's leaderboard.
-      </div>
+      <div class="auth-card-sub" id="auth-sub">Sign in with Google to track your streak and compete on today's leaderboard.</div>
       <button class="google-btn" onclick="signInWithGoogle()">
         <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
         Continue with Google
@@ -291,16 +293,25 @@
   </div>
 </div>
 
-<!-- COLLEGE PROMPT SCREEN -->
+<!-- COLLEGE + YEAR PROMPT SCREEN -->
 <div id="college-screen" class="screen">
   <div class="start-bg-grid" id="college-bg-grid"></div>
   <div class="auth-content" style="position:relative;z-index:1;">
     <div class="auth-logo">TheMedTimes</div>
     <div class="auth-tagline">One quick thing before you play</div>
     <div class="auth-card">
-      <div class="auth-mode-title">Your College</div>
-      <div class="auth-card-sub">Enter your college abbreviation so you appear correctly on the leaderboard</div>
-      <input class="auth-input" type="text" id="college-input" placeholder="e.g. BJMC, BAVMC, KEM" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()" autofocus>
+      <div class="auth-mode-title">About You</div>
+      <div class="auth-card-sub">This helps you appear correctly on the leaderboard</div>
+      <input class="auth-input" type="text" id="college-input" placeholder="College (e.g. BJMC, KEM, BAVMC)" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+      <div class="year-section-label">Your Year</div>
+      <select class="auth-select" id="year-input">
+        <option value="">— Select your year —</option>
+        <option value="1st Year">1st Year</option>
+        <option value="2nd Year">2nd Year</option>
+        <option value="3rd Year - Part 1">3rd Year – Part 1</option>
+        <option value="3rd Year - Part 2">3rd Year – Part 2</option>
+        <option value="Doctor">Doctor</option>
+      </select>
       <label class="consent-row">
         <input type="checkbox" id="lb-consent" checked>
         <span>Show my name and college on the leaderboard</span>
@@ -315,46 +326,59 @@
 <div id="start-screen" class="screen">
   <div class="start-bg-grid" id="start-bg-grid"></div>
   <div class="start-topbar">
-    <button class="start-icon-btn hidden" id="yesterday-btn" onclick="startArchiveGame()" title="Yesterday's puzzle">📖 Yesterday</button>
-    <button class="start-icon-btn" onclick="openSettingsModal()" title="Settings">⚙️</button>
+    <button class="start-icon-btn hidden" id="archive-btn" onclick="openArchiveModal()" title="Practice puzzles">
+      <span class="ic" data-lucide="book-open" style="width:20px;height:20px;"></span>
+    </button>
+    <button class="start-icon-btn" onclick="openSettingsModal()" title="Settings">
+      <span class="ic" data-lucide="settings" style="width:20px;height:20px;"></span>
+    </button>
   </div>
   <div class="start-content">
     <div class="start-badge">Daily Puzzle</div>
     <div class="start-logo">TheMedTimes</div>
-    <div class="start-tagline">The daily crossword built for<br>2nd Year MBBS students</div>
+    <div class="start-tagline">The daily crossword for MBBS students</div>
     <div class="start-card">
       <div class="start-card-row">
-        <div class="start-card-icon">📅</div>
+        <div class="start-card-icon"><span class="ic" data-lucide="calendar" style="width:20px;height:20px;"></span></div>
         <div>
           <div class="start-card-label">Today's Date</div>
           <div class="start-card-value" id="start-date">—</div>
         </div>
       </div>
       <div class="start-card-row">
-        <div class="start-card-icon">🧬</div>
+        <div class="start-card-icon"><span class="ic" data-lucide="microscope" style="width:20px;height:20px;"></span></div>
         <div>
           <div class="start-card-label" id="start-topic-label">Today's Topic</div>
           <div class="start-card-value" id="start-topic">—</div>
         </div>
       </div>
       <div class="start-card-row">
-        <div class="start-card-icon">👤</div>
+        <div class="start-card-icon"><span class="ic" data-lucide="user" style="width:20px;height:20px;"></span></div>
         <div>
           <div class="start-card-label">Signed in as</div>
           <div class="start-card-value" id="start-username">—</div>
         </div>
       </div>
       <div class="start-card-row">
-        <div class="start-card-icon">🔥</div>
+        <div class="start-card-icon"><span class="ic" data-lucide="flame" style="width:20px;height:20px;"></span></div>
         <div>
           <div class="start-card-label">Your Streak</div>
           <div class="start-card-value" id="start-streak">—</div>
         </div>
       </div>
     </div>
-    <div class="completed-banner" id="completed-banner" style="display:none;">✅ You've completed today's puzzle!</div>
-    <button class="play-btn" id="play-btn" onclick="startGame()">Play Today's Puzzle</button>
-    <button class="leaderboard-btn" onclick="openLeaderboard()">🏆 Today's Leaderboard</button>
+    <div class="completed-banner" id="completed-banner" style="display:none;">
+      <span class="ic" data-lucide="circle-check" style="width:16px;height:16px;color:var(--correct)"></span>
+      You've completed today's puzzle!
+    </div>
+    <button class="play-btn" id="play-btn" onclick="startGame()">
+      <span class="ic" data-lucide="play" style="width:18px;height:18px;"></span>
+      Play Today's Puzzle
+    </button>
+    <button class="leaderboard-btn" onclick="openLeaderboard()">
+      <span class="ic" data-lucide="trophy" style="width:18px;height:18px;color:var(--accent);"></span>
+      Today's Leaderboard
+    </button>
     <div class="start-rules">
       Tap a cell · Tap again to flip direction<br>
       Use arrows to move between clues<br>
@@ -366,7 +390,7 @@
 <!-- NO PUZZLE -->
 <div id="no-puzzle-screen" class="screen">
   <div class="no-puzzle-inner">
-    <div class="no-puzzle-emoji">🩺</div>
+    <div class="no-puzzle-icon"><span class="ic" data-lucide="stethoscope" style="width:64px;height:64px;"></span></div>
     <div class="no-puzzle-title">Come Back Tomorrow</div>
     <div class="no-puzzle-sub">Today's puzzle hasn't dropped yet.<br>Here's how long until the next one:</div>
     <div class="countdown-card">
@@ -392,12 +416,14 @@
     <div class="header-left">
       <button class="archive-back-btn" onclick="exitArchiveMode()">← Back</button>
       <div class="logo" onclick="goToStart()">TheMedTimes</div>
-      <div class="date-label" id="date-label"></div>
       <div class="archive-badge">Yesterday's Puzzle</div>
     </div>
     <div class="header-right">
       <div class="timer" id="timer">0:00</div>
-      <button class="icon-btn" onclick="openClueList()">Clues</button>
+      <button class="icon-btn" onclick="openClueList()">
+        <span class="ic" data-lucide="list" style="width:14px;height:14px;"></span>
+        Clues
+      </button>
     </div>
   </header>
   <div class="clue-nav-top">
@@ -405,8 +431,12 @@
     <span class="clue-nav-label" id="clue-nav-label">—</span>
     <button class="clue-nav-btn" onclick="nextClue()">&#8594;</button>
     <div class="check-actions">
-      <button class="action-btn" onclick="checkWord()">Check</button>
-      <button class="action-btn" onclick="revealLetter()">Reveal</button>
+      <button class="action-btn" onclick="checkWord()">
+        <span class="ic" data-lucide="check" style="width:13px;height:13px;"></span>Check
+      </button>
+      <button class="action-btn" onclick="revealLetter()">
+        <span class="ic" data-lucide="eye" style="width:13px;height:13px;"></span>Reveal
+      </button>
     </div>
   </div>
   <div class="grid-wrap"><div class="crossword-grid" id="grid"></div></div>
@@ -424,11 +454,40 @@
   </div>
 </div>
 
-<!-- SETTINGS MODAL (from start screen) -->
+<!-- ARCHIVE PICKER MODAL -->
+<div class="modal-overlay" id="archive-modal" onclick="closeArchiveModal(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">
+      <span class="ic" data-lucide="book-open" style="width:20px;height:20px;color:var(--accent)"></span>
+      Practice Puzzles
+    </div>
+    <div class="archive-option" onclick="startArchiveGame('yesterday')">
+      <div class="archive-option-icon"><span class="ic" data-lucide="calendar" style="width:22px;height:22px;"></span></div>
+      <div>
+        <div class="archive-option-title">Yesterday's Crossword</div>
+        <div class="archive-option-sub" id="archive-yesterday-sub">Practice with yesterday's puzzle</div>
+      </div>
+    </div>
+    <div class="archive-option" id="random-archive-option" onclick="startArchiveGame('random')">
+      <div class="archive-option-icon"><span class="ic" data-lucide="shuffle" style="width:22px;height:22px;"></span></div>
+      <div>
+        <div class="archive-option-title">Random Crossword</div>
+        <div class="archive-option-sub">A random puzzle from the archive</div>
+      </div>
+    </div>
+    <button class="modal-close" style="margin-top:6px;" onclick="closeArchiveModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL -->
 <div class="modal-overlay" id="settings-modal" onclick="closeSettingsModal(event)">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title">⚙️ Settings</div>
+    <div class="modal-title">
+      <span class="ic" data-lucide="settings" style="width:20px;height:20px;color:var(--accent)"></span>
+      Settings
+    </div>
     <div class="settings-section-title">Theme</div>
     <div class="theme-options">
       <div class="theme-opt selected" onclick="setTheme('light')" id="opt-light">
@@ -446,7 +505,7 @@
     </div>
     <div class="settings-section-title">Gameplay</div>
     <div class="settings-row">
-      <div>
+      <div class="settings-row-left">
         <div class="settings-row-label">Live Check</div>
         <div class="settings-row-sub">Instantly marks correct / wrong letters</div>
       </div>
@@ -456,8 +515,67 @@
       </label>
     </div>
     <div class="settings-section-title">Account</div>
-    <button class="settings-signout" onclick="signOut()">Sign out</button>
+    <div class="settings-row">
+      <div class="settings-row-left">
+        <div class="settings-row-label">Year</div>
+        <div class="settings-row-value" id="settings-year-val">—</div>
+      </div>
+      <button class="settings-edit-btn" onclick="openEditYear()">Change</button>
+    </div>
+    <div class="settings-row" style="border-bottom:none;">
+      <div class="settings-row-left">
+        <div class="settings-row-label">College</div>
+        <div class="settings-row-value" id="settings-college-val">—</div>
+      </div>
+      <button class="settings-edit-btn" onclick="openEditCollege()">Change</button>
+    </div>
+    <button class="settings-signout" onclick="confirmSignOut()">
+      <span class="ic" data-lucide="log-out" style="width:16px;height:16px;"></span>
+      Sign out
+    </button>
     <button class="modal-close" style="margin-top:12px;" onclick="closeSettingsModal()">Done</button>
+  </div>
+</div>
+
+<!-- EDIT YEAR MODAL -->
+<div class="modal-overlay" id="edit-year-modal" onclick="closeEditYear(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Change Year</div>
+    <select class="auth-select" id="edit-year-select" style="margin-bottom:16px;">
+      <option value="1st Year">1st Year</option>
+      <option value="2nd Year">2nd Year</option>
+      <option value="3rd Year - Part 1">3rd Year – Part 1</option>
+      <option value="3rd Year - Part 2">3rd Year – Part 2</option>
+      <option value="Doctor">Doctor</option>
+    </select>
+    <div class="auth-error" id="edit-year-error"></div>
+    <button class="modal-close" onclick="saveEditYear()">Save</button>
+    <button class="modal-close" style="background:none;border:1.5px solid var(--border);color:var(--text);margin-top:10px;" onclick="closeEditYear()">Cancel</button>
+  </div>
+</div>
+
+<!-- EDIT COLLEGE MODAL -->
+<div class="modal-overlay" id="edit-college-modal" onclick="closeEditCollege(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Change College</div>
+    <input class="auth-input" type="text" id="edit-college-input" placeholder="e.g. BJMC, KEM, BAVMC" style="text-transform:uppercase;margin-bottom:8px;" oninput="this.value=this.value.toUpperCase()">
+    <div class="auth-error" id="edit-college-error"></div>
+    <button class="modal-close" onclick="saveEditCollege()">Save</button>
+    <button class="modal-close" style="background:none;border:1.5px solid var(--border);color:var(--text);margin-top:10px;" onclick="closeEditCollege()">Cancel</button>
+  </div>
+</div>
+
+<!-- CONFIRM DIALOG -->
+<div class="confirm-overlay" id="confirm-overlay">
+  <div class="confirm-card">
+    <div class="confirm-title" id="confirm-title">Are you sure?</div>
+    <div class="confirm-sub" id="confirm-sub"></div>
+    <div class="confirm-actions">
+      <button class="confirm-btn secondary" onclick="closeConfirm()">Cancel</button>
+      <button class="confirm-btn primary" id="confirm-ok-btn">Confirm</button>
+    </div>
   </div>
 </div>
 
@@ -465,7 +583,10 @@
 <div class="modal-overlay" id="lb-modal" onclick="closeLbModal(event)">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title">🏆 Today's Leaderboard</div>
+    <div class="modal-title">
+      <span class="ic" data-lucide="trophy" style="width:20px;height:20px;color:#f59e0b"></span>
+      Today's Leaderboard
+    </div>
     <div class="lb-date" id="lb-date"></div>
     <div id="lb-content"><div class="lb-loading">Loading...</div></div>
     <div class="lb-your-rank" id="lb-your-rank" style="display:none;">Your rank: <span id="lb-rank-val">—</span></div>
@@ -486,16 +607,22 @@
 <!-- SUCCESS -->
 <div class="success-overlay" id="success-overlay">
   <div class="success-card">
-    <div class="success-emoji" id="success-emoji">🎉</div>
+    <div class="success-icon" id="success-icon"></div>
     <div class="success-title" id="success-title">Puzzle Complete!</div>
     <div class="success-time" id="final-time">—</div>
     <div class="success-streak" id="final-streak"></div>
     <div class="success-rank" id="final-rank"></div>
+    <div class="success-penalty" id="final-penalty"></div>
     <div class="success-meta" id="success-date"></div>
-    <div class="success-meta" id="final-penalty" style="color:var(--wrong);font-weight:600;margin-bottom:4px;display:none;"></div>
-    <div class="success-archive-note" id="archive-success-note" style="display:none;">Practice mode — no timer or leaderboard for yesterday's puzzle.</div>
-    <div class="success-next-topic" id="success-next-topic" style="display:none;">📅 Tomorrow's topic: <strong id="next-topic-val"></strong></div>
-    <button class="success-btn" id="success-lb-btn" onclick="openLeaderboardFromSuccess()">🏆 View Leaderboard</button>
+    <div class="success-archive-note" id="archive-success-note">Practice mode — no timer or leaderboard for this puzzle.</div>
+    <div class="success-next-topic" id="success-next-topic" style="display:none;">
+      <span class="ic" data-lucide="calendar" style="width:13px;height:13px;display:inline-flex;vertical-align:middle;margin-right:4px;"></span>
+      Tomorrow's topic: <strong id="next-topic-val"></strong>
+    </div>
+    <button class="success-btn" id="success-lb-btn" onclick="openLeaderboardFromSuccess()">
+      <span class="ic" data-lucide="trophy" style="width:16px;height:16px;"></span>
+      View Leaderboard
+    </button>
     <button class="success-btn outline" id="success-home-btn" onclick="goToStart()">Back to Home</button>
     <button class="success-btn outline" onclick="document.getElementById('success-overlay').classList.remove('open')">View Board</button>
   </div>
@@ -508,7 +635,7 @@ const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON):null;
 
 let PUZZLE=null,currentUser=null,userProfile=null,userStreak=0;
-let YESTERDAY_PUZZLE=null;
+let YESTERDAY_PUZZLE=null,PUZZLE_INDEX=[];
 let userGrid=[],selectedRow=-1,selectedCol=-1;
 let direction='across';
 let timerInterval=null,seconds=0,started=false,timerStopped=false;
@@ -518,7 +645,7 @@ let countdownInterval=null;
 let puzzleAlreadyCompleted=false;
 let usedReveal=false,revealPenalties=0;
 let completionHandled=false;
-let archiveMode=false;
+let archiveMode=false,_todayPuzzleBackup=null;
 
 // ── LOADING SAFETY NET ──
 const _bootTimer=setTimeout(()=>{
@@ -527,18 +654,18 @@ const _bootTimer=setTimeout(()=>{
     document.getElementById('loading-stuck').style.display='block';
   }
 },10000);
-function hideLoading(){
-  clearTimeout(_bootTimer);
-  document.getElementById('loading').style.display='none';
-}
+function hideLoading(){clearTimeout(_bootTimer);document.getElementById('loading').style.display='none';}
 
 function getTodayString(){
   const d=new Date();
   return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
+function getYesterdayString(){
+  const d=new Date();d.setDate(d.getDate()-1);
+  return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
 function getMidnightCountdown(){
-  const now=new Date(),midnight=new Date();
-  midnight.setHours(24,0,0,0);
+  const now=new Date(),midnight=new Date();midnight.setHours(24,0,0,0);
   return Math.floor((midnight-now)/1000);
 }
 function showScreen(id){
@@ -547,144 +674,84 @@ function showScreen(id){
 }
 function streakDisplay(n){
   if(n<=0)return'Start your streak today!';
-  const flames=n>=30?'🔥🔥🔥':n>=7?'🔥🔥':'🔥';
-  return`${n} day${n>1?'s':''} ${flames}`;
+  return`${n} day${n>1?'s':''} ${n>=30?'🔥🔥🔥':n>=7?'🔥🔥':'🔥'}`;
 }
 function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;}
 
+// ── LUCIDE INIT ──
+function initIcons(){if(window.lucide)lucide.createIcons();}
+
 // ── AUTH ──
 async function boot(){
-  if(!sb){
-    hideLoading();
-    buildAuthBg();
-    showScreen('auth-screen');
-    setAuthError('Connection issue loading auth. Please refresh.');
-    return;
-  }
+  if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
   try{
-    // Always try getSession first — critical for Safari PWA persistence
-    const sessionPromise=sb.auth.getSession();
-    const timeoutPromise=new Promise((_,reject)=>setTimeout(()=>reject(new Error('session timeout')),8000));
-    const{data:{session}}=await Promise.race([sessionPromise,timeoutPromise]);
-
-    // Keep token fresh in background (helps Safari PWA not drop session)
     sb.auth.startAutoRefresh();
-
-    // Listen for future auth events (OAuth redirects, sign out)
-    sb.auth.onAuthStateChange(async(event,newSession)=>{
-      if(event==='SIGNED_IN'&&newSession&&!currentUser){
-        currentUser=newSession.user;
-        const profileResult=await loadUserProfile();
-        if(profileResult!=='needs-college') await loadPuzzle();
-      }
-      if(event==='TOKEN_REFRESHED'&&newSession&&currentUser){
-        // Session silently refreshed — nothing to do, already loaded
+    sb.auth.onAuthStateChange(async(event,session)=>{
+      if(event==='SIGNED_IN'&&session&&!currentUser){
+        currentUser=session.user;
+        const r=await loadUserProfile();
+        if(r!=='needs-college')await loadPuzzle();
       }
       if(event==='SIGNED_OUT'){
         currentUser=null;userProfile=null;userStreak=0;
-        hideLoading();
-        buildAuthBg();
-        showScreen('auth-screen');
+        hideLoading();buildAuthBg();showScreen('auth-screen');
       }
     });
-
+    const{data:{session}}=await Promise.race([
+      sb.auth.getSession(),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),8000))
+    ]);
     if(session){
       currentUser=session.user;
-      const profileResult=await loadUserProfile();
-      if(profileResult!=='needs-college') await loadPuzzle();
-    }else{
-      hideLoading();
-      buildAuthBg();
-      showScreen('auth-screen');
-    }
+      const r=await loadUserProfile();
+      if(r!=='needs-college')await loadPuzzle();
+    }else{hideLoading();buildAuthBg();showScreen('auth-screen');}
   }catch(err){
-    if(err.message!=='session timeout') console.error('Boot error:',err);
-    hideLoading();
-    buildAuthBg();
-    showScreen('auth-screen');
-    if(err.message!=='session timeout') setAuthError('Could not connect. Check internet and refresh.');
+    if(err.message!=='session timeout')console.error('Boot error:',err);
+    hideLoading();buildAuthBg();showScreen('auth-screen');
+    if(err.message!=='session timeout')setAuthError('Could not connect. Check internet and refresh.');
   }
 }
 
 function buildAuthBg(){
-  const bg=document.getElementById('auth-bg-grid');
-  if(bg.children.length)return;
-  for(let i=0;i<300;i++){
-    const c=document.createElement('div');
-    c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
-    bg.appendChild(c);
-  }
-}
-
-async function signInWithGoogle(){
-  setAuthError('');
-  if(!sb){setAuthError('Auth unavailable. Please refresh.');return;}
-  const redirectTo = `${window.location.origin}${window.location.pathname}`;
-  const{error}=await sb.auth.signInWithOAuth({
-    provider:'google',
-    options:{redirectTo}
-  });
-  if(error)setAuthError(error.message);
-}
-
-function setAuthError(msg){document.getElementById('auth-error').textContent=msg;}
-
-// ── PROFILE + STREAK ──
-async function loadUserProfile(){
-  if (!currentUser) return;
-
-  let { data, error } = await sb
-    .from('profiles')
-    .select('*')
-    .eq('id', currentUser.id)
-    .single();
-
-  if (!data) {
-    const username =
-      currentUser.user_metadata?.full_name ||
-      currentUser.user_metadata?.name ||
-      (currentUser.email ? currentUser.email.split('@')[0] : 'Player');
-
-    const insertRes = await sb
-      .from('profiles')
-      .insert({
-        id: currentUser.id,
-        username,
-        college: '',
-        show_on_leaderboard: true
-      })
-      .select('*')
-      .single();
-
-    if (insertRes.error) {
-      console.log('Error creating profile:', insertRes.error);
-    } else {
-      data = insertRes.data;
-    }
-  }
-
-  userProfile = data || null;
-  userStreak = await calculateStreak();
-
-  if (
-    userProfile &&
-    (!userProfile.college || userProfile.college === null || userProfile.college === '')
-  ) {
-    hideLoading();
-    const bg=document.getElementById('college-bg-grid');
-    if(!bg.children.length){
+  ['auth-bg-grid','college-bg-grid'].forEach(id=>{
+    const bg=document.getElementById(id);
+    if(bg&&!bg.children.length){
       for(let i=0;i<300;i++){
         const c=document.createElement('div');
         c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
         bg.appendChild(c);
       }
     }
+  });
+}
+
+async function signInWithGoogle(){
+  setAuthError('');
+  if(!sb){setAuthError('Auth unavailable. Please refresh.');return;}
+  const{error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:`${location.origin}${location.pathname}`}});
+  if(error)setAuthError(error.message);
+}
+function setAuthError(msg){document.getElementById('auth-error').textContent=msg;}
+
+// ── PROFILE ──
+async function loadUserProfile(){
+  if(!currentUser)return;
+  let{data}=await sb.from('profiles').select('*').eq('id',currentUser.id).single();
+  if(!data){
+    const username=currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||(currentUser.email?currentUser.email.split('@')[0]:'Player');
+    const ins=await sb.from('profiles').insert({id:currentUser.id,username,college:'',show_on_leaderboard:true}).select('*').single();
+    if(!ins.error)data=ins.data;
+  }
+  userProfile=data||null;
+  userStreak=await calculateStreak();
+  if(userProfile&&(!userProfile.college||userProfile.college==='')){
+    hideLoading();buildAuthBg();
     showScreen('college-screen');
     setTimeout(()=>document.getElementById('college-input').focus(),300);
     return'needs-college';
   }
-
-  return 'ok';
+  return'ok';
 }
 
 async function calculateStreak(){
@@ -692,15 +759,13 @@ async function calculateStreak(){
   const{data}=await sb.from('completions').select('puzzle_date').eq('user_id',currentUser.id).order('puzzle_date',{ascending:false});
   if(!data||!data.length)return 0;
   const dates=data.map(d=>d.puzzle_date);
-  let streak=0;
   const today=getTodayString();
   let check=dates.includes(today)?today:null;
   if(!check){
-    const d=new Date();d.setDate(d.getDate()-1);
-    const yesterday=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    if(dates.includes(yesterday))check=yesterday;
-    else return 0;
+    const y=getYesterdayString();
+    if(dates.includes(y))check=y;else return 0;
   }
+  let streak=0;
   while(dates.includes(check)){
     streak++;
     const cd=new Date(check+'T00:00:00');cd.setDate(cd.getDate()-1);
@@ -711,16 +776,13 @@ async function calculateStreak(){
 
 async function checkAlreadyCompleted(){
   if(!currentUser)return false;
-  try{
-    const{data}=await sb.from('completions').select('id').eq('user_id',currentUser.id).eq('puzzle_date',getTodayString());
-    return!!(data&&data.length>0);
-  }catch(e){return false;}
+  try{const{data}=await sb.from('completions').select('id').eq('user_id',currentUser.id).eq('puzzle_date',getTodayString());return!!(data&&data.length>0);}catch(e){return false;}
 }
 
-async function saveCompletion(timeSeconds,didReveal){
+async function saveCompletion(t,r){
   if(!currentUser)return;
   try{
-    await sb.from('completions').insert({user_id:currentUser.id,puzzle_date:getTodayString(),time_seconds:timeSeconds,revealed:didReveal});
+    await sb.from('completions').insert({user_id:currentUser.id,puzzle_date:getTodayString(),time_seconds:t,revealed:r});
     userStreak=await calculateStreak();
   }catch(e){console.log('Save error:',e);}
 }
@@ -729,43 +791,82 @@ async function signOut(){await sb.auth.signOut();localStorage.removeItem('tmt_pr
 
 // ── COLLEGE PROMPT ──
 async function saveCollegePrompt(){
-  const val=document.getElementById('college-input').value.trim().toUpperCase();
+  const college=document.getElementById('college-input').value.trim().toUpperCase();
+  const year=document.getElementById('year-input').value;
   const consent=document.getElementById('lb-consent').checked;
-
-  if(!val){
-    document.getElementById('college-error').textContent='Please enter your college abbreviation';
-    return;
-  }
+  if(!college){document.getElementById('college-error').textContent='Please enter your college abbreviation';return;}
+  if(!year){document.getElementById('college-error').textContent='Please select your year';return;}
   document.getElementById('college-error').textContent='';
-
-  const { error } = await sb
-    .from('profiles')
-    .update({
-      college: val,
-      show_on_leaderboard: consent
-    })
-    .eq('id', currentUser.id);
-
-  if(error){
-    document.getElementById('college-error').textContent='Something went wrong, try again';
-    return;
-  }
-
-  userProfile.college = val;
-  userProfile.show_on_leaderboard = consent;
+  const{error}=await sb.from('profiles').update({college,year,show_on_leaderboard:consent}).eq('id',currentUser.id);
+  if(error){document.getElementById('college-error').textContent='Something went wrong, try again';return;}
+  userProfile.college=college;userProfile.year=year;userProfile.show_on_leaderboard=consent;
   await loadPuzzle();
 }
+
+// ── SETTINGS ──
+function openSettingsModal(){
+  document.getElementById('settings-year-val').textContent=userProfile?.year||'Not set';
+  document.getElementById('settings-college-val').textContent=userProfile?.college||'Not set';
+  document.getElementById('settings-modal').classList.add('open');
+}
+function closeSettingsModal(e){if(!e||e.target===document.getElementById('settings-modal'))document.getElementById('settings-modal').classList.remove('open');}
+
+function openEditYear(){
+  document.getElementById('edit-year-select').value=userProfile?.year||'';
+  document.getElementById('edit-year-error').textContent='';
+  document.getElementById('edit-year-modal').classList.add('open');
+}
+function closeEditYear(e){if(!e||e.target===document.getElementById('edit-year-modal'))document.getElementById('edit-year-modal').classList.remove('open');}
+async function saveEditYear(){
+  const val=document.getElementById('edit-year-select').value;
+  if(!val){document.getElementById('edit-year-error').textContent='Please select a year';return;}
+  showConfirm('Change Year',`Set your year to "${val}"?`,async()=>{
+    const{error}=await sb.from('profiles').update({year:val}).eq('id',currentUser.id);
+    if(error){document.getElementById('edit-year-error').textContent='Something went wrong';return;}
+    userProfile.year=val;
+    document.getElementById('settings-year-val').textContent=val;
+    document.getElementById('edit-year-modal').classList.remove('open');
+  });
+}
+
+function openEditCollege(){
+  document.getElementById('edit-college-input').value=userProfile?.college||'';
+  document.getElementById('edit-college-error').textContent='';
+  document.getElementById('edit-college-modal').classList.add('open');
+}
+function closeEditCollege(e){if(!e||e.target===document.getElementById('edit-college-modal'))document.getElementById('edit-college-modal').classList.remove('open');}
+async function saveEditCollege(){
+  const val=document.getElementById('edit-college-input').value.trim().toUpperCase();
+  if(!val){document.getElementById('edit-college-error').textContent='Please enter your college';return;}
+  showConfirm('Change College',`Set your college to "${val}"?`,async()=>{
+    const{error}=await sb.from('profiles').update({college:val}).eq('id',currentUser.id);
+    if(error){document.getElementById('edit-college-error').textContent='Something went wrong';return;}
+    userProfile.college=val;
+    document.getElementById('settings-college-val').textContent=val;
+    document.getElementById('edit-college-modal').classList.remove('open');
+  });
+}
+
+function confirmSignOut(){showConfirm('Sign Out','Are you sure you want to sign out?',signOut);}
+
+// ── CONFIRM DIALOG ──
+let _confirmCallback=null;
+function showConfirm(title,sub,cb){
+  document.getElementById('confirm-title').textContent=title;
+  document.getElementById('confirm-sub').textContent=sub;
+  _confirmCallback=cb;
+  document.getElementById('confirm-overlay').classList.add('open');
+}
+function closeConfirm(){document.getElementById('confirm-overlay').classList.remove('open');_confirmCallback=null;}
+document.getElementById('confirm-ok-btn').onclick=()=>{const cb=_confirmCallback;closeConfirm();if(cb)cb();};
 
 // ── LEADERBOARD ──
 async function fetchLeaderboard(){
   const{data}=await sb.from('completions')
     .select(`user_id,time_seconds,profiles!inner(username,college,show_on_leaderboard)`)
-    .eq('puzzle_date',getTodayString())
-    .order('time_seconds',{ascending:true})
-    .limit(10);
+    .eq('puzzle_date',getTodayString()).order('time_seconds',{ascending:true}).limit(10);
   return data||[];
 }
-
 async function openLeaderboard(){
   document.getElementById('lb-modal').classList.add('open');
   const d=new Date();
@@ -773,76 +874,89 @@ async function openLeaderboard(){
   document.getElementById('lb-content').innerHTML='<div class="lb-loading">Loading...</div>';
   document.getElementById('lb-your-rank').style.display='none';
   const rows=await fetchLeaderboard();
-  if(!rows.length){
-    document.getElementById('lb-content').innerHTML='<div class="lb-empty">No completions yet today — be the first!</div>';
-    return;
-  }
+  if(!rows.length){document.getElementById('lb-content').innerHTML='<div class="lb-empty">No completions yet today — be the first!</div>';return;}
   let myRank=null;
   const html=rows.map((r,i)=>{
-    const isMe=r.user_id===currentUser?.id;
-    if(isMe)myRank=i+1;
-    const rankClass=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+    const isMe=r.user_id===currentUser?.id;if(isMe)myRank=i+1;
+    const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
     const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
     const prof=Array.isArray(r.profiles)?r.profiles[0]:r.profiles;
-    const show = prof?.show_on_leaderboard !== false;
-    const name = show ? (prof?.username || 'Anonymous') : 'Anonymous';
-    const college = show && prof?.college ? `<span class="lb-college"> · ${prof.college}</span>` : '';
-    return`<div class="lb-row${isMe?' me':''}">
-      <div class="lb-rank ${rankClass}">${medal}</div>
-      <div class="lb-name">${name}${isMe?' (you)':''}${college}</div>
-      <div class="lb-time">${formatTime(r.time_seconds)}</div>
-    </div>`;
+    const show=prof?.show_on_leaderboard!==false;
+    const name=show?(prof?.username||'Anonymous'):'Anonymous';
+    const college=show&&prof?.college?`<span class="lb-college"> · ${prof.college}</span>`:'';
+    return`<div class="lb-row${isMe?' me':''}"><div class="lb-rank ${rc}">${medal}</div><div class="lb-name">${name}${isMe?' (you)':''}${college}</div><div class="lb-time">${formatTime(r.time_seconds)}</div></div>`;
   }).join('');
   document.getElementById('lb-content').innerHTML=`<div class="lb-list">${html}</div>`;
-  if(myRank){
-    document.getElementById('lb-your-rank').style.display='block';
-    document.getElementById('lb-rank-val').textContent=`#${myRank} today`;
-  }
+  if(myRank){document.getElementById('lb-your-rank').style.display='block';document.getElementById('lb-rank-val').textContent=`#${myRank} today`;}
 }
-
-function closeLbModal(e){
-  if(!e||e.target===document.getElementById('lb-modal'))
-    document.getElementById('lb-modal').classList.remove('open');
-}
-
-function openLeaderboardFromSuccess(){
-  document.getElementById('success-overlay').classList.remove('open');
-  openLeaderboard();
-}
+function closeLbModal(e){if(!e||e.target===document.getElementById('lb-modal'))document.getElementById('lb-modal').classList.remove('open');}
+function openLeaderboardFromSuccess(){document.getElementById('success-overlay').classList.remove('open');openLeaderboard();}
 
 // ── PUZZLE LOADER ──
 async function loadPuzzle(){
   const today=getTodayString();
   try{
-    const controller=new AbortController();
-    const fetchTimer=setTimeout(()=>controller.abort(),8000);
-    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`,{signal:controller.signal});
-    clearTimeout(fetchTimer);
-    if(!res.ok)throw new Error('not found');
+    const ctrl=new AbortController();const ft=setTimeout(()=>ctrl.abort(),8000);
+    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`,{signal:ctrl.signal});
+    clearTimeout(ft);if(!res.ok)throw new Error('not found');
     PUZZLE=await res.json();
     puzzleAlreadyCompleted=await checkAlreadyCompleted();
-    // Try fetching yesterday's puzzle for the archive button
-    await tryLoadYesterday();
+    await loadArchiveData();
     showStartScreen();
   }catch(e){showNoPuzzle(today);}
 }
 
-async function tryLoadYesterday(){
+async function loadArchiveData(){
+  const yesterday=getYesterdayString();
+  // Load yesterday
   try{
-    const d=new Date();d.setDate(d.getDate()-1);
-    const yesterday=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const res=await fetch(`puzzles/${yesterday}.json`);
-    if(res.ok){
-      YESTERDAY_PUZZLE=await res.json();
-      document.getElementById('yesterday-btn').classList.remove('hidden');
-    }else{
-      YESTERDAY_PUZZLE=null;
-      document.getElementById('yesterday-btn').classList.add('hidden');
+    const r=await fetch(`puzzles/${yesterday}.json`);
+    if(r.ok){YESTERDAY_PUZZLE=await r.json();document.getElementById('archive-btn').classList.remove('hidden');document.getElementById('archive-yesterday-sub').textContent=`${new Date(yesterday+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'})} · ${YESTERDAY_PUZZLE.topic}`;}
+    else{YESTERDAY_PUZZLE=null;}
+  }catch(e){YESTERDAY_PUZZLE=null;}
+  // Load puzzle index for random
+  try{
+    const r=await fetch(`puzzles/index.json`);
+    if(r.ok){
+      const idx=await r.json();
+      PUZZLE_INDEX=idx.filter(d=>d!==getTodayString()&&d!==yesterday);
+      document.getElementById('random-archive-option').style.display=PUZZLE_INDEX.length>0?'flex':'none';
     }
-  }catch(e){
-    YESTERDAY_PUZZLE=null;
-    document.getElementById('yesterday-btn').classList.add('hidden');
+  }catch(e){PUZZLE_INDEX=[];document.getElementById('random-archive-option').style.display='none';}
+  if(YESTERDAY_PUZZLE||PUZZLE_INDEX.length>0)document.getElementById('archive-btn').classList.remove('hidden');
+}
+
+// ── ARCHIVE MODE ──
+function openArchiveModal(){document.getElementById('archive-modal').classList.add('open');}
+function closeArchiveModal(e){if(!e||e.target===document.getElementById('archive-modal'))document.getElementById('archive-modal').classList.remove('open');}
+
+async function startArchiveGame(type){
+  closeArchiveModal();
+  let puzzleData=null;
+  if(type==='yesterday'){
+    puzzleData=YESTERDAY_PUZZLE;
+  }else if(type==='random'&&PUZZLE_INDEX.length>0){
+    const date=PUZZLE_INDEX[Math.floor(Math.random()*PUZZLE_INDEX.length)];
+    try{const r=await fetch(`puzzles/${date}.json`);if(r.ok)puzzleData=await r.json();}catch(e){}
   }
+  if(!puzzleData)return;
+  _todayPuzzleBackup=PUZZLE;
+  PUZZLE=puzzleData;
+  archiveMode=true;
+  document.getElementById('game-screen').setAttribute('data-archive','true');
+  // Update badge for random vs yesterday
+  document.querySelector('.archive-badge').textContent=type==='random'?'Archive Puzzle':'Yesterday\'s Puzzle';
+  showScreen('game-screen');
+  initGame();
+}
+
+function exitArchiveMode(){
+  archiveMode=false;
+  document.getElementById('game-screen').removeAttribute('data-archive');
+  clearInterval(timerInterval);timerInterval=null;
+  PUZZLE=_todayPuzzleBackup;
+  document.getElementById('success-overlay').classList.remove('open');
+  showStartScreen();
 }
 
 function showStartScreen(){
@@ -861,23 +975,18 @@ function showStartScreen(){
   const banner=document.getElementById('completed-banner');
   const playBtn=document.getElementById('play-btn');
   if(puzzleAlreadyCompleted){
-    banner.style.display='block';
-    playBtn.textContent='View Today\'s Board';
+    banner.style.display='flex';
+    playBtn.innerHTML=`<span class="ic" data-lucide="layout-grid" style="width:18px;height:18px;"></span> View Today's Board`;
     playBtn.classList.add('completed');
   }else{
     banner.style.display='none';
-    playBtn.textContent='Play Today\'s Puzzle';
+    playBtn.innerHTML=`<span class="ic" data-lucide="play" style="width:18px;height:18px;"></span> Play Today's Puzzle`;
     playBtn.classList.remove('completed');
   }
   const bg=document.getElementById('start-bg-grid');
-  if(!bg.children.length){
-    for(let i=0;i<300;i++){
-      const c=document.createElement('div');
-      c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');
-      bg.appendChild(c);
-    }
-  }
+  if(!bg.children.length){for(let i=0;i<300;i++){const c=document.createElement('div');c.className='start-bg-cell'+(Math.random()<0.18?' filled':'');bg.appendChild(c);}}
   showScreen('start-screen');
+  initIcons();
 }
 
 async function showNoPuzzle(today){
@@ -885,29 +994,20 @@ async function showNoPuzzle(today){
   document.getElementById('no-puzzle-date').textContent=today;
   document.getElementById('no-puzzle-topic-wrap').style.display='none';
   showScreen('no-puzzle-screen');
+  initIcons();
   startCountdown();
   try{
-    const d=new Date();d.setDate(d.getDate()-1);
-    const yesterday=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const res=await fetch(`puzzles/${yesterday}.json`);
-    if(res.ok){
-      const yp=await res.json();
-      if(yp.next_topic&&yp.next_topic!=='TBD'){
-        document.getElementById('no-puzzle-next-topic').textContent=`📚 Today's topic: ${yp.next_topic}`;
-        document.getElementById('no-puzzle-topic-wrap').style.display='block';
-      }
-    }
+    const r=await fetch(`puzzles/${getYesterdayString()}.json`);
+    if(r.ok){const yp=await r.json();if(yp.next_topic&&yp.next_topic!=='TBD'){document.getElementById('no-puzzle-next-topic').textContent=`Today's topic: ${yp.next_topic}`;document.getElementById('no-puzzle-topic-wrap').style.display='block';}}
   }catch(e){}
 }
 
 function startCountdown(){
   function tick(){
-    let total=getMidnightCountdown();
-    if(total<=0){clearInterval(countdownInterval);loadPuzzle();return;}
-    const h=Math.floor(total/3600),m=Math.floor((total%3600)/60),s=total%60;
-    document.getElementById('cd-hours').textContent=String(h).padStart(2,'0');
-    document.getElementById('cd-mins').textContent=String(m).padStart(2,'0');
-    document.getElementById('cd-secs').textContent=String(s).padStart(2,'0');
+    let t=getMidnightCountdown();if(t<=0){clearInterval(countdownInterval);loadPuzzle();return;}
+    document.getElementById('cd-hours').textContent=String(Math.floor(t/3600)).padStart(2,'0');
+    document.getElementById('cd-mins').textContent=String(Math.floor((t%3600)/60)).padStart(2,'0');
+    document.getElementById('cd-secs').textContent=String(t%60).padStart(2,'0');
   }
   tick();countdownInterval=setInterval(tick,1000);
 }
@@ -915,70 +1015,23 @@ function startCountdown(){
 // ── PROGRESS ──
 function saveProgress(){
   if(!PUZZLE||archiveMode)return;
-  const S=PUZZLE.size,cellStates=[];
-  for(let r=0;r<S;r++){
-    cellStates[r]=[];
-    for(let c=0;c<S;c++){
-      if(PUZZLE.solution[r][c]==='#'){cellStates[r][c]=null;continue;}
-      const cell=document.getElementById(`cell-${r}-${c}`);
-      cellStates[r][c]=cell.classList.contains('correct')?'correct':cell.classList.contains('wrong')?'wrong':'';
-    }
-  }
-  localStorage.setItem('tmt_progress',JSON.stringify({
-    date:getTodayString(),grid:userGrid.map(r=>[...r]),cellStates,
-    completedCells:[...completedCells],seconds,instantCheck
-  }));
+  const S=PUZZLE.size,cs=[];
+  for(let r=0;r<S;r++){cs[r]=[];for(let c=0;c<S;c++){if(PUZZLE.solution[r][c]==='#'){cs[r][c]=null;continue;}const cell=document.getElementById(`cell-${r}-${c}`);cs[r][c]=cell.classList.contains('correct')?'correct':cell.classList.contains('wrong')?'wrong':'';}  }
+  localStorage.setItem('tmt_progress',JSON.stringify({date:getTodayString(),grid:userGrid.map(r=>[...r]),cellStates:cs,completedCells:[...completedCells],seconds,instantCheck}));
 }
-
 function loadProgress(){
   try{
-    const raw=localStorage.getItem('tmt_progress');
-    if(!raw)return false;
-    const state=JSON.parse(raw);
-    if(state.date!==getTodayString())return false;
-    const S=PUZZLE.size;
-    userGrid=state.grid;seconds=state.seconds||0;
-    instantCheck=state.instantCheck!==undefined?state.instantCheck:true;
-    completedCells=new Set(state.completedCells||[]);
-    const toggle=document.getElementById('instant-check-toggle');
-    if(toggle)toggle.checked=instantCheck;
-    for(let r=0;r<S;r++)for(let c=0;c<S;c++){
-      if(PUZZLE.solution[r][c]==='#')continue;
-      const lt=document.getElementById(`letter-${r}-${c}`);
-      if(lt)lt.textContent=userGrid[r][c]||'';
-      const cell=document.getElementById(`cell-${r}-${c}`);
-      const st=state.cellStates[r]&&state.cellStates[r][c];
-      if(cell&&st)cell.classList.add(st);
-    }
-    document.getElementById('timer').textContent=formatTime(seconds);
-    return true;
+    const raw=localStorage.getItem('tmt_progress');if(!raw)return false;
+    const state=JSON.parse(raw);if(state.date!==getTodayString())return false;
+    const S=PUZZLE.size;userGrid=state.grid;seconds=state.seconds||0;instantCheck=state.instantCheck!==undefined?state.instantCheck:true;completedCells=new Set(state.completedCells||[]);
+    const toggle=document.getElementById('instant-check-toggle');if(toggle)toggle.checked=instantCheck;
+    for(let r=0;r<S;r++)for(let c=0;c<S;c++){if(PUZZLE.solution[r][c]==='#')continue;const lt=document.getElementById(`letter-${r}-${c}`);if(lt)lt.textContent=userGrid[r][c]||'';const cell=document.getElementById(`cell-${r}-${c}`);const st=state.cellStates[r]&&state.cellStates[r][c];if(cell&&st)cell.classList.add(st);}
+    document.getElementById('timer').textContent=formatTime(seconds);return true;
   }catch(e){return false;}
 }
 
 // ── NAVIGATION ──
-function startArchiveGame(){
-  if(!YESTERDAY_PUZZLE)return;
-  _todayPuzzleBackup=PUZZLE;
-  PUZZLE=YESTERDAY_PUZZLE;
-  archiveMode=true;
-  document.getElementById('game-screen').setAttribute('data-archive','true');
-  showScreen('game-screen');
-  initGame();
-}
-
-function startGame(){
-  archiveMode=false;
-  document.getElementById('game-screen').removeAttribute('data-archive');
-  showScreen('game-screen');
-  initGame();
-}
-
-// iOS keyboard press highlight
-document.querySelectorAll('.kb-key').forEach(btn=>{
-  btn.addEventListener('touchstart',()=>{btn.classList.add('pressed');},{passive:true});
-  btn.addEventListener('touchend',()=>{setTimeout(()=>btn.classList.remove('pressed'),120);},{passive:true});
-  btn.addEventListener('touchcancel',()=>{btn.classList.remove('pressed');},{passive:true});
-});
+function startGame(){archiveMode=false;document.getElementById('game-screen').removeAttribute('data-archive');showScreen('game-screen');initGame();}
 function goToStart(){
   if(archiveMode){exitArchiveMode();return;}
   if(started)saveProgress();
@@ -987,42 +1040,27 @@ function goToStart(){
   showStartScreen();
 }
 
-function exitArchiveMode(){
-  archiveMode=false;
-  document.getElementById('game-screen').removeAttribute('data-archive');
-  clearInterval(timerInterval);timerInterval=null;
-  // Restore today's puzzle
-  PUZZLE=_todayPuzzleBackup;
-  document.getElementById('success-overlay').classList.remove('open');
-  showStartScreen();
-}
-
-let _todayPuzzleBackup=null;
+document.querySelectorAll('.kb-key').forEach(btn=>{
+  btn.addEventListener('touchstart',()=>{btn.classList.add('pressed');},{passive:true});
+  btn.addEventListener('touchend',()=>{setTimeout(()=>btn.classList.remove('pressed'),120);},{passive:true});
+  btn.addEventListener('touchcancel',()=>{btn.classList.remove('pressed');},{passive:true});
+});
 
 // ── GAME INIT ──
 function initGame(){
   const d=archiveMode?new Date(PUZZLE.date+'T00:00:00'):new Date();
   document.getElementById('date-label').textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-  const S=PUZZLE.size;
-  userGrid=[];
+  const S=PUZZLE.size;userGrid=[];
   for(let r=0;r<S;r++){userGrid[r]=[];for(let c=0;c<S;c++)userGrid[r][c]='';}
-  seconds=0;started=false;timerStopped=false;completedCells=new Set();
-  usedReveal=false;revealPenalties=0;completionHandled=false;
-  document.getElementById('timer').textContent='0:00';
-  document.getElementById('timer').className='timer';
-  buildClueList();
-  buildGrid(computeNumbers());
+  seconds=0;started=false;timerStopped=false;completedCells=new Set();usedReveal=false;revealPenalties=0;completionHandled=false;
+  document.getElementById('timer').textContent='0:00';document.getElementById('timer').className='timer';
+  buildClueList();buildGrid(computeNumbers());
   if(!archiveMode&&PUZZLE.next_topic&&PUZZLE.next_topic!=='TBD'){
     document.getElementById('next-topic-val').textContent=PUZZLE.next_topic;
     document.getElementById('success-next-topic').style.display='block';
-  }else{
-    document.getElementById('success-next-topic').style.display='none';
-  }
-  // Only restore progress for today's puzzle
-  if(!archiveMode){
-    const restored=loadProgress();
-    if(restored&&!puzzleAlreadyCompleted){started=true;startTimer();}
-  }
+  }else{document.getElementById('success-next-topic').style.display='none';}
+  if(!archiveMode){const restored=loadProgress();if(restored&&!puzzleAlreadyCompleted){started=true;startTimer();}}
+  initIcons();
   requestAnimationFrame(()=>jumpToClueIndex(0));
 }
 
@@ -1031,29 +1069,23 @@ function buildClueList(){
   const dn=PUZZLE.clues.down.map(c=>({...c,dir:'down'}));
   allClues=[...ac,...dn].sort((a,b)=>a.number-b.number||a.dir.localeCompare(b.dir));
 }
-
 function computeNumbers(){
   const S=PUZZLE.size,nums={};let n=1;
   for(let r=0;r<S;r++)for(let c=0;c<S;c++){
     if(PUZZLE.solution[r][c]==='#')continue;
-    const sA=c===0||PUZZLE.solution[r][c-1]==='#';
-    const sD=r===0||PUZZLE.solution[r-1][c]==='#';
+    const sA=c===0||PUZZLE.solution[r][c-1]==='#';const sD=r===0||PUZZLE.solution[r-1][c]==='#';
     if((sA&&acrossLen(r,c)>1)||(sD&&downLen(r,c)>1))nums[`${r},${c}`]=n++;
   }
   return nums;
 }
 function acrossLen(r,c){const S=PUZZLE.size;let l=0;while(c+l<S&&PUZZLE.solution[r][c+l]!=='#')l++;return l;}
 function downLen(r,c){const S=PUZZLE.size;let l=0;while(r+l<S&&PUZZLE.solution[r+l][c]!=='#')l++;return l;}
-
 function buildGrid(numbers){
   const S=PUZZLE.size,el=document.getElementById('grid');
-  el.style.gridTemplateColumns=`repeat(${S},var(--cell-size))`;
-  el.innerHTML='';
+  el.style.gridTemplateColumns=`repeat(${S},var(--cell-size))`;el.innerHTML='';
   for(let r=0;r<S;r++)for(let c=0;c<S;c++){
-    const div=document.createElement('div');
-    const blk=PUZZLE.solution[r][c]==='#';
-    div.className='cell'+(blk?' black':'');
-    div.id=`cell-${r}-${c}`;
+    const div=document.createElement('div');const blk=PUZZLE.solution[r][c]==='#';
+    div.className='cell'+(blk?' black':'');div.id=`cell-${r}-${c}`;
     if(!blk){
       const num=numbers[`${r},${c}`];
       if(num){const n=document.createElement('div');n.className='cell-num';n.textContent=num;div.appendChild(n);}
@@ -1066,20 +1098,13 @@ function buildGrid(numbers){
 }
 
 // ── CLUE NAV ──
-function isClueComplete(cl){
-  return getWordCells(cl.row,cl.col,cl.dir).every(([r,c])=>userGrid[r][c]===PUZZLE.solution[r][c]);
-}
+function isClueComplete(cl){return getWordCells(cl.row,cl.col,cl.dir).every(([r,c])=>userGrid[r][c]===PUZZLE.solution[r][c]);}
 function jumpToClueIndex(idx,skipComplete=false){
-  const len=allClues.length;
-  if(idx<0)idx=len-1;if(idx>=len)idx=0;
+  const len=allClues.length;if(idx<0)idx=len-1;if(idx>=len)idx=0;
   if(skipComplete){let tries=0;while(isClueComplete(allClues[idx])&&tries<len){idx=(idx+1)%len;tries++;}}
-  currentClueIndex=idx;
-  const cl=allClues[idx];
-  direction=cl.dir;selectedRow=cl.row;selectedCol=cl.col;
-  const wc=getWordCells(cl.row,cl.col,cl.dir);
-  const firstEmpty=wc.find(([r,c])=>!userGrid[r][c]);
-  if(firstEmpty)[selectedRow,selectedCol]=firstEmpty;
-  highlightCells();updateClueUI();
+  currentClueIndex=idx;const cl=allClues[idx];direction=cl.dir;selectedRow=cl.row;selectedCol=cl.col;
+  const wc=getWordCells(cl.row,cl.col,cl.dir);const fe=wc.find(([r,c])=>!userGrid[r][c]);
+  if(fe)[selectedRow,selectedCol]=fe;highlightCells();updateClueUI();
 }
 function prevClue(){jumpToClueIndex(currentClueIndex-1);}
 function nextClue(){jumpToClueIndex(currentClueIndex+1);}
@@ -1089,336 +1114,168 @@ function updateClueUI(){
   document.getElementById('clue-bar-text').textContent=cl.clue;
 }
 function syncClueIndex(){
-  const idx=allClues.findIndex(cl=>{
-    if(cl.dir!==direction)return false;
-    return getWordCells(cl.row,cl.col,cl.dir).some(([r,c])=>r===selectedRow&&c===selectedCol);
-  });
+  const idx=allClues.findIndex(cl=>{if(cl.dir!==direction)return false;return getWordCells(cl.row,cl.col,cl.dir).some(([r,c])=>r===selectedRow&&c===selectedCol);});
   if(idx!==-1){currentClueIndex=idx;updateClueUI();}
 }
 
 // ── CELL ──
 function handleCellClick(r,c){
   if(PUZZLE.solution[r][c]==='#')return;
-  if(selectedRow===r&&selectedCol===c){
-    direction=direction==='across'?'down':'across';
-    if(!canGo(r,c,'across'))direction='down';
-    if(!canGo(r,c,'down'))direction='across';
-  }else{
-    selectedRow=r;selectedCol=c;
-    if(!canGo(r,c,'across')&&canGo(r,c,'down'))direction='down';
-    else if(!canGo(r,c,'down'))direction='across';
-  }
+  if(selectedRow===r&&selectedCol===c){direction=direction==='across'?'down':'across';if(!canGo(r,c,'across'))direction='down';if(!canGo(r,c,'down'))direction='across';}
+  else{selectedRow=r;selectedCol=c;if(!canGo(r,c,'across')&&canGo(r,c,'down'))direction='down';else if(!canGo(r,c,'down'))direction='across';}
   highlightCells();syncClueIndex();
 }
-function canGo(r,c,dir){
-  if(dir==='across')return acrossLen(r,wordStart(r,c,'across'))>1;
-  return downLen(wordStart(r,c,'down'),c)>1;
-}
-function wordStart(r,c,dir){
-  if(dir==='across'){while(c>0&&PUZZLE.solution[r][c-1]!=='#')c--;return c;}
-  else{while(r>0&&PUZZLE.solution[r-1][c]!=='#')r--;return r;}
-}
-function getWordCells(sr,sc,dir){
-  const S=PUZZLE.size,cells=[];
-  if(dir==='across'){let c=sc;while(c<S&&PUZZLE.solution[sr][c]!=='#')cells.push([sr,c++]);}
-  else{let r=sr;while(r<S&&PUZZLE.solution[r][sc]!=='#')cells.push([r++,sc]);}
-  return cells;
-}
-function getCurrentWordCells(){
-  if(selectedRow===-1)return[];
-  const sr=direction==='down'?wordStart(selectedRow,selectedCol,'down'):selectedRow;
-  const sc=direction==='across'?wordStart(selectedRow,selectedCol,'across'):selectedCol;
-  return getWordCells(sr,sc,direction);
-}
+function canGo(r,c,dir){if(dir==='across')return acrossLen(r,wordStart(r,c,'across'))>1;return downLen(wordStart(r,c,'down'),c)>1;}
+function wordStart(r,c,dir){if(dir==='across'){while(c>0&&PUZZLE.solution[r][c-1]!=='#')c--;return c;}else{while(r>0&&PUZZLE.solution[r-1][c]!=='#')r--;return r;}}
+function getWordCells(sr,sc,dir){const S=PUZZLE.size,cells=[];if(dir==='across'){let c=sc;while(c<S&&PUZZLE.solution[sr][c]!=='#')cells.push([sr,c++]);}else{let r=sr;while(r<S&&PUZZLE.solution[r][sc]!=='#')cells.push([r++,sc]);}return cells;}
+function getCurrentWordCells(){if(selectedRow===-1)return[];const sr=direction==='down'?wordStart(selectedRow,selectedCol,'down'):selectedRow;const sc=direction==='across'?wordStart(selectedRow,selectedCol,'across'):selectedCol;return getWordCells(sr,sc,direction);}
 function highlightCells(){
   document.querySelectorAll('.cell:not(.black)').forEach(el=>el.classList.remove('highlighted','active'));
   if(selectedRow===-1)return;
   getCurrentWordCells().forEach(([r,c])=>document.getElementById(`cell-${r}-${c}`)?.classList.add('highlighted'));
-  const a=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
-  if(a){a.classList.remove('highlighted');a.classList.add('active');}
+  const a=document.getElementById(`cell-${selectedRow}-${selectedCol}`);if(a){a.classList.remove('highlighted');a.classList.add('active');}
 }
 
 // ── KEYBOARD ──
 function isLocked(r,c){return instantCheck&&completedCells.has(`${r},${c}`);}
 function kbInput(letter){
   if(selectedRow===-1||timerStopped)return;
-  if(!started)startTimer();
+  if(!started&&!archiveMode)startTimer();else if(!started)started=true;
   if(isLocked(selectedRow,selectedCol)){advanceSelection();return;}
   userGrid[selectedRow][selectedCol]=letter;
   const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=letter;
-  const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
-  cell.classList.remove('correct','wrong');
-  if(instantCheck){
-    const ok=PUZZLE.solution[selectedRow][selectedCol]===letter;
-    cell.classList.add(ok?'correct':'wrong');
-    if(ok)completedCells.add(`${selectedRow},${selectedCol}`);
-    else{cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}
-  }
+  const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);cell.classList.remove('correct','wrong');
+  if(instantCheck){const ok=PUZZLE.solution[selectedRow][selectedCol]===letter;cell.classList.add(ok?'correct':'wrong');if(ok)completedCells.add(`${selectedRow},${selectedCol}`);else{cell.classList.add('shaking');setTimeout(()=>cell.classList.remove('shaking'),300);}}
   saveProgress();advanceSelection();checkCompletion();
 }
 function kbDelete(){
   if(selectedRow===-1||timerStopped)return;
-  if(!started)startTimer();
+  if(!started&&!archiveMode)startTimer();
   if(isLocked(selectedRow,selectedCol)){retreatSelection();return;}
-  if(userGrid[selectedRow][selectedCol]){
-    userGrid[selectedRow][selectedCol]='';
-    const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent='';
-    document.getElementById(`cell-${selectedRow}-${selectedCol}`)?.classList.remove('correct','wrong');
-    saveProgress();
-  }else{retreatSelection();}
+  if(userGrid[selectedRow][selectedCol]){userGrid[selectedRow][selectedCol]='';const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent='';document.getElementById(`cell-${selectedRow}-${selectedCol}`)?.classList.remove('correct','wrong');saveProgress();}else{retreatSelection();}
 }
 function advanceSelection(){
-  const wc=getCurrentWordCells();
-  const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);
-  let next=idx+1;
+  const wc=getCurrentWordCells();const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);let next=idx+1;
   if(instantCheck){while(next<wc.length&&isLocked(wc[next][0],wc[next][1]))next++;}
-  if(next<wc.length){[selectedRow,selectedCol]=wc[next];highlightCells();}
-  else{jumpToClueIndex(currentClueIndex+1,true);}
+  if(next<wc.length){[selectedRow,selectedCol]=wc[next];highlightCells();}else{jumpToClueIndex(currentClueIndex+1,true);}
 }
 function retreatSelection(){
-  const wc=getCurrentWordCells();
-  const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);
-  if(idx>0){
-    let prevIdx=idx-1;
-    while(prevIdx>=0&&isLocked(wc[prevIdx][0],wc[prevIdx][1]))prevIdx--;
-    if(prevIdx>=0){
-      [selectedRow,selectedCol]=wc[prevIdx];
-      if(!isLocked(selectedRow,selectedCol)){
-        userGrid[selectedRow][selectedCol]='';
-        const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent='';
-        document.getElementById(`cell-${selectedRow}-${selectedCol}`)?.classList.remove('correct','wrong');
-        saveProgress();
-      }
-      highlightCells();
-    }
-  }
+  const wc=getCurrentWordCells();const idx=wc.findIndex(([r,c])=>r===selectedRow&&c===selectedCol);
+  if(idx>0){let pi=idx-1;while(pi>=0&&isLocked(wc[pi][0],wc[pi][1]))pi--;if(pi>=0){[selectedRow,selectedCol]=wc[pi];if(!isLocked(selectedRow,selectedCol)){userGrid[selectedRow][selectedCol]='';const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent='';document.getElementById(`cell-${selectedRow}-${selectedCol}`)?.classList.remove('correct','wrong');saveProgress();}highlightCells();}}
 }
 
 // ── CHECK / REVEAL ──
 function checkWord(){
-  getCurrentWordCells().forEach(([r,c])=>{
-    if(!userGrid[r][c])return;
-    const cell=document.getElementById(`cell-${r}-${c}`);
-    cell.classList.remove('correct','wrong');
-    const ok=PUZZLE.solution[r][c]===userGrid[r][c];
-    cell.classList.add(ok?'correct':'wrong');
-    if(ok)completedCells.add(`${r}`,`${c}`);
-  });
+  getCurrentWordCells().forEach(([r,c])=>{if(!userGrid[r][c])return;const cell=document.getElementById(`cell-${r}-${c}`);cell.classList.remove('correct','wrong');const ok=PUZZLE.solution[r][c]===userGrid[r][c];cell.classList.add(ok?'correct':'wrong');if(ok)completedCells.add(`${r},${c}`);});
   saveProgress();
 }
 function revealLetter(){
-  if(selectedRow===-1)return;
-  const sol=PUZZLE.solution[selectedRow][selectedCol];if(sol==='#')return;
+  if(selectedRow===-1)return;const sol=PUZZLE.solution[selectedRow][selectedCol];if(sol==='#')return;
   usedReveal=true;
-  if(!started&&!archiveMode)startTimer();
-  else if(!started&&archiveMode){started=true;}
+  if(!started&&!archiveMode)startTimer();else if(!started)started=true;
   userGrid[selectedRow][selectedCol]=sol;
   const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=sol;
-  const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
-  cell.classList.remove('wrong');cell.classList.add('correct');
-  completedCells.add(`${selectedRow}`,`${selectedCol}`);
-  // +10s penalty (today's puzzle only)
-  if(!archiveMode){
-    revealPenalties++;
-    seconds+=10;
-    document.getElementById('timer').textContent=formatTime(seconds);
-    spawnPenaltyPop();
-  }
+  const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);cell.classList.remove('wrong');cell.classList.add('correct');
+  completedCells.add(`${selectedRow},${selectedCol}`);
+  if(!archiveMode){revealPenalties++;seconds+=10;document.getElementById('timer').textContent=formatTime(seconds);spawnPenaltyPop();}
   saveProgress();advanceSelection();checkCompletion();
 }
-
 function spawnPenaltyPop(){
-  const timerEl=document.getElementById('timer');
-  const rect=timerEl.getBoundingClientRect();
-  const el=document.createElement('div');
-  el.className='penalty-pop';
-  el.textContent='+10s';
-  el.style.left=(rect.left+rect.width/2-18)+'px';
-  el.style.top=(rect.top-8)+'px';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(),1300);
+  const r=document.getElementById('timer').getBoundingClientRect();
+  const el=document.createElement('div');el.className='penalty-pop';el.textContent='+10s';
+  el.style.left=(r.left+r.width/2-18)+'px';el.style.top=(r.top-8)+'px';
+  document.body.appendChild(el);setTimeout(()=>el.remove(),1300);
 }
 function toggleInstantCheck(val){
-  instantCheck=val;
-  const S=PUZZLE.size;
+  instantCheck=val;const S=PUZZLE.size;
   for(let r=0;r<S;r++)for(let c=0;c<S;c++){
-    if(PUZZLE.solution[r][c]==='#')continue;
-    const cell=document.getElementById(`cell-${r}-${c}`);if(!cell)continue;
+    if(PUZZLE.solution[r][c]==='#')continue;const cell=document.getElementById(`cell-${r}-${c}`);if(!cell)continue;
     if(!val){if(cell.classList.contains('wrong'))cell.classList.remove('wrong');}
-    else{
-      cell.classList.remove('correct','wrong');
-      if(userGrid[r][c]){
-        const ok=PUZZLE.solution[r][c]===userGrid[r][c];
-        cell.classList.add(ok?'correct':'wrong');
-        if(ok)completedCells.add(`${r},${c}`);
-      }
-    }
+    else{cell.classList.remove('correct','wrong');if(userGrid[r][c]){const ok=PUZZLE.solution[r][c]===userGrid[r][c];cell.classList.add(ok?'correct':'wrong');if(ok)completedCells.add(`${r},${c}`);}}
   }
   saveProgress();
 }
 
 // ── COMPLETION ──
 function checkCompletion(){
-  if(completionHandled)return;
-  const S=PUZZLE.size;
-  for(let r=0;r<S;r++)for(let c=0;c<S;c++){
-    if(PUZZLE.solution[r][c]==='#')continue;
-    if(userGrid[r][c]!==PUZZLE.solution[r][c])return;
-  }
-  completionHandled=true;
-  stopTimer();
-  if(archiveMode){
-    showSuccess(0);
-    return;
-  }
-  localStorage.removeItem('tmt_progress');
-  puzzleAlreadyCompleted=true;
+  if(completionHandled)return;const S=PUZZLE.size;
+  for(let r=0;r<S;r++)for(let c=0;c<S;c++){if(PUZZLE.solution[r][c]==='#')continue;if(userGrid[r][c]!==PUZZLE.solution[r][c])return;}
+  completionHandled=true;stopTimer();
+  if(archiveMode){showSuccess(0);return;}
+  localStorage.removeItem('tmt_progress');puzzleAlreadyCompleted=true;
   showSuccess(0);
   saveCompletion(seconds,usedReveal).then(async()=>{
     userStreak=await calculateStreak();
-    document.getElementById('final-streak').textContent=userStreak>0?streakDisplay(userStreak):'';
-    fetchLeaderboard().then(rows=>{
-      const myRank=rows.findIndex(r=>r.user_id===currentUser?.id)+1;
-      if(myRank>0){
-        document.getElementById('final-rank').textContent=`#${myRank} on today's leaderboard`;
-      }
-    });
+    document.getElementById('final-streak').innerHTML=streakDisplay(userStreak);
+    fetchLeaderboard().then(rows=>{const mr=rows.findIndex(r=>r.user_id===currentUser?.id)+1;if(mr>0)document.getElementById('final-rank').textContent=`#${mr} on today's leaderboard`;});
   });
 }
 
 function showSuccess(myRank){
   spawnConfetti();
-  const d=new Date();
-  // Archive mode variant
+  const iconEl=document.getElementById('success-icon');
   if(archiveMode){
-    document.getElementById('success-emoji').textContent='✅';
+    iconEl.innerHTML=`<span class="ic" data-lucide="check-circle-2" style="width:52px;height:52px;color:var(--correct)"></span>`;
     document.getElementById('success-title').textContent='Well Done!';
     document.getElementById('final-time').style.display='none';
-    document.getElementById('final-streak').textContent='';
+    document.getElementById('final-streak').innerHTML='';
     document.getElementById('final-rank').textContent='';
     document.getElementById('final-penalty').style.display='none';
     document.getElementById('archive-success-note').style.display='block';
     document.getElementById('success-lb-btn').style.display='none';
     document.getElementById('success-home-btn').textContent='Close';
-    document.getElementById('success-date').textContent=
-      new Date(PUZZLE.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+    document.getElementById('success-date').textContent=new Date(PUZZLE.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
   }else{
-    document.getElementById('success-emoji').textContent='🎉';
+    iconEl.innerHTML=`<span class="ic" data-lucide="party-popper" style="width:52px;height:52px;color:var(--accent)"></span>`;
     document.getElementById('success-title').textContent='Puzzle Complete!';
     document.getElementById('final-time').style.display='';
     document.getElementById('final-time').textContent=formatTime(seconds);
-    document.getElementById('final-streak').textContent=userStreak>0?streakDisplay(userStreak):'';
+    document.getElementById('final-streak').innerHTML=userStreak>0?streakDisplay(userStreak):'';
     document.getElementById('final-rank').textContent=myRank>0?`#${myRank} on today's leaderboard`:'';
     document.getElementById('archive-success-note').style.display='none';
     document.getElementById('success-lb-btn').style.display='';
     document.getElementById('success-home-btn').textContent='Back to Home';
-    document.getElementById('success-date').textContent=
-      d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
-    // Show penalty if any reveals were used
-    const penaltyEl=document.getElementById('final-penalty');
-    if(revealPenalties>0){
-      penaltyEl.textContent=`${revealPenalties} reveal${revealPenalties>1?'s':''} used (+${revealPenalties*10}s)`;
-      penaltyEl.style.display='block';
-    }else{
-      penaltyEl.style.display='none';
-    }
+    document.getElementById('success-date').textContent=new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+    const pe=document.getElementById('final-penalty');
+    if(revealPenalties>0){pe.textContent=`${revealPenalties} reveal${revealPenalties>1?'s':''} used (+${revealPenalties*10}s)`;pe.style.display='block';}
+    else pe.style.display='none';
   }
   document.getElementById('success-overlay').classList.add('open');
+  initIcons();
 }
 
 function spawnConfetti(){
   const theme=document.body.dataset.theme;
-  const colors=theme==='dark'?['#ff6b5b','#fde68a','#34d399','#60a5fa','#c084fc']:
-    theme==='medical'?['#0d6e52','#34d399','#6ee7b7','#059669','#d1fae5']:
-    ['#c8392b','#f59e0b','#16a34a','#2563eb','#9333ea'];
-  for(let i=0;i<60;i++)setTimeout(()=>{
-    const el=document.createElement('div');el.className='confetti-piece';
-    el.style.left=Math.random()*100+'vw';el.style.top='-10px';
-    el.style.background=colors[Math.floor(Math.random()*colors.length)];
-    el.style.animationDuration=(1.5+Math.random()*2)+'s';
-    el.style.animationDelay=Math.random()*0.5+'s';
-    document.body.appendChild(el);setTimeout(()=>el.remove(),4000);
-  },i*30);
+  const colors=theme==='dark'?['#ff6b5b','#fde68a','#34d399','#60a5fa','#c084fc']:theme==='medical'?['#0d6e52','#34d399','#6ee7b7','#059669','#d1fae5']:['#c8392b','#f59e0b','#16a34a','#2563eb','#9333ea'];
+  for(let i=0;i<60;i++)setTimeout(()=>{const el=document.createElement('div');el.className='confetti-piece';el.style.left=Math.random()*100+'vw';el.style.top='-10px';el.style.background=colors[Math.floor(Math.random()*colors.length)];el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=Math.random()*0.5+'s';document.body.appendChild(el);setTimeout(()=>el.remove(),4000);},i*30);
 }
 
 // ── TIMER ──
 function startTimer(){
-  if(timerInterval)return;
-  started=true;timerStopped=false;
-  timerInterval=setInterval(()=>{
-    if(timerStopped){clearInterval(timerInterval);timerInterval=null;return;}
-    seconds++;
-    document.getElementById('timer').textContent=formatTime(seconds);
-    document.getElementById('timer').className='timer running';
-    if(seconds%10===0)saveProgress();
-  },1000);
+  if(timerInterval)return;started=true;timerStopped=false;
+  timerInterval=setInterval(()=>{if(timerStopped){clearInterval(timerInterval);timerInterval=null;return;}seconds++;document.getElementById('timer').textContent=formatTime(seconds);document.getElementById('timer').className='timer running';if(seconds%10===0)saveProgress();},1000);
 }
-function stopTimer(){
-  timerStopped=true;
-  clearInterval(timerInterval);timerInterval=null;
-  document.getElementById('timer').className='timer';
-}
+function stopTimer(){timerStopped=true;clearInterval(timerInterval);timerInterval=null;document.getElementById('timer').className='timer';}
 
-// ── PAUSE ON HIDE ──
 document.addEventListener('visibilitychange',()=>{
-  if(!started||timerStopped)return;
-  if(document.hidden){
-    clearInterval(timerInterval);timerInterval=null;
-  }else{
-    if(!timerInterval){
-      timerInterval=setInterval(()=>{
-        if(timerStopped){clearInterval(timerInterval);timerInterval=null;return;}
-        seconds++;
-        document.getElementById('timer').textContent=formatTime(seconds);
-        document.getElementById('timer').className='timer running';
-        if(seconds%10===0)saveProgress();
-      },1000);
-    }
-  }
+  if(!started||timerStopped||archiveMode)return;
+  if(document.hidden){clearInterval(timerInterval);timerInterval=null;}
+  else if(!timerInterval){timerInterval=setInterval(()=>{if(timerStopped){clearInterval(timerInterval);timerInterval=null;return;}seconds++;document.getElementById('timer').textContent=formatTime(seconds);document.getElementById('timer').className='timer running';if(seconds%10===0)saveProgress();},1000);}
 });
 
 // ── CLUE LIST ──
 function openClueList(){
-  if(!PUZZLE)return;
-  const content=document.getElementById('clue-list-content');
-  const currentClue=allClues[currentClueIndex];
-  const renderSection=(clues,dir)=>`
-    <div class="clue-list-section">
-      <div class="clue-list-heading">${dir==='across'?'Across':'Down'}</div>
-      <div class="clue-list-items">
-        ${clues.map(cl=>{
-          const isActive=currentClue&&currentClue.number===cl.number&&currentClue.dir===dir;
-          return`<div class="clue-list-item${isActive?' active-clue':''}" onclick="jumpToClueFromList(${cl.number},'${dir}')">
-            <div class="clue-num">${cl.number}</div>
-            <div class="clue-text">${cl.clue}</div>
-          </div>`;
-        }).join('')}
-      </div>
-    </div>`;
+  if(!PUZZLE)return;const content=document.getElementById('clue-list-content');const currentClue=allClues[currentClueIndex];
+  const renderSection=(clues,dir)=>`<div class="clue-list-section"><div class="clue-list-heading">${dir==='across'?'Across':'Down'}</div><div class="clue-list-items">${clues.map(cl=>{const isActive=currentClue&&currentClue.number===cl.number&&currentClue.dir===dir;return`<div class="clue-list-item${isActive?' active-clue':''}" onclick="jumpToClueFromList(${cl.number},'${dir}')"><div class="clue-num">${cl.number}</div><div class="clue-text">${cl.clue}</div></div>`;}).join('')}</div></div>`;
   content.innerHTML=renderSection(PUZZLE.clues.across,'across')+renderSection(PUZZLE.clues.down,'down');
   document.getElementById('clue-list-modal').classList.add('open');
-  setTimeout(()=>{
-    const active=content.querySelector('.active-clue');
-    if(active)active.scrollIntoView({block:'center',behavior:'smooth'});
-  },50);
+  setTimeout(()=>{const active=content.querySelector('.active-clue');if(active)active.scrollIntoView({block:'center',behavior:'smooth'});},50);
 }
-function closeClueList(e){
-  if(!e||e.target===document.getElementById('clue-list-modal'))
-    document.getElementById('clue-list-modal').classList.remove('open');
-}
-function jumpToClueFromList(number,dir){
-  const idx=allClues.findIndex(cl=>cl.number===number&&cl.dir===dir);
-  if(idx!==-1)jumpToClueIndex(idx);
-  closeClueList();
-}
+function closeClueList(e){if(!e||e.target===document.getElementById('clue-list-modal'))document.getElementById('clue-list-modal').classList.remove('open');}
+function jumpToClueFromList(number,dir){const idx=allClues.findIndex(cl=>cl.number===number&&cl.dir===dir);if(idx!==-1)jumpToClueIndex(idx);closeClueList();}
 
-// ── SETTINGS MODAL ──
-function openSettingsModal(){document.getElementById('settings-modal').classList.add('open');}
-function closeSettingsModal(e){if(!e||e.target===document.getElementById('settings-modal'))document.getElementById('settings-modal').classList.remove('open');}
-function setTheme(t){
-  document.body.dataset.theme=t;
-  ['light','dark','medical'].forEach(n=>document.getElementById(`opt-${n}`).classList.toggle('selected',n===t));
-}
+// ── THEME ──
+function setTheme(t){document.body.dataset.theme=t;['light','dark','medical'].forEach(n=>document.getElementById(`opt-${n}`).classList.toggle('selected',n===t));}
 
 boot();
 </script>
