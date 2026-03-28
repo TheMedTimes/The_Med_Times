@@ -1,0 +1,409 @@
+{
+  "date": "2026-03-28",
+  "topic": "Microbiology of Tuberculosis",
+  "next_topic": "Disorders of Leucocytes and Lymphoreticular Tissues",
+  "size": 15,
+  "solution": [
+    [
+      "M",
+      "#",
+      "H",
+      "I",
+      "V",
+      "#",
+      "S",
+      "O",
+      "F",
+      "T",
+      "#",
+      "#",
+      "#",
+      "#",
+      "A"
+    ],
+    [
+      "Y",
+      "#",
+      "#",
+      "N",
+      "#",
+      "M",
+      "#",
+      "#",
+      "U",
+      "#",
+      "R",
+      "A",
+      "N",
+      "K",
+      "E"
+    ],
+    [
+      "C",
+      "#",
+      "#",
+      "H",
+      "#",
+      "A",
+      "#",
+      "#",
+      "M",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "R"
+    ],
+    [
+      "O",
+      "#",
+      "C",
+      "A",
+      "L",
+      "C",
+      "I",
+      "F",
+      "I",
+      "E",
+      "S",
+      "#",
+      "T",
+      "W",
+      "O"
+    ],
+    [
+      "L",
+      "#",
+      "#",
+      "L",
+      "#",
+      "R",
+      "#",
+      "#",
+      "G",
+      "#",
+      "W",
+      "#",
+      "#",
+      "#",
+      "B"
+    ],
+    [
+      "I",
+      "G",
+      "R",
+      "A",
+      "#",
+      "O",
+      "#",
+      "#",
+      "A",
+      "#",
+      "A",
+      "#",
+      "C",
+      "#",
+      "E"
+    ],
+    [
+      "C",
+      "#",
+      "#",
+      "T",
+      "#",
+      "P",
+      "#",
+      "#",
+      "T",
+      "#",
+      "L",
+      "#",
+      "Y",
+      "E",
+      "S"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "I",
+      "#",
+      "H",
+      "#",
+      "#",
+      "U",
+      "#",
+      "L",
+      "#",
+      "T",
+      "#",
+      "#"
+    ],
+    [
+      "H",
+      "U",
+      "M",
+      "O",
+      "R",
+      "A",
+      "L",
+      "#",
+      "S",
+      "#",
+      "O",
+      "#",
+      "O",
+      "#",
+      "T"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "N",
+      "#",
+      "G",
+      "#",
+      "A",
+      "#",
+      "#",
+      "W",
+      "#",
+      "K",
+      "#",
+      "W"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "E",
+      "#",
+      "P",
+      "O",
+      "S",
+      "I",
+      "T",
+      "I",
+      "V",
+      "E"
+    ],
+    [
+      "#",
+      "L",
+      "#",
+      "L",
+      "#",
+      "S",
+      "#",
+      "P",
+      "#",
+      "#",
+      "N",
+      "#",
+      "N",
+      "#",
+      "N"
+    ],
+    [
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "L",
+      "#",
+      "#",
+      "G",
+      "#",
+      "E",
+      "#",
+      "T"
+    ],
+    [
+      "#",
+      "M",
+      "A",
+      "N",
+      "N",
+      "O",
+      "S",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "S",
+      "#",
+      "Y"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 2,
+        "row": 0,
+        "col": 2,
+        "len": 3,
+        "clue": "Miliary TB is common in _ infected people"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 6,
+        "len": 4,
+        "clue": "Tubercles are of two types hard and _"
+      },
+      {
+        "number": 8,
+        "row": 1,
+        "col": 10,
+        "len": 5,
+        "clue": "Primary complex becomes calcified \u2014 _ complex"
+      },
+      {
+        "number": 9,
+        "row": 3,
+        "col": 2,
+        "len": 9,
+        "clue": "Tubercular lesion heals and _"
+      },
+      {
+        "number": 11,
+        "row": 3,
+        "col": 12,
+        "len": 3,
+        "clue": "How many sputum samples are recommended for PTB?"
+      },
+      {
+        "number": 12,
+        "row": 5,
+        "col": 0,
+        "len": 4,
+        "clue": "Diagnosis of latent TB method"
+      },
+      {
+        "number": 14,
+        "row": 6,
+        "col": 12,
+        "len": 3,
+        "clue": "Is cavity formation seen in secondary TB?"
+      },
+      {
+        "number": 15,
+        "row": 8,
+        "col": 0,
+        "len": 7,
+        "clue": "TH2 cells are responsible for _ immune response"
+      },
+      {
+        "number": 18,
+        "row": 10,
+        "col": 7,
+        "len": 8,
+        "clue": "Mycobacteria appear as gram _"
+      },
+      {
+        "number": 20,
+        "row": 13,
+        "col": 1,
+        "len": 7,
+        "clue": "LAM binds to _ receptors on macrophages"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 7,
+        "clue": "Acid fastness is due to presence of _ acid"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 3,
+        "len": 12,
+        "clue": "Through which route is TB mainly spread?"
+      },
+      {
+        "number": 5,
+        "row": 0,
+        "col": 8,
+        "len": 9,
+        "clue": "Post TB Aspergillosis is due to A. _"
+      },
+      {
+        "number": 6,
+        "row": 0,
+        "col": 14,
+        "len": 7,
+        "clue": "Mycobacteria are obligate _"
+      },
+      {
+        "number": 7,
+        "row": 1,
+        "col": 5,
+        "len": 11,
+        "clue": "Cells infected in TB"
+      },
+      {
+        "number": 10,
+        "row": 3,
+        "col": 10,
+        "len": 10,
+        "clue": "GI TB occurs due to _ of sputum"
+      },
+      {
+        "number": 13,
+        "row": 5,
+        "col": 12,
+        "len": 9,
+        "clue": "TH1 cells release _ such as IL-2 and IFN-\u03b3"
+      },
+      {
+        "number": 16,
+        "row": 8,
+        "col": 14,
+        "len": 6,
+        "clue": "Pleural TB accounts for _% of EPTB cases"
+      },
+      {
+        "number": 17,
+        "row": 9,
+        "col": 7,
+        "len": 5,
+        "clue": "Lupus vulgaris involves _ jelly nodules on face"
+      },
+      {
+        "number": 19,
+        "row": 11,
+        "col": 1,
+        "len": 3,
+        "clue": "_ facilitates survival of TB bacilli in macrophages"
+      }
+    ]
+  }
+}
