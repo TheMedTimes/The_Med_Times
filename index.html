@@ -72,7 +72,7 @@
   .play-btn{width:100%;padding:17px;background:var(--accent);color:#fff;border:none;border-radius:16px;font-size:17px;font-weight:700;font-family:var(--font-display);cursor:pointer;box-shadow:0 6px 24px rgba(200,57,43,0.35);display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px;-webkit-appearance:none;}
   .play-btn:active{transform:scale(0.97);}
   .play-btn.completed{background:var(--correct);box-shadow:0 6px 24px rgba(22,163,74,0.3);}
-  .leaderboard-btn{width:100%;padding:14px;background:none;border:1.5px solid var(--border);border-radius:16px;font-size:15px;font-weight:600;font-family:var(--font-body);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;-webkit-appearance:none;}
+  .leaderboard-btn{width:100%;padding:14px;background:var(--surface);border:1.5px solid var(--border);border-radius:16px;font-size:15px;font-weight:600;font-family:var(--font-body);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;-webkit-appearance:none;box-shadow:0 2px 8px rgba(0,0,0,0.06);}
   .leaderboard-btn:active{background:var(--border);}
   .completed-banner{background:var(--correct-bg);border:1px solid var(--correct);border-radius:12px;padding:10px 16px;width:100%;text-align:center;margin-bottom:12px;font-size:13px;color:var(--correct);font-weight:600;display:flex;align-items:center;justify-content:center;gap:6px;}
   .start-rules{margin-top:14px;font-size:12px;color:var(--text-muted);text-align:center;line-height:1.9;}
@@ -98,6 +98,7 @@
   .logo{font-family:var(--font-display);font-size:18px;font-weight:900;color:var(--accent);cursor:pointer;line-height:1;}
   .archive-back-btn{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--accent);background:none;border:none;cursor:pointer;padding:0;line-height:1;display:none;}
   .date-label{font-size:10px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;}
+  [data-archive="true"] .date-label{display:none;}
   .archive-badge{display:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--highlight-active);color:#92400e;padding:2px 8px;border-radius:6px;margin-top:3px;width:fit-content;}
   [data-archive="true"] .archive-back-btn{display:block;}
   [data-archive="true"] .logo{display:none;}
@@ -910,22 +911,44 @@ async function loadPuzzle(){
 
 async function loadArchiveData(){
   const yesterday=getYesterdayString();
+  const today=getTodayString();
   // Load yesterday
   try{
     const r=await fetch(`puzzles/${yesterday}.json`);
     if(r.ok){YESTERDAY_PUZZLE=await r.json();document.getElementById('archive-btn').classList.remove('hidden');document.getElementById('archive-yesterday-sub').textContent=`${new Date(yesterday+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'})} · ${YESTERDAY_PUZZLE.topic}`;}
     else{YESTERDAY_PUZZLE=null;}
   }catch(e){YESTERDAY_PUZZLE=null;}
-  // Load puzzle index for random
+  // Load puzzle index for random — fall back to probing if index.json missing
   try{
     const r=await fetch(`puzzles/index.json`);
     if(r.ok){
       const idx=await r.json();
-      PUZZLE_INDEX=idx.filter(d=>d!==getTodayString()&&d!==yesterday);
-      document.getElementById('random-archive-option').style.display=PUZZLE_INDEX.length>0?'flex':'none';
+      PUZZLE_INDEX=idx.filter(d=>d!==today&&d!==yesterday);
+    }else{
+      PUZZLE_INDEX=await probePuzzleDates(today,yesterday);
     }
-  }catch(e){PUZZLE_INDEX=[];document.getElementById('random-archive-option').style.display='none';}
+  }catch(e){
+    PUZZLE_INDEX=await probePuzzleDates(today,yesterday);
+  }
+  document.getElementById('random-archive-option').style.display=PUZZLE_INDEX.length>0?'flex':'none';
   if(YESTERDAY_PUZZLE||PUZZLE_INDEX.length>0)document.getElementById('archive-btn').classList.remove('hidden');
+}
+
+async function probePuzzleDates(today,yesterday){
+  // Walk backwards up to 60 days to find available puzzles
+  const found=[];
+  const d=new Date(yesterday+'T00:00:00');
+  d.setDate(d.getDate()-1); // start day before yesterday
+  for(let i=0;i<60;i++){
+    const ds=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    try{
+      const r=await fetch(`puzzles/${ds}.json`,{method:'HEAD'});
+      if(r.ok)found.push(ds);
+      else break; // stop at first gap
+    }catch(e){break;}
+    d.setDate(d.getDate()-1);
+  }
+  return found;
 }
 
 // ── ARCHIVE MODE ──
