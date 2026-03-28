@@ -203,6 +203,36 @@
   .clue-text{font-size:13px;color:var(--text);line-height:1.4;}
   .clue-list-scroll{max-height:65vh;overflow-y:auto;padding-bottom:4px;}
 
+  /* START SCREEN TOP BAR */
+  .start-topbar{position:absolute;top:16px;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:0 20px;z-index:2;}
+  .start-icon-btn{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:18px;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,0.07);-webkit-appearance:none;}
+  .start-icon-btn:active{background:var(--border);}
+  .start-icon-btn.hidden{visibility:hidden;pointer-events:none;}
+
+  /* ARCHIVE MODE BANNER in game header */
+  .archive-badge{display:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--highlight-active);color:#92400e;padding:2px 8px;border-radius:6px;margin-top:2px;}
+  [data-archive="true"] .archive-badge{display:inline-block;}
+  [data-archive="true"] #timer{visibility:hidden;}
+  .archive-back-btn{display:none;font-size:13px;font-weight:600;color:var(--accent);background:none;border:none;cursor:pointer;padding:0;font-family:var(--font-body);}
+  [data-archive="true"] .archive-back-btn{display:block;}
+  [data-archive="true"] .logo{display:none;}
+
+  /* REVEAL PENALTY ANIMATION */
+  .penalty-pop{position:fixed;font-family:var(--font-mono);font-size:15px;font-weight:700;color:var(--wrong);pointer-events:none;z-index:600;animation:penaltyFloat 1.2s ease-out forwards;}
+  @keyframes penaltyFloat{0%{opacity:1;transform:translateY(0) scale(1)}60%{opacity:1;transform:translateY(-28px) scale(1.1)}100%{opacity:0;transform:translateY(-48px) scale(0.9)}}
+
+  /* SETTINGS MODAL extras */
+  .settings-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:16px 0 10px;}
+  .settings-row{display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border);}
+  .settings-row:last-of-type{border-bottom:none;}
+  .settings-row-label{font-size:14px;font-weight:600;color:var(--text);}
+  .settings-row-sub{font-size:12px;color:var(--text-muted);margin-top:2px;}
+  .settings-signout{width:100%;padding:13px;background:none;border:1.5px solid var(--border);border-radius:12px;font-size:15px;font-weight:600;color:var(--text-muted);cursor:pointer;font-family:var(--font-body);margin-top:8px;-webkit-appearance:none;}
+  .settings-signout:active{background:var(--border);}
+
+  /* ARCHIVE SUCCESS overlay variant */
+  .success-archive-note{font-size:13px;color:var(--text-muted);margin-bottom:16px;padding:10px 14px;background:var(--highlight);border-radius:10px;line-height:1.5;}
+
   /* College screen layout + consent */
   #college-screen{
     align-items:center;
@@ -284,6 +314,10 @@
 <!-- START SCREEN -->
 <div id="start-screen" class="screen">
   <div class="start-bg-grid" id="start-bg-grid"></div>
+  <div class="start-topbar">
+    <button class="start-icon-btn hidden" id="yesterday-btn" onclick="startArchiveGame()" title="Yesterday's puzzle">📖 Yesterday</button>
+    <button class="start-icon-btn" onclick="openSettingsModal()" title="Settings">⚙️</button>
+  </div>
   <div class="start-content">
     <div class="start-badge">Daily Puzzle</div>
     <div class="start-logo">TheMedTimes</div>
@@ -324,9 +358,8 @@
     <div class="start-rules">
       Tap a cell · Tap again to flip direction<br>
       Use arrows to move between clues<br>
-      Tap View to change theme
+      Reveal penalty: +10s per reveal
     </div>
-    <div class="start-signout" onclick="signOut()">Sign out</div>
   </div>
 </div>
 
@@ -357,13 +390,14 @@
 <div id="game-screen" class="screen">
   <header>
     <div class="header-left">
+      <button class="archive-back-btn" onclick="exitArchiveMode()">← Back</button>
       <div class="logo" onclick="goToStart()">TheMedTimes</div>
       <div class="date-label" id="date-label"></div>
+      <div class="archive-badge">Yesterday's Puzzle</div>
     </div>
     <div class="header-right">
       <div class="timer" id="timer">0:00</div>
       <button class="icon-btn" onclick="openClueList()">Clues</button>
-      <button class="icon-btn" onclick="openViewModal()">View</button>
     </div>
   </header>
   <div class="clue-nav-top">
@@ -390,21 +424,12 @@
   </div>
 </div>
 
-<!-- VIEW MODAL -->
-<div class="modal-overlay" id="view-modal" onclick="closeViewModal(event)">
+<!-- SETTINGS MODAL (from start screen) -->
+<div class="modal-overlay" id="settings-modal" onclick="closeSettingsModal(event)">
   <div class="modal">
     <div class="modal-handle"></div>
-    <div class="modal-title">Settings</div>
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border);margin-bottom:16px;">
-      <div>
-        <div style="font-size:14px;font-weight:600;color:var(--text);">Live Check</div>
-        <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">Instantly marks correct / wrong letters</div>
-      </div>
-      <label class="toggle">
-        <input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)" checked>
-        <span class="slider"></span>
-      </label>
-    </div>
+    <div class="modal-title">⚙️ Settings</div>
+    <div class="settings-section-title">Theme</div>
     <div class="theme-options">
       <div class="theme-opt selected" onclick="setTheme('light')" id="opt-light">
         <div class="theme-swatch" style="background:linear-gradient(135deg,#f7f4ef,#c8392b)"></div>
@@ -419,7 +444,20 @@
         <div class="theme-name">Medical</div>
       </div>
     </div>
-    <button class="modal-close" onclick="closeViewModal()">Done</button>
+    <div class="settings-section-title">Gameplay</div>
+    <div class="settings-row">
+      <div>
+        <div class="settings-row-label">Live Check</div>
+        <div class="settings-row-sub">Instantly marks correct / wrong letters</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="settings-section-title">Account</div>
+    <button class="settings-signout" onclick="signOut()">Sign out</button>
+    <button class="modal-close" style="margin-top:12px;" onclick="closeSettingsModal()">Done</button>
   </div>
 </div>
 
@@ -448,15 +486,17 @@
 <!-- SUCCESS -->
 <div class="success-overlay" id="success-overlay">
   <div class="success-card">
-    <div class="success-emoji">🎉</div>
-    <div class="success-title">Puzzle Complete!</div>
+    <div class="success-emoji" id="success-emoji">🎉</div>
+    <div class="success-title" id="success-title">Puzzle Complete!</div>
     <div class="success-time" id="final-time">—</div>
     <div class="success-streak" id="final-streak"></div>
     <div class="success-rank" id="final-rank"></div>
     <div class="success-meta" id="success-date"></div>
+    <div class="success-meta" id="final-penalty" style="color:var(--wrong);font-weight:600;margin-bottom:4px;display:none;"></div>
+    <div class="success-archive-note" id="archive-success-note" style="display:none;">Practice mode — no timer or leaderboard for yesterday's puzzle.</div>
     <div class="success-next-topic" id="success-next-topic" style="display:none;">📅 Tomorrow's topic: <strong id="next-topic-val"></strong></div>
-    <button class="success-btn" onclick="openLeaderboardFromSuccess()">🏆 View Leaderboard</button>
-    <button class="success-btn outline" onclick="goToStart()">Back to Home</button>
+    <button class="success-btn" id="success-lb-btn" onclick="openLeaderboardFromSuccess()">🏆 View Leaderboard</button>
+    <button class="success-btn outline" id="success-home-btn" onclick="goToStart()">Back to Home</button>
     <button class="success-btn outline" onclick="document.getElementById('success-overlay').classList.remove('open')">View Board</button>
   </div>
 </div>
@@ -468,6 +508,7 @@ const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON):null;
 
 let PUZZLE=null,currentUser=null,userProfile=null,userStreak=0;
+let YESTERDAY_PUZZLE=null;
 let userGrid=[],selectedRow=-1,selectedCol=-1;
 let direction='across';
 let timerInterval=null,seconds=0,started=false,timerStopped=false;
@@ -475,8 +516,9 @@ let instantCheck=true,completedCells=new Set();
 let allClues=[],currentClueIndex=0;
 let countdownInterval=null;
 let puzzleAlreadyCompleted=false;
-let usedReveal=false;
+let usedReveal=false,revealPenalties=0;
 let completionHandled=false;
+let archiveMode=false;
 
 // ── LOADING SAFETY NET ──
 const _bootTimer=setTimeout(()=>{
@@ -520,11 +562,23 @@ async function boot(){
     return;
   }
   try{
-    sb.auth.onAuthStateChange(async(event,session)=>{
-      if(event==='SIGNED_IN'&&session&&!currentUser){
-        currentUser=session.user;
+    // Always try getSession first — critical for Safari PWA persistence
+    const sessionPromise=sb.auth.getSession();
+    const timeoutPromise=new Promise((_,reject)=>setTimeout(()=>reject(new Error('session timeout')),8000));
+    const{data:{session}}=await Promise.race([sessionPromise,timeoutPromise]);
+
+    // Keep token fresh in background (helps Safari PWA not drop session)
+    sb.auth.startAutoRefresh();
+
+    // Listen for future auth events (OAuth redirects, sign out)
+    sb.auth.onAuthStateChange(async(event,newSession)=>{
+      if(event==='SIGNED_IN'&&newSession&&!currentUser){
+        currentUser=newSession.user;
         const profileResult=await loadUserProfile();
         if(profileResult!=='needs-college') await loadPuzzle();
+      }
+      if(event==='TOKEN_REFRESHED'&&newSession&&currentUser){
+        // Session silently refreshed — nothing to do, already loaded
       }
       if(event==='SIGNED_OUT'){
         currentUser=null;userProfile=null;userStreak=0;
@@ -533,9 +587,7 @@ async function boot(){
         showScreen('auth-screen');
       }
     });
-    const sessionPromise=sb.auth.getSession();
-    const timeoutPromise=new Promise((_,reject)=>setTimeout(()=>reject(new Error('session timeout')),8000));
-    const{data:{session}}=await Promise.race([sessionPromise,timeoutPromise]);
+
     if(session){
       currentUser=session.user;
       const profileResult=await loadUserProfile();
@@ -769,8 +821,28 @@ async function loadPuzzle(){
     if(!res.ok)throw new Error('not found');
     PUZZLE=await res.json();
     puzzleAlreadyCompleted=await checkAlreadyCompleted();
+    // Try fetching yesterday's puzzle for the archive button
+    await tryLoadYesterday();
     showStartScreen();
   }catch(e){showNoPuzzle(today);}
+}
+
+async function tryLoadYesterday(){
+  try{
+    const d=new Date();d.setDate(d.getDate()-1);
+    const yesterday=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const res=await fetch(`puzzles/${yesterday}.json`);
+    if(res.ok){
+      YESTERDAY_PUZZLE=await res.json();
+      document.getElementById('yesterday-btn').classList.remove('hidden');
+    }else{
+      YESTERDAY_PUZZLE=null;
+      document.getElementById('yesterday-btn').classList.add('hidden');
+    }
+  }catch(e){
+    YESTERDAY_PUZZLE=null;
+    document.getElementById('yesterday-btn').classList.add('hidden');
+  }
 }
 
 function showStartScreen(){
@@ -842,7 +914,7 @@ function startCountdown(){
 
 // ── PROGRESS ──
 function saveProgress(){
-  if(!PUZZLE)return;
+  if(!PUZZLE||archiveMode)return;
   const S=PUZZLE.size,cellStates=[];
   for(let r=0;r<S;r++){
     cellStates[r]=[];
@@ -884,7 +956,19 @@ function loadProgress(){
 }
 
 // ── NAVIGATION ──
+function startArchiveGame(){
+  if(!YESTERDAY_PUZZLE)return;
+  _todayPuzzleBackup=PUZZLE;
+  PUZZLE=YESTERDAY_PUZZLE;
+  archiveMode=true;
+  document.getElementById('game-screen').setAttribute('data-archive','true');
+  showScreen('game-screen');
+  initGame();
+}
+
 function startGame(){
+  archiveMode=false;
+  document.getElementById('game-screen').removeAttribute('data-archive');
   showScreen('game-screen');
   initGame();
 }
@@ -896,32 +980,49 @@ document.querySelectorAll('.kb-key').forEach(btn=>{
   btn.addEventListener('touchcancel',()=>{btn.classList.remove('pressed');},{passive:true});
 });
 function goToStart(){
+  if(archiveMode){exitArchiveMode();return;}
   if(started)saveProgress();
   clearInterval(timerInterval);timerInterval=null;
   document.getElementById('success-overlay').classList.remove('open');
   showStartScreen();
 }
 
+function exitArchiveMode(){
+  archiveMode=false;
+  document.getElementById('game-screen').removeAttribute('data-archive');
+  clearInterval(timerInterval);timerInterval=null;
+  // Restore today's puzzle
+  PUZZLE=_todayPuzzleBackup;
+  document.getElementById('success-overlay').classList.remove('open');
+  showStartScreen();
+}
+
+let _todayPuzzleBackup=null;
+
 // ── GAME INIT ──
 function initGame(){
-  const d=new Date();
+  const d=archiveMode?new Date(PUZZLE.date+'T00:00:00'):new Date();
   document.getElementById('date-label').textContent=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
   const S=PUZZLE.size;
   userGrid=[];
   for(let r=0;r<S;r++){userGrid[r]=[];for(let c=0;c<S;c++)userGrid[r][c]='';}
-  seconds=0;started=false;timerStopped=false;completedCells=new Set();usedReveal=false;completionHandled=false;
+  seconds=0;started=false;timerStopped=false;completedCells=new Set();
+  usedReveal=false;revealPenalties=0;completionHandled=false;
   document.getElementById('timer').textContent='0:00';
   document.getElementById('timer').className='timer';
   buildClueList();
   buildGrid(computeNumbers());
-  if(PUZZLE.next_topic&&PUZZLE.next_topic!=='TBD'){
+  if(!archiveMode&&PUZZLE.next_topic&&PUZZLE.next_topic!=='TBD'){
     document.getElementById('next-topic-val').textContent=PUZZLE.next_topic;
     document.getElementById('success-next-topic').style.display='block';
   }else{
     document.getElementById('success-next-topic').style.display='none';
   }
-  const restored=loadProgress();
-  if(restored&&!puzzleAlreadyCompleted){started=true;startTimer();}
+  // Only restore progress for today's puzzle
+  if(!archiveMode){
+    const restored=loadProgress();
+    if(restored&&!puzzleAlreadyCompleted){started=true;startTimer();}
+  }
   requestAnimationFrame(()=>jumpToClueIndex(0));
 }
 
@@ -1109,13 +1210,33 @@ function revealLetter(){
   if(selectedRow===-1)return;
   const sol=PUZZLE.solution[selectedRow][selectedCol];if(sol==='#')return;
   usedReveal=true;
-  if(!started)startTimer();
+  if(!started&&!archiveMode)startTimer();
+  else if(!started&&archiveMode){started=true;}
   userGrid[selectedRow][selectedCol]=sol;
   const lt=document.getElementById(`letter-${selectedRow}-${selectedCol}`);if(lt)lt.textContent=sol;
   const cell=document.getElementById(`cell-${selectedRow}-${selectedCol}`);
   cell.classList.remove('wrong');cell.classList.add('correct');
   completedCells.add(`${selectedRow}`,`${selectedCol}`);
+  // +10s penalty (today's puzzle only)
+  if(!archiveMode){
+    revealPenalties++;
+    seconds+=10;
+    document.getElementById('timer').textContent=formatTime(seconds);
+    spawnPenaltyPop();
+  }
   saveProgress();advanceSelection();checkCompletion();
+}
+
+function spawnPenaltyPop(){
+  const timerEl=document.getElementById('timer');
+  const rect=timerEl.getBoundingClientRect();
+  const el=document.createElement('div');
+  el.className='penalty-pop';
+  el.textContent='+10s';
+  el.style.left=(rect.left+rect.width/2-18)+'px';
+  el.style.top=(rect.top-8)+'px';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),1300);
 }
 function toggleInstantCheck(val){
   instantCheck=val;
@@ -1146,6 +1267,10 @@ function checkCompletion(){
   }
   completionHandled=true;
   stopTimer();
+  if(archiveMode){
+    showSuccess(0);
+    return;
+  }
   localStorage.removeItem('tmt_progress');
   puzzleAlreadyCompleted=true;
   showSuccess(0);
@@ -1164,10 +1289,40 @@ function checkCompletion(){
 function showSuccess(myRank){
   spawnConfetti();
   const d=new Date();
-  document.getElementById('final-time').textContent=formatTime(seconds);
-  document.getElementById('final-streak').textContent=userStreak>0?streakDisplay(userStreak):'';
-  document.getElementById('final-rank').textContent=myRank>0?`#${myRank} on today's leaderboard`:'';
-  document.getElementById('success-date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  // Archive mode variant
+  if(archiveMode){
+    document.getElementById('success-emoji').textContent='✅';
+    document.getElementById('success-title').textContent='Well Done!';
+    document.getElementById('final-time').style.display='none';
+    document.getElementById('final-streak').textContent='';
+    document.getElementById('final-rank').textContent='';
+    document.getElementById('final-penalty').style.display='none';
+    document.getElementById('archive-success-note').style.display='block';
+    document.getElementById('success-lb-btn').style.display='none';
+    document.getElementById('success-home-btn').textContent='Close';
+    document.getElementById('success-date').textContent=
+      new Date(PUZZLE.date+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  }else{
+    document.getElementById('success-emoji').textContent='🎉';
+    document.getElementById('success-title').textContent='Puzzle Complete!';
+    document.getElementById('final-time').style.display='';
+    document.getElementById('final-time').textContent=formatTime(seconds);
+    document.getElementById('final-streak').textContent=userStreak>0?streakDisplay(userStreak):'';
+    document.getElementById('final-rank').textContent=myRank>0?`#${myRank} on today's leaderboard`:'';
+    document.getElementById('archive-success-note').style.display='none';
+    document.getElementById('success-lb-btn').style.display='';
+    document.getElementById('success-home-btn').textContent='Back to Home';
+    document.getElementById('success-date').textContent=
+      d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+    // Show penalty if any reveals were used
+    const penaltyEl=document.getElementById('final-penalty');
+    if(revealPenalties>0){
+      penaltyEl.textContent=`${revealPenalties} reveal${revealPenalties>1?'s':''} used (+${revealPenalties*10}s)`;
+      penaltyEl.style.display='block';
+    }else{
+      penaltyEl.style.display='none';
+    }
+  }
   document.getElementById('success-overlay').classList.add('open');
 }
 
@@ -1257,9 +1412,9 @@ function jumpToClueFromList(number,dir){
   closeClueList();
 }
 
-// ── VIEW MODAL ──
-function openViewModal(){document.getElementById('view-modal').classList.add('open');}
-function closeViewModal(e){if(!e||e.target===document.getElementById('view-modal'))document.getElementById('view-modal').classList.remove('open');}
+// ── SETTINGS MODAL ──
+function openSettingsModal(){document.getElementById('settings-modal').classList.add('open');}
+function closeSettingsModal(e){if(!e||e.target===document.getElementById('settings-modal'))document.getElementById('settings-modal').classList.remove('open');}
 function setTheme(t){
   document.body.dataset.theme=t;
   ['light','dark','medical'].forEach(n=>document.getElementById(`opt-${n}`).classList.toggle('selected',n===t));
