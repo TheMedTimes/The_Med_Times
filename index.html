@@ -1033,6 +1033,8 @@ async function showNoPuzzle(today){
   showScreen('no-puzzle-screen');
   initIcons();
   startCountdown();
+  // Load archive data so the archive button shows if past puzzles exist
+  await loadArchiveData();
   try{
     const r=await fetch(`puzzles/${getYesterdayString()}.json`);
     if(r.ok){const yp=await r.json();if(yp.next_topic&&yp.next_topic!=='TBD'){document.getElementById('no-puzzle-next-topic').textContent=`Today's topic: ${yp.next_topic}`;document.getElementById('no-puzzle-topic-wrap').style.display='block';}}
