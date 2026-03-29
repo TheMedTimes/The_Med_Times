@@ -23,7 +23,7 @@
   "clues": {
     "across": [
       { "number": 1, "row": 0, "col": 1, "len": 7, "clue": "CML consists of chronic, accelerated and __ phase" },
-      { "number": 8, "row": 0, "col": 10, "len": 5, "clue": "There are __ groups under Myeloid Neoplasms" },
+      { "number": 8, "row": 0, "col": 10, "len": 5, "clue": "FAB classification of AML goes from M0 to M_" },
       { "number": 18, "row": 2, "col": 2, "len": 3, "clue": "AML and __" },
       { "number": 20, "row": 2, "col": 7, "len": 8, "clue": "ALL is primarily a disease of __ and young adults" },
       { "number": 30, "row": 4, "col": 0, "len": 4, "clue": "Metamyelocyte to __ form" },
