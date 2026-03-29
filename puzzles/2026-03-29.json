@@ -1,0 +1,528 @@
+{
+  "date": "2026-03-29",
+  "topic": "Disorders of Leucocytes and Lymphoreticular Tissues",
+  "next_topic": "TBD",
+  "size": 15,
+  "solution": [
+    [
+      "G",
+      "B",
+      "C",
+      "R",
+      "A",
+      "B",
+      "L",
+      "Y",
+      "M",
+      "P",
+      "H",
+      "O",
+      "M",
+      "A",
+      "S"
+    ],
+    [
+      "L",
+      "Y",
+      "M",
+      "P",
+      "H",
+      "N",
+      "O",
+      "D",
+      "E",
+      "#",
+      "#",
+      "#",
+      "Y",
+      "G",
+      "C"
+    ],
+    [
+      "A",
+      "L",
+      "L",
+      "#",
+      "C",
+      "V",
+      "C",
+      "H",
+      "I",
+      "L",
+      "D",
+      "R",
+      "E",
+      "N",
+      "H"
+    ],
+    [
+      "N",
+      "O",
+      "N",
+      "H",
+      "O",
+      "D",
+      "G",
+      "K",
+      "I",
+      "N",
+      "S",
+      "Y",
+      "L",
+      "O",
+      "I"
+    ],
+    [
+      "D",
+      "S",
+      "A",
+      "I",
+      "G",
+      "#",
+      "B",
+      "F",
+      "A",
+      "B",
+      "#",
+      "E",
+      "O",
+      "G",
+      "L"
+    ],
+    [
+      "U",
+      "U",
+      "P",
+      "S",
+      "U",
+      "#",
+      "A",
+      "I",
+      "#",
+      "#",
+      "#",
+      "#",
+      "B",
+      "E",
+      "L"
+    ],
+    [
+      "L",
+      "P",
+      "#",
+      "T",
+      "G",
+      "#",
+      "N",
+      "V",
+      "E",
+      "R",
+      "A",
+      "M",
+      "L",
+      "N",
+      "I"
+    ],
+    [
+      "A",
+      "P",
+      "H",
+      "I",
+      "L",
+      "A",
+      "D",
+      "E",
+      "L",
+      "P",
+      "H",
+      "I",
+      "A",
+      "I",
+      "N"
+    ],
+    [
+      "R",
+      "R",
+      "S",
+      "O",
+      "I",
+      "N",
+      "S",
+      "I",
+      "D",
+      "I",
+      "O",
+      "U",
+      "S",
+      "C",
+      "G"
+    ],
+    [
+      "B",
+      "E",
+      "N",
+      "C",
+      "E",
+      "J",
+      "O",
+      "N",
+      "E",
+      "S",
+      "#",
+      "#",
+      "T",
+      "T",
+      "M"
+    ],
+    [
+      "#",
+      "S",
+      "#",
+      "Y",
+      "L",
+      "A",
+      "C",
+      "U",
+      "N",
+      "A",
+      "R",
+      "#",
+      "I",
+      "W",
+      "I"
+    ],
+    [
+      "#",
+      "S",
+      "#",
+      "T",
+      "M",
+      "A",
+      "L",
+      "E",
+      "R",
+      "E",
+      "D",
+      "U",
+      "C",
+      "E",
+      "D"
+    ],
+    [
+      "#",
+      "I",
+      "#",
+      "I",
+      "O",
+      "W",
+      "L",
+      "Y",
+      "E",
+      "S",
+      "E",
+      "V",
+      "E",
+      "N",
+      "D"
+    ],
+    [
+      "#",
+      "O",
+      "#",
+      "C",
+      "S",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "T",
+      "L"
+    ],
+    [
+      "#",
+      "N",
+      "A",
+      "E",
+      "G",
+      "E",
+      "L",
+      "I",
+      "T",
+      "H",
+      "I",
+      "R",
+      "T",
+      "Y",
+      "E"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 2,
+        "row": 0,
+        "col": 1,
+        "len": 6,
+        "clue": "Ph chromosome involves ___ fusion"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 6,
+        "len": 9,
+        "clue": "__ are malignant tumors of lymphoreticular tissues"
+      },
+      {
+        "number": 8,
+        "row": 1,
+        "col": 0,
+        "len": 9,
+        "clue": "Juvenile CML is more often grouped with __ enlargement"
+      },
+      {
+        "number": 9,
+        "row": 2,
+        "col": 0,
+        "len": 3,
+        "clue": "AML and __"
+      },
+      {
+        "number": 10,
+        "row": 2,
+        "col": 4,
+        "len": 3,
+        "clue": "Mild Splenomegaly is seen in __ of spleen"
+      },
+      {
+        "number": 11,
+        "row": 2,
+        "col": 6,
+        "len": 8,
+        "clue": "ALL is primarily a disease of __ and young adults"
+      },
+      {
+        "number": 13,
+        "row": 3,
+        "col": 0,
+        "len": 11,
+        "clue": "Lukes Collins classification was used for ___ lymphoma"
+      },
+      {
+        "number": 19,
+        "row": 4,
+        "col": 7,
+        "len": 3,
+        "clue": "Two main classification schemes for AML are WHO and _"
+      },
+      {
+        "number": 21,
+        "row": 6,
+        "col": 7,
+        "len": 4,
+        "clue": "Myeloproliferative disease - Polycythaemia __"
+      },
+      {
+        "number": 22,
+        "row": 6,
+        "col": 10,
+        "len": 3,
+        "clue": "Auer rods are seen in"
+      },
+      {
+        "number": 23,
+        "row": 7,
+        "col": 1,
+        "len": 12,
+        "clue": "__ chromosome seen in 70-90% cases with CML"
+      },
+      {
+        "number": 24,
+        "row": 8,
+        "col": 1,
+        "len": 2,
+        "clue": "Classic feature of Hodgkin's Disease are __ cells"
+      },
+      {
+        "number": 25,
+        "row": 8,
+        "col": 4,
+        "len": 9,
+        "clue": "The onset of CML is generally __"
+      },
+      {
+        "number": 26,
+        "row": 9,
+        "col": 0,
+        "len": 10,
+        "clue": "__ proteins seen in urine of multiple myeloma"
+      },
+      {
+        "number": 29,
+        "row": 10,
+        "col": 4,
+        "len": 7,
+        "clue": "Nodular Sclerosis shows __ type RS cell"
+      },
+      {
+        "number": 30,
+        "row": 11,
+        "col": 4,
+        "len": 4,
+        "clue": "The incidence of leukemia is higher in which gender"
+      },
+      {
+        "number": 31,
+        "row": 11,
+        "col": 8,
+        "len": 7,
+        "clue": "NAP score is __ in CML"
+      },
+      {
+        "number": 32,
+        "row": 12,
+        "col": 4,
+        "len": 3,
+        "clue": "Classic RS cell shows __ eye appearance"
+      },
+      {
+        "number": 33,
+        "row": 12,
+        "col": 7,
+        "len": 3,
+        "clue": "Is splenomegaly seen in CML?"
+      },
+      {
+        "number": 34,
+        "row": 12,
+        "col": 9,
+        "len": 5,
+        "clue": "FAB classification of AML goes from M0 to M_"
+      },
+      {
+        "number": 35,
+        "row": 14,
+        "col": 1,
+        "len": 7,
+        "clue": "M4 AML is __ type"
+      },
+      {
+        "number": 36,
+        "row": 14,
+        "col": 8,
+        "len": 6,
+        "clue": "Based on FAB a leukaemia is acute if blasts exceed __%"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 9,
+        "clue": "Infectious mononucleosis is also called __ fever"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 2,
+        "len": 3,
+        "clue": "Massive splenomegaly can be seen in"
+      },
+      {
+        "number": 5,
+        "row": 0,
+        "col": 12,
+        "len": 10,
+        "clue": "__ to promyelocyte"
+      },
+      {
+        "number": 6,
+        "row": 0,
+        "col": 13,
+        "len": 9,
+        "clue": "Chronic idiopathic myelofibrosis aka ___ myeloid metaplasia"
+      },
+      {
+        "number": 7,
+        "row": 0,
+        "col": 14,
+        "len": 9,
+        "clue": "M5 AML is __ type"
+      },
+      {
+        "number": 12,
+        "row": 2,
+        "col": 11,
+        "len": 3,
+        "clue": "Classification of Hodgkin's Disease other than WHO"
+      },
+      {
+        "number": 14,
+        "row": 3,
+        "col": 2,
+        "len": 3,
+        "clue": "__ score is elevated in Leukaemoid reaction"
+      },
+      {
+        "number": 15,
+        "row": 3,
+        "col": 3,
+        "len": 11,
+        "clue": "Myeloid Neoplams - Lymphoid Neoplasms - ___ Neoplasms"
+      },
+      {
+        "number": 16,
+        "row": 4,
+        "col": 1,
+        "len": 11,
+        "clue": "Leukemic cells cause __ of normal hematopoietic cells"
+      },
+      {
+        "number": 17,
+        "row": 4,
+        "col": 4,
+        "len": 10,
+        "clue": "M6 AML is Di __ syndrome"
+      },
+      {
+        "number": 18,
+        "row": 4,
+        "col": 6,
+        "len": 4,
+        "clue": "Metamyelocyte to _ form"
+      },
+      {
+        "number": 19,
+        "row": 4,
+        "col": 7,
+        "len": 4,
+        "clue": "There are __ groups under Myeloid Neoplasms"
+      },
+      {
+        "number": 20,
+        "row": 5,
+        "col": 12,
+        "len": 7,
+        "clue": "CML consists of chronic, accelerated and __"
+      },
+      {
+        "number": 27,
+        "row": 9,
+        "col": 13,
+        "len": 6,
+        "clue": "Based on WHO a leukaemia is acute if blasts exceed __%"
+      },
+      {
+        "number": 28,
+        "row": 9,
+        "col": 14,
+        "len": 6,
+        "clue": "CML is commonly found in __ age"
+      }
+    ]
+  }
+}
