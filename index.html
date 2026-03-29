@@ -99,10 +99,11 @@
   .archive-back-btn{font-family:var(--font-display);font-size:16px;font-weight:700;color:var(--accent);background:none;border:none;cursor:pointer;padding:0;line-height:1;display:none;}
   .date-label{font-size:10px;color:var(--text-muted);font-weight:500;text-transform:uppercase;letter-spacing:0.8px;margin-top:2px;}
   [data-archive="true"] .date-label{display:none;}
-  .archive-badge{display:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--highlight-active);color:#92400e;padding:2px 8px;border-radius:6px;margin-top:3px;width:fit-content;}
-  [data-archive="true"] .archive-back-btn{display:block;}
+  .archive-badge{display:none;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--highlight-active);color:#92400e;padding:2px 8px;border-radius:6px;width:fit-content;}
+  [data-archive="true"] .archive-back-btn{display:flex;align-items:center;}
   [data-archive="true"] .logo{display:none;}
-  [data-archive="true"] .archive-badge{display:block;}
+  [data-archive="true"] .archive-badge{display:inline-block;}
+  [data-archive="true"] .header-left{flex-direction:row;align-items:center;gap:8px;}
   [data-archive="true"] #timer{visibility:hidden;}
   .header-right{display:flex;align-items:center;gap:8px;}
   .timer{font-family:var(--font-mono);font-size:18px;font-weight:500;color:var(--text);min-width:52px;text-align:right;}
@@ -993,7 +994,7 @@ function exitArchiveMode(){
   clearInterval(timerInterval);timerInterval=null;
   PUZZLE=_todayPuzzleBackup;
   document.getElementById('success-overlay').classList.remove('open');
-  showStartScreen();
+  if(PUZZLE){showStartScreen();}else{showNoPuzzle(getTodayString());}
 }
 
 function showStartScreen(){
