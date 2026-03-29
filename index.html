@@ -697,24 +697,17 @@ async function boot(){
   if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
   try{
     sb.auth.startAutoRefresh();
-
-    // iOS PWA: restore session from storage before racing getSession
-    // Safari kills the JS context on swipe-away, so we need this fallback
     sb.auth.onAuthStateChange(async(event,session)=>{
       if(event==='SIGNED_IN'&&session&&!currentUser){
         currentUser=session.user;
         const r=await loadUserProfile();
         if(r!=='needs-college')await loadPuzzle();
       }
-      if(event==='TOKEN_REFRESHED'&&session){
-        currentUser=session.user;
-      }
       if(event==='SIGNED_OUT'){
         currentUser=null;userProfile=null;userStreak=0;
         hideLoading();buildAuthBg();showScreen('auth-screen');
       }
     });
-
     const{data:{session}}=await Promise.race([
       sb.auth.getSession(),
       new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),8000))
@@ -723,34 +716,9 @@ async function boot(){
       currentUser=session.user;
       const r=await loadUserProfile();
       if(r!=='needs-college')await loadPuzzle();
-    }else{
-      // iOS PWA fallback: try refreshing the session explicitly
-      // (Safari may have dropped the in-memory token but kept it in storage)
-      try{
-        const{data:refreshData}=await sb.auth.refreshSession();
-        if(refreshData?.session){
-          currentUser=refreshData.session.user;
-          const r=await loadUserProfile();
-          if(r!=='needs-college')await loadPuzzle();
-          return;
-        }
-      }catch(e){}
-      hideLoading();buildAuthBg();showScreen('auth-screen');
-    }
+    }else{hideLoading();buildAuthBg();showScreen('auth-screen');}
   }catch(err){
     if(err.message!=='session timeout')console.error('Boot error:',err);
-    // On timeout, try a quick session refresh before giving up
-    if(err.message==='session timeout'){
-      try{
-        const{data:refreshData}=await sb.auth.refreshSession();
-        if(refreshData?.session){
-          currentUser=refreshData.session.user;
-          const r=await loadUserProfile();
-          if(r!=='needs-college')await loadPuzzle();
-          return;
-        }
-      }catch(e){}
-    }
     hideLoading();buildAuthBg();showScreen('auth-screen');
     if(err.message!=='session timeout')setAuthError('Could not connect. Check internet and refresh.');
   }
