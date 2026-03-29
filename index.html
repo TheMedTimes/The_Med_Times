@@ -391,6 +391,14 @@
 
 <!-- NO PUZZLE -->
 <div id="no-puzzle-screen" class="screen">
+  <div class="start-topbar">
+    <button class="start-icon-btn hidden" id="no-puzzle-archive-btn" onclick="openArchiveModal()" title="Practice puzzles">
+      <span class="ic" data-lucide="book-open" style="width:20px;height:20px;"></span>
+    </button>
+    <button class="start-icon-btn" onclick="openSettingsModal()" title="Settings">
+      <span class="ic" data-lucide="settings" style="width:20px;height:20px;"></span>
+    </button>
+  </div>
   <div class="no-puzzle-inner">
     <div class="no-puzzle-icon"><span class="ic" data-lucide="stethoscope" style="width:64px;height:64px;"></span></div>
     <div class="no-puzzle-title">Come Back Tomorrow</div>
@@ -689,17 +697,24 @@ async function boot(){
   if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
   try{
     sb.auth.startAutoRefresh();
+
+    // iOS PWA: restore session from storage before racing getSession
+    // Safari kills the JS context on swipe-away, so we need this fallback
     sb.auth.onAuthStateChange(async(event,session)=>{
       if(event==='SIGNED_IN'&&session&&!currentUser){
         currentUser=session.user;
         const r=await loadUserProfile();
         if(r!=='needs-college')await loadPuzzle();
       }
+      if(event==='TOKEN_REFRESHED'&&session){
+        currentUser=session.user;
+      }
       if(event==='SIGNED_OUT'){
         currentUser=null;userProfile=null;userStreak=0;
         hideLoading();buildAuthBg();showScreen('auth-screen');
       }
     });
+
     const{data:{session}}=await Promise.race([
       sb.auth.getSession(),
       new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),8000))
@@ -708,9 +723,34 @@ async function boot(){
       currentUser=session.user;
       const r=await loadUserProfile();
       if(r!=='needs-college')await loadPuzzle();
-    }else{hideLoading();buildAuthBg();showScreen('auth-screen');}
+    }else{
+      // iOS PWA fallback: try refreshing the session explicitly
+      // (Safari may have dropped the in-memory token but kept it in storage)
+      try{
+        const{data:refreshData}=await sb.auth.refreshSession();
+        if(refreshData?.session){
+          currentUser=refreshData.session.user;
+          const r=await loadUserProfile();
+          if(r!=='needs-college')await loadPuzzle();
+          return;
+        }
+      }catch(e){}
+      hideLoading();buildAuthBg();showScreen('auth-screen');
+    }
   }catch(err){
     if(err.message!=='session timeout')console.error('Boot error:',err);
+    // On timeout, try a quick session refresh before giving up
+    if(err.message==='session timeout'){
+      try{
+        const{data:refreshData}=await sb.auth.refreshSession();
+        if(refreshData?.session){
+          currentUser=refreshData.session.user;
+          const r=await loadUserProfile();
+          if(r!=='needs-college')await loadPuzzle();
+          return;
+        }
+      }catch(e){}
+    }
     hideLoading();buildAuthBg();showScreen('auth-screen');
     if(err.message!=='session timeout')setAuthError('Could not connect. Check internet and refresh.');
   }
@@ -931,7 +971,11 @@ async function loadArchiveData(){
     PUZZLE_INDEX=await probePuzzleDates(today,yesterday);
   }
   document.getElementById('random-archive-option').style.display=PUZZLE_INDEX.length>0?'flex':'none';
-  if(YESTERDAY_PUZZLE||PUZZLE_INDEX.length>0)document.getElementById('archive-btn').classList.remove('hidden');
+  if(YESTERDAY_PUZZLE||PUZZLE_INDEX.length>0){
+    document.getElementById('archive-btn').classList.remove('hidden');
+    const npa=document.getElementById('no-puzzle-archive-btn');
+    if(npa)npa.classList.remove('hidden');
+  }
 }
 
 async function probePuzzleDates(today,yesterday){
