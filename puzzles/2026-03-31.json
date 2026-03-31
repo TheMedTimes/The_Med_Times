@@ -1,0 +1,423 @@
+{
+  "date": "2026-03-31",
+  "topic": "Insulin and Oral Antidiabetic Drugs",
+  "next_topic": "Drugs Modulating Autacoids",
+  "size": 15,
+  "solution": [
+    [
+      "P",
+      "R",
+      "E",
+      "P",
+      "R",
+      "O",
+      "I",
+      "N",
+      "S",
+      "U",
+      "L",
+      "I",
+      "N",
+      "#",
+      "L"
+    ],
+    [
+      "A",
+      "L",
+      "B",
+      "I",
+      "G",
+      "L",
+      "U",
+      "T",
+      "I",
+      "D",
+      "E",
+      "#",
+      "#",
+      "#",
+      "A"
+    ],
+    [
+      "N",
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "Z",
+      "I",
+      "N",
+      "C"
+    ],
+    [
+      "C",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "H",
+      "F",
+      "I",
+      "R",
+      "S",
+      "T"
+    ],
+    [
+      "R",
+      "E",
+      "P",
+      "A",
+      "G",
+      "L",
+      "I",
+      "N",
+      "I",
+      "D",
+      "E",
+      "#",
+      "#",
+      "#",
+      "I"
+    ],
+    [
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "L",
+      "#",
+      "#",
+      "#",
+      "#",
+      "C"
+    ],
+    [
+      "A",
+      "C",
+      "A",
+      "R",
+      "B",
+      "O",
+      "S",
+      "E",
+      "F",
+      "#",
+      "A",
+      "L",
+      "P",
+      "H",
+      "A"
+    ],
+    [
+      "T",
+      "O",
+      "L",
+      "B",
+      "U",
+      "T",
+      "A",
+      "M",
+      "I",
+      "D",
+      "E",
+      "#",
+      "#",
+      "#",
+      "C"
+    ],
+    [
+      "I",
+      "S",
+      "O",
+      "P",
+      "H",
+      "A",
+      "N",
+      "E",
+      "V",
+      "#",
+      "#",
+      "#",
+      "A",
+      "S",
+      "I"
+    ],
+    [
+      "T",
+      "Y",
+      "R",
+      "O",
+      "S",
+      "I",
+      "N",
+      "E",
+      "E",
+      "#",
+      "#",
+      "#",
+      "M",
+      "U",
+      "D"
+    ],
+    [
+      "I",
+      "N",
+      "C",
+      "R",
+      "E",
+      "T",
+      "I",
+      "N",
+      "#",
+      "L",
+      "I",
+      "S",
+      "P",
+      "R",
+      "O"
+    ],
+    [
+      "S",
+      "I",
+      "T",
+      "A",
+      "G",
+      "L",
+      "I",
+      "P",
+      "T",
+      "I",
+      "N",
+      "#",
+      "K",
+      "#",
+      "S"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "O",
+      "I"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "I",
+      "N",
+      "C",
+      "R",
+      "E",
+      "T",
+      "I",
+      "N",
+      "S"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 13,
+        "clue": "___ is cleaved to form proinsulin"
+      },
+      {
+        "number": 13,
+        "row": 1,
+        "col": 0,
+        "len": 11,
+        "clue": "__ is GLP-1 fused to human albumin"
+      },
+      {
+        "number": 14,
+        "row": 2,
+        "col": 0,
+        "len": 2,
+        "clue": "Is metformin metabolized in the body?"
+      },
+      {
+        "number": 15,
+        "row": 2,
+        "col": 11,
+        "len": 4,
+        "clue": "Regular insulin is soluble insulin mixed with a little"
+      },
+      {
+        "number": 19,
+        "row": 3,
+        "col": 10,
+        "len": 5,
+        "clue": "Metformin is a __-line drug in T2DM"
+      },
+      {
+        "number": 20,
+        "row": 4,
+        "col": 0,
+        "len": 11,
+        "clue": "Example of meglitinides"
+      },
+      {
+        "number": 21,
+        "row": 6,
+        "col": 0,
+        "len": 8,
+        "clue": "Example of alpha glucosidase inhibitors"
+      },
+      {
+        "number": 30,
+        "row": 6,
+        "col": 10,
+        "len": 5,
+        "clue": "Insulin receptor is made up of _ and beta subunits"
+      },
+      {
+        "number": 31,
+        "row": 7,
+        "col": 0,
+        "len": 11,
+        "clue": "Example of first generation sulfonylurea"
+      },
+      {
+        "number": 32,
+        "row": 8,
+        "col": 0,
+        "len": 8,
+        "clue": "NPH is also called __ insulin"
+      },
+      {
+        "number": 35,
+        "row": 9,
+        "col": 0,
+        "len": 8,
+        "clue": "beta subunit of insulin receptor shows __ kinase activity"
+      },
+      {
+        "number": 37,
+        "row": 10,
+        "col": 0,
+        "len": 8,
+        "clue": "GLP-1 Analogs aka ___ Analogs"
+      },
+      {
+        "number": 38,
+        "row": 10,
+        "col": 9,
+        "len": 6,
+        "clue": "___ : Aspart : Glulisine"
+      },
+      {
+        "number": 40,
+        "row": 11,
+        "col": 0,
+        "len": 11,
+        "clue": "Example of DPP-4 inhibitor"
+      },
+      {
+        "number": 42,
+        "row": 13,
+        "col": 6,
+        "len": 9,
+        "clue": "Dipeptidyl peptidase is an enzyme which degrades __"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 12,
+        "clue": "ADR of GLP-1 Analogs - Hemorrhagic ____"
+      },
+      {
+        "number": 12,
+        "row": 0,
+        "col": 14,
+        "len": 14,
+        "clue": "Phenformin is not used as it causes"
+      },
+      {
+        "number": 18,
+        "row": 3,
+        "col": 9,
+        "len": 3,
+        "clue": "Thiazolidinediones increase __ cholesterol"
+      },
+      {
+        "number": 29,
+        "row": 6,
+        "col": 8,
+        "len": 4,
+        "clue": "How many subtypes of glucose transporters"
+      },
+      {
+        "number": 33,
+        "row": 8,
+        "col": 12,
+        "len": 4,
+        "clue": "Metformin suppresses hepatic gluconeogenesis by an enzyme"
+      },
+      {
+        "number": 34,
+        "row": 8,
+        "col": 13,
+        "len": 3,
+        "clue": "Sulfonylureas bind to"
+      },
+      {
+        "number": 41,
+        "row": 12,
+        "col": 13,
+        "len": 3,
+        "clue": "Human insulin differs from porcine insulin by _ amino acids"
+      }
+    ]
+  }
+}
