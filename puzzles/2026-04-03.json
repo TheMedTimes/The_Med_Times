@@ -382,6 +382,20 @@
         "col": 10,
         "len": 5,
         "clue": "COX-3 is present in the _"
+      },
+      {
+        "number": 15,
+        "row": 11,
+        "col": 2,
+        "len": 2,
+        "clue": "Inhibition of COX inhibits __ synthesis"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 11,
+        "len": 3,
+        "clue": "Platelets contain COX-__ (Which form)"
       }
     ]
   }
