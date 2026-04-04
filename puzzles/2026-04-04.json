@@ -1,0 +1,416 @@
+{
+  "date": "2026-04-04",
+  "topic": "General Microbiology",
+  "next_topic": "TBD",
+  "size": 15,
+  "solution": [
+    [
+      "C",
+      "A",
+      "T",
+      "A",
+      "L",
+      "A",
+      "S",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "P"
+    ],
+    [
+      "H",
+      "#",
+      "C",
+      "#",
+      "#",
+      "#",
+      "H",
+      "#",
+      "#",
+      "#",
+      "#",
+      "G",
+      "#",
+      "#",
+      "E"
+    ],
+    [
+      "O",
+      "#",
+      "B",
+      "#",
+      "L",
+      "O",
+      "E",
+      "F",
+      "F",
+      "L",
+      "E",
+      "R",
+      "S",
+      "#",
+      "P"
+    ],
+    [
+      "C",
+      "#",
+      "S",
+      "#",
+      "J",
+      "#",
+      "E",
+      "#",
+      "I",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#",
+      "T"
+    ],
+    [
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "P",
+      "#",
+      "V",
+      "R",
+      "#",
+      "M",
+      "#",
+      "#",
+      "I"
+    ],
+    [
+      "L",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "N",
+      "#",
+      "#",
+      "D"
+    ],
+    [
+      "A",
+      "L",
+      "B",
+      "E",
+      "R",
+      "T",
+      "S",
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "O"
+    ],
+    [
+      "T",
+      "#",
+      "H",
+      "#",
+      "C",
+      "#",
+      "#",
+      "#",
+      "H",
+      "A",
+      "N",
+      "G",
+      "I",
+      "N",
+      "G"
+    ],
+    [
+      "E",
+      "#",
+      "I",
+      "#",
+      "M",
+      "#",
+      "#",
+      "J",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#",
+      "L"
+    ],
+    [
+      "#",
+      "I",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "T",
+      "#",
+      "#",
+      "Y"
+    ],
+    [
+      "#",
+      "O",
+      "#",
+      "#",
+      "C",
+      "A",
+      "P",
+      "N",
+      "O",
+      "P",
+      "H",
+      "I",
+      "L",
+      "I",
+      "C"
+    ],
+    [
+      "#",
+      "D",
+      "#",
+      "#",
+      "L",
+      "#",
+      "#",
+      "S",
+      "#",
+      "#",
+      "#",
+      "V",
+      "#",
+      "#",
+      "A"
+    ],
+    [
+      "F",
+      "I",
+      "L",
+      "D",
+      "E",
+      "S",
+      "#",
+      "E",
+      "#",
+      "O",
+      "N",
+      "E",
+      "#",
+      "#",
+      "N"
+    ],
+    [
+      "#",
+      "N",
+      "#",
+      "#",
+      "D",
+      "#",
+      "#",
+      "N",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "P",
+      "O",
+      "S",
+      "I",
+      "T",
+      "I",
+      "V",
+      "E",
+      "#",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 8,
+        "clue": "Test differentiating between staph and strepto"
+      },
+      {
+        "number": 6,
+        "row": 2,
+        "col": 4,
+        "len": 9,
+        "clue": "Isolation of C. diphtheriae"
+      },
+      {
+        "number": 8,
+        "row": 4,
+        "col": 8,
+        "len": 2,
+        "clue": "Transport media used for vibrio"
+      },
+      {
+        "number": 9,
+        "row": 6,
+        "col": 0,
+        "len": 7,
+        "clue": "Used to demonstrate metachromatic granules"
+      },
+      {
+        "number": 12,
+        "row": 7,
+        "col": 8,
+        "len": 7,
+        "clue": "_ drop preparation for stool microscopy"
+      },
+      {
+        "number": 15,
+        "row": 10,
+        "col": 4,
+        "len": 11,
+        "clue": "CO2 loving bacteria"
+      },
+      {
+        "number": 16,
+        "row": 12,
+        "col": 0,
+        "len": 6,
+        "clue": "Mcintosh and _ anaerobic jar"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 9,
+        "len": 3,
+        "clue": "% H2SO4 for Nocardia"
+      },
+      {
+        "number": 18,
+        "row": 14,
+        "col": 5,
+        "len": 8,
+        "clue": "Proteus vulgaris is indole _"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 9,
+        "clue": "Heated blood agar, more nutritious"
+      },
+      {
+        "number": 2,
+        "row": 0,
+        "col": 2,
+        "len": 4,
+        "clue": "Media used for isolation of vibrio species"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 6,
+        "len": 5,
+        "clue": "Enriched media usually use _ blood"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 14,
+        "len": 13,
+        "clue": "Gram positive cell wall has a thick _ layer"
+      },
+      {
+        "number": 5,
+        "row": 1,
+        "col": 11,
+        "len": 12,
+        "clue": "Enrichment broth for Shigella"
+      },
+      {
+        "number": 6,
+        "row": 2,
+        "col": 4,
+        "len": 2,
+        "clue": "Media used for M. tuberculosis"
+      },
+      {
+        "number": 7,
+        "row": 2,
+        "col": 8,
+        "len": 4,
+        "clue": "% H2SO4 for M. leprae"
+      },
+      {
+        "number": 10,
+        "row": 6,
+        "col": 2,
+        "len": 3,
+        "clue": "Monophasic blood culture broth"
+      },
+      {
+        "number": 11,
+        "row": 6,
+        "col": 4,
+        "len": 3,
+        "clue": "Anaerobic culture media"
+      },
+      {
+        "number": 13,
+        "row": 8,
+        "col": 7,
+        "len": 7,
+        "clue": "Modification of gram staining for meningococci"
+      },
+      {
+        "number": 14,
+        "row": 9,
+        "col": 1,
+        "len": 6,
+        "clue": "Mordant in gram staining"
+      },
+      {
+        "number": 15,
+        "row": 10,
+        "col": 4,
+        "len": 4,
+        "clue": "Alternative to MacConkey"
+      }
+    ]
+  }
+}
