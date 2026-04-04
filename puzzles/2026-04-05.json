@@ -1,0 +1,423 @@
+{
+  "date": "2026-04-05",
+  "topic": "Opioid Agonists and Antagonists",
+  "next_topic": "Myxovirus Infections of Respiratory Tract",
+  "size": 15,
+  "solution": [
+    [
+      "T",
+      "W",
+      "E",
+      "N",
+      "T",
+      "Y",
+      "#",
+      "A",
+      "D",
+      "J",
+      "U",
+      "V",
+      "A",
+      "N",
+      "T"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "H",
+      "#",
+      "D",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "R"
+    ],
+    [
+      "C",
+      "O",
+      "D",
+      "E",
+      "I",
+      "N",
+      "E",
+      "#",
+      "G",
+      "#",
+      "#",
+      "#",
+      "T",
+      "#",
+      "A"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "L",
+      "#",
+      "P",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "M"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "D",
+      "#",
+      "T",
+      "#",
+      "R",
+      "#",
+      "#",
+      "#",
+      "U",
+      "#",
+      "A"
+    ],
+    [
+      "S",
+      "#",
+      "#",
+      "#",
+      "#",
+      "N",
+      "A",
+      "L",
+      "O",
+      "X",
+      "O",
+      "N",
+      "E",
+      "#",
+      "D"
+    ],
+    [
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "T",
+      "#",
+      "R",
+      "#",
+      "#",
+      "#",
+      "O"
+    ],
+    [
+      "M",
+      "E",
+      "T",
+      "H",
+      "A",
+      "D",
+      "O",
+      "N",
+      "E",
+      "#",
+      "P",
+      "U",
+      "P",
+      "I",
+      "L"
+    ],
+    [
+      "N",
+      "#",
+      "#",
+      "E",
+      "#",
+      "E",
+      "#",
+      "#",
+      "I",
+      "#",
+      "H",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "I",
+      "N",
+      "T",
+      "R",
+      "A",
+      "C",
+      "R",
+      "A",
+      "N",
+      "I",
+      "A",
+      "L",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "F",
+      "#",
+      "#",
+      "O",
+      "#",
+      "R",
+      "#",
+      "#",
+      "#",
+      "#",
+      "N",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "E",
+      "W",
+      "#",
+      "I",
+      "#",
+      "E",
+      "#",
+      "M",
+      "A",
+      "O",
+      "I",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "R",
+      "#",
+      "#",
+      "N",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "#",
+      "N",
+      "M",
+      "D",
+      "A",
+      "#"
+    ],
+    [
+      "U",
+      "#",
+      "#",
+      "#",
+      "#",
+      "S",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "#"
+    ],
+    [
+      "M",
+      "U",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "Y",
+      "E",
+      "S"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 6,
+        "clue": "Opium contains __ alkaloids (number)"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 7,
+        "len": 8,
+        "clue": "Analgesics are Opioid, Nonopioid, and ___"
+      },
+      {
+        "number": 6,
+        "row": 2,
+        "col": 0,
+        "len": 7,
+        "clue": "Opioid agonist that can be used as an antitussive"
+      },
+      {
+        "number": 10,
+        "row": 5,
+        "col": 5,
+        "len": 8,
+        "clue": "__ injection reverses morphine induced apnoea in fetus"
+      },
+      {
+        "number": 12,
+        "row": 7,
+        "col": 0,
+        "len": 9,
+        "clue": "For opioid deaddiction morphine is substituted with oral __"
+      },
+      {
+        "number": 15,
+        "row": 7,
+        "col": 10,
+        "len": 5,
+        "clue": "High doses or morphine may show pin-point __"
+      },
+      {
+        "number": 16,
+        "row": 9,
+        "col": 0,
+        "len": 12,
+        "clue": "Morphine causes CO2 retention which increase __ pressure"
+      },
+      {
+        "number": 17,
+        "row": 11,
+        "col": 0,
+        "len": 2,
+        "clue": "Morphine producing miosis is due to the __ nucleus"
+      },
+      {
+        "number": 18,
+        "row": 11,
+        "col": 7,
+        "len": 4,
+        "clue": "Pethidine + ___ can cause serotonin syndrome"
+      },
+      {
+        "number": 19,
+        "row": 12,
+        "col": 10,
+        "len": 4,
+        "clue": "Nonopioid property of methadone is blocking __ receptor"
+      },
+      {
+        "number": 21,
+        "row": 14,
+        "col": 0,
+        "len": 2,
+        "clue": "Opioid actions in GIT are mediated by __ and delta receptors"
+      },
+      {
+        "number": 22,
+        "row": 14,
+        "col": 12,
+        "len": 3,
+        "clue": "Is morphine contraindicated in head injury?"
+      }
+    ],
+    "down": [
+      {
+        "number": 2,
+        "row": 0,
+        "col": 4,
+        "len": 5,
+        "clue": "Edinger Westphal nucleus is of the __ cranial nerve"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 14,
+        "len": 8,
+        "clue": "Opioid agonist that blocks the reuptake of serotonin in CNS"
+      },
+      {
+        "number": 5,
+        "row": 1,
+        "col": 6,
+        "len": 5,
+        "clue": "Opioid receptors - mu - kappa - __ - N/OFQ"
+      },
+      {
+        "number": 7,
+        "row": 2,
+        "col": 8,
+        "len": 8,
+        "clue": "All opioid receptors are __-coupled receptors"
+      },
+      {
+        "number": 8,
+        "row": 2,
+        "col": 12,
+        "len": 4,
+        "clue": "T or F - Morphine produces respiratory depression"
+      },
+      {
+        "number": 9,
+        "row": 5,
+        "col": 0,
+        "len": 10,
+        "clue": "Opium is obtained from Papaver __"
+      },
+      {
+        "number": 11,
+        "row": 5,
+        "col": 10,
+        "len": 8,
+        "clue": "O in N/OFQ"
+      },
+      {
+        "number": 13,
+        "row": 7,
+        "col": 3,
+        "len": 6,
+        "clue": "Heroin has a strong smell of __"
+      },
+      {
+        "number": 14,
+        "row": 7,
+        "col": 5,
+        "len": 8,
+        "clue": "Do opioids increase or decrease intracellular calcium"
+      },
+      {
+        "number": 20,
+        "row": 12,
+        "col": 12,
+        "len": 3,
+        "clue": "Opioids used as antitussives in __ cough"
+      }
+    ]
+  }
+}
