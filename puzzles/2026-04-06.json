@@ -1,0 +1,451 @@
+{
+  "date": "2026-04-06",
+  "topic": "Myxovirus Infections of Respiratory Tract",
+  "next_topic": "TBD",
+  "size": 15,
+  "solution": [
+    [
+      "S",
+      "W",
+      "I",
+      "N",
+      "E",
+      "#",
+      "V",
+      "#",
+      "B",
+      "I",
+      "R",
+      "D",
+      "S",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "T",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "S"
+    ],
+    [
+      "C",
+      "R",
+      "O",
+      "U",
+      "P",
+      "#",
+      "M",
+      "U",
+      "C",
+      "I",
+      "N",
+      "#",
+      "#",
+      "#",
+      "E"
+    ],
+    [
+      "#",
+      "S",
+      "#",
+      "R",
+      "#",
+      "#",
+      "#",
+      "#",
+      "H",
+      "#",
+      "I",
+      "#",
+      "H",
+      "#",
+      "V"
+    ],
+    [
+      "#",
+      "V",
+      "#",
+      "A",
+      "#",
+      "F",
+      "#",
+      "#",
+      "I",
+      "#",
+      "K",
+      "#",
+      "U",
+      "#",
+      "E"
+    ],
+    [
+      "Y",
+      "#",
+      "#",
+      "M",
+      "#",
+      "A",
+      "#",
+      "#",
+      "C",
+      "#",
+      "H",
+      "#",
+      "M",
+      "#",
+      "N"
+    ],
+    [
+      "E",
+      "#",
+      "#",
+      "I",
+      "#",
+      "L",
+      "#",
+      "#",
+      "K",
+      "#",
+      "E",
+      "#",
+      "O",
+      "#",
+      "#"
+    ],
+    [
+      "S",
+      "P",
+      "A",
+      "N",
+      "I",
+      "S",
+      "H",
+      "#",
+      "#",
+      "#",
+      "T",
+      "H",
+      "R",
+      "E",
+      "E"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "I",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "D",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "S",
+      "I",
+      "A",
+      "L",
+      "I",
+      "C"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "A",
+      "L",
+      "P",
+      "H",
+      "A",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "H",
+      "#",
+      "S",
+      "#",
+      "I",
+      "#",
+      "#",
+      "#",
+      "N",
+      "A",
+      "#",
+      "#",
+      "#",
+      "T"
+    ],
+    [
+      "#",
+      "E",
+      "#",
+      "E",
+      "I",
+      "G",
+      "H",
+      "T",
+      "#",
+      "D",
+      "#",
+      "F",
+      "O",
+      "U",
+      "R"
+    ],
+    [
+      "#",
+      "L",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "W",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "#",
+      "U"
+    ],
+    [
+      "P",
+      "A",
+      "R",
+      "A",
+      "M",
+      "Y",
+      "X",
+      "O",
+      "V",
+      "I",
+      "R",
+      "I",
+      "D",
+      "A",
+      "E"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 5,
+        "clue": "H1N1 flu is commonly called ___ flu"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 8,
+        "len": 5,
+        "clue": "__ are the primary reservoirs for influenza"
+      },
+      {
+        "number": 7,
+        "row": 2,
+        "col": 0,
+        "len": 5,
+        "clue": "Laryngotracheobronchitis is also called"
+      },
+      {
+        "number": 9,
+        "row": 2,
+        "col": 6,
+        "len": 5,
+        "clue": "Myxoviruses bind to _ receptors on RBCs"
+      },
+      {
+        "number": 14,
+        "row": 7,
+        "col": 0,
+        "len": 7,
+        "clue": "Most severe influenza pandemic - ____ flu"
+      },
+      {
+        "number": 15,
+        "row": 7,
+        "col": 10,
+        "len": 5,
+        "clue": "Types one and __ belong to the genus respirovirus"
+      },
+      {
+        "number": 16,
+        "row": 9,
+        "col": 9,
+        "len": 6,
+        "clue": "Influenza virus binds to _ acid receptors"
+      },
+      {
+        "number": 17,
+        "row": 10,
+        "col": 3,
+        "len": 5,
+        "clue": "_ 2-3 sialic acid receptors are specific for avian influenza"
+      },
+      {
+        "number": 20,
+        "row": 11,
+        "col": 9,
+        "len": 2,
+        "clue": "In influenza antibodies against HA and __ are protective"
+      },
+      {
+        "number": 22,
+        "row": 12,
+        "col": 3,
+        "len": 5,
+        "clue": "Influenza A and B contain _ segments of RNA (number)"
+      },
+      {
+        "number": 24,
+        "row": 12,
+        "col": 11,
+        "len": 4,
+        "clue": "Influenza viruses consist of _ genera (number)"
+      },
+      {
+        "number": 25,
+        "row": 14,
+        "col": 0,
+        "len": 15,
+        "clue": "Orthomyxoviridae and __"
+      }
+    ],
+    "down": [
+      {
+        "number": 2,
+        "row": 0,
+        "col": 3,
+        "len": 13,
+        "clue": "RNA segment coding for _ is absent in Influenza C and D"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 6,
+        "len": 3,
+        "clue": "Swab for influenza is transported in"
+      },
+      {
+        "number": 5,
+        "row": 0,
+        "col": 10,
+        "len": 8,
+        "clue": "Newcastle disease is commonly called (In India)"
+      },
+      {
+        "number": 6,
+        "row": 1,
+        "col": 14,
+        "len": 5,
+        "clue": "Influenza C and D contain _ segments of RNA (number)"
+      },
+      {
+        "number": 8,
+        "row": 2,
+        "col": 1,
+        "len": 3,
+        "clue": "most common cause of lower respiratory disease in infants"
+      },
+      {
+        "number": 10,
+        "row": 2,
+        "col": 8,
+        "len": 5,
+        "clue": "Mumps vaccin is prepared in __ embryo cell line"
+      },
+      {
+        "number": 11,
+        "row": 3,
+        "col": 12,
+        "len": 7,
+        "clue": "Predominant type of immune response in influenza"
+      },
+      {
+        "number": 12,
+        "row": 4,
+        "col": 5,
+        "len": 5,
+        "clue": "T or F - Measles virus possesses NA, but lacks HA"
+      },
+      {
+        "number": 13,
+        "row": 5,
+        "col": 0,
+        "len": 3,
+        "clue": "Is influenza RNA segmented?"
+      },
+      {
+        "number": 16,
+        "row": 9,
+        "col": 9,
+        "len": 6,
+        "clue": "_ virus of mice is a subtype of human parainfluenza type 1"
+      },
+      {
+        "number": 18,
+        "row": 10,
+        "col": 5,
+        "len": 3,
+        "clue": "Common mixing vessel in influenza"
+      },
+      {
+        "number": 19,
+        "row": 11,
+        "col": 1,
+        "len": 4,
+        "clue": "__ and HEp-2 are the common cell lines for RSV isolation"
+      },
+      {
+        "number": 21,
+        "row": 11,
+        "col": 14,
+        "len": 4,
+        "clue": "T or F - H1N1 flu lacks the PB1F2 protein"
+      },
+      {
+        "number": 23,
+        "row": 12,
+        "col": 7,
+        "len": 3,
+        "clue": "Influenza virus has __ nonstructural proteins (number)"
+      }
+    ]
+  }
+}
