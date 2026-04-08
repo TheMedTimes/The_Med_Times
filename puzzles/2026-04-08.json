@@ -1,0 +1,430 @@
+{
+  "date": "2026-04-08",
+  "topic": "Sedatives and Hypnotics",
+  "next_topic": "TBD",
+  "size": 15,
+  "solution": [
+    [
+      "P",
+      "O",
+      "R",
+      "P",
+      "H",
+      "Y",
+      "R",
+      "I",
+      "A",
+      "S",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "L",
+      "#",
+      "F",
+      "#",
+      "#",
+      "F",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "M",
+      "#",
+      "#",
+      "S",
+      "#",
+      "#",
+      "P",
+      "#",
+      "I",
+      "#",
+      "#",
+      "L",
+      "#"
+    ],
+    [
+      "S",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "V",
+      "#",
+      "#",
+      "U",
+      "#"
+    ],
+    [
+      "H",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "D",
+      "I",
+      "A",
+      "Z",
+      "E",
+      "P",
+      "A",
+      "M",
+      "#"
+    ],
+    [
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "Z",
+      "#",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#"
+    ],
+    [
+      "R",
+      "E",
+      "C",
+      "T",
+      "A",
+      "L",
+      "#",
+      "#",
+      "O",
+      "#",
+      "P",
+      "#",
+      "#",
+      "Z",
+      "#"
+    ],
+    [
+      "T",
+      "#",
+      "#",
+      "R",
+      "#",
+      "#",
+      "C",
+      "H",
+      "L",
+      "O",
+      "R",
+      "I",
+      "D",
+      "E",
+      "#"
+    ],
+    [
+      "#",
+      "F",
+      "O",
+      "U",
+      "R",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "O",
+      "#",
+      "#",
+      "N",
+      "#"
+    ],
+    [
+      "#",
+      "A",
+      "#",
+      "E",
+      "#",
+      "A",
+      "G",
+      "O",
+      "M",
+      "E",
+      "L",
+      "A",
+      "T",
+      "I",
+      "N"
+    ],
+    [
+      "#",
+      "L",
+      "#",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "L",
+      "#"
+    ],
+    [
+      "#",
+      "S",
+      "#",
+      "G",
+      "P",
+      "R",
+      "O",
+      "T",
+      "E",
+      "I",
+      "N",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "B",
+      "E",
+      "T",
+      "A",
+      "#",
+      "#",
+      "W",
+      "#",
+      "#",
+      "#",
+      "G",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "Z",
+      "#",
+      "#",
+      "B",
+      "#",
+      "#",
+      "T",
+      "W",
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "D",
+      "O",
+      "R",
+      "A",
+      "#",
+      "#",
+      "H",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 10,
+        "clue": "Barbiturates are contraindicated in acute intermittent __"
+      },
+      {
+        "number": 8,
+        "row": 4,
+        "col": 6,
+        "len": 8,
+        "clue": "_ and Lorazepam are used IV for status epilepticus"
+      },
+      {
+        "number": 9,
+        "row": 6,
+        "col": 0,
+        "len": 6,
+        "clue": "In febrile convulsions diazepam is commonly given via _ route"
+      },
+      {
+        "number": 12,
+        "row": 7,
+        "col": 6,
+        "len": 8,
+        "clue": "GABA A is a ligand gated __ channel"
+      },
+      {
+        "number": 13,
+        "row": 8,
+        "col": 1,
+        "len": 4,
+        "clue": "Stages of NREM sleep go from 0 to __"
+      },
+      {
+        "number": 14,
+        "row": 9,
+        "col": 5,
+        "len": 10,
+        "clue": "Melatonin analog with antidepressant properties"
+      },
+      {
+        "number": 16,
+        "row": 11,
+        "col": 3,
+        "len": 8,
+        "clue": "GABA B receptors are __ coupled receptors"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 0,
+        "len": 4,
+        "clue": "Inverse agonist of GABA A receptor is __-carboline"
+      },
+      {
+        "number": 18,
+        "row": 13,
+        "col": 6,
+        "len": 3,
+        "clue": "BZDs prolong stage __ NREM sleep"
+      },
+      {
+        "number": 19,
+        "row": 14,
+        "col": 0,
+        "len": 4,
+        "clue": "Dual Orexin Receptor Antagonists - shortened to"
+      }
+    ],
+    "down": [
+      {
+        "number": 0,
+        "row": 2,
+        "col": 10,
+        "len": 2,
+        "clue": "Flumazenil is given via __ route"
+      },
+      {
+        "number": 2,
+        "row": 0,
+        "col": 2,
+        "len": 3,
+        "clue": "BZDs decrease duration of __ sleep"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 5,
+        "len": 3,
+        "clue": "Are barbiturates drugs of addiction?"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 8,
+        "len": 10,
+        "clue": "__ has a good efficacy in panic attacks"
+      },
+      {
+        "number": 5,
+        "row": 1,
+        "col": 10,
+        "len": 4,
+        "clue": "GABA A receptor is made up of __ subunits"
+      },
+      {
+        "number": 6,
+        "row": 1,
+        "col": 13,
+        "len": 10,
+        "clue": "Competitive antagonist of GABA A receptor"
+      },
+      {
+        "number": 7,
+        "row": 3,
+        "col": 0,
+        "len": 5,
+        "clue": "Duration of action of flumazenil is __"
+      },
+      {
+        "number": 10,
+        "row": 6,
+        "col": 3,
+        "len": 4,
+        "clue": "T or F - BZDs can cross the placenta"
+      },
+      {
+        "number": 11,
+        "row": 6,
+        "col": 10,
+        "len": 7,
+        "clue": "Microsomal enzyme inhibitors __ t1/2 of BZDs"
+      },
+      {
+        "number": 13,
+        "row": 8,
+        "col": 1,
+        "len": 5,
+        "clue": "T or F - Z hypnotics have anxiolytic and anticonvulsant prop"
+      },
+      {
+        "number": 15,
+        "row": 9,
+        "col": 6,
+        "len": 6,
+        "clue": "__ hormone secretion is the highest in stage 4 of NREM sleep"
+      },
+      {
+        "number": 16,
+        "row": 11,
+        "col": 3,
+        "len": 4,
+        "clue": "Inhibitory neurotrasmitters - Glycine and __"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 0,
+        "len": 3,
+        "clue": "Most commonly used anxiolytics"
+      }
+    ]
+  }
+}
