@@ -335,13 +335,6 @@
     ],
     "down": [
       {
-        "number": 0,
-        "row": 2,
-        "col": 10,
-        "len": 2,
-        "clue": "Flumazenil is given via __ route"
-      },
-      {
         "number": 2,
         "row": 0,
         "col": 2,
