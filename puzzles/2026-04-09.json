@@ -131,7 +131,7 @@
       "#",
       "I",
       "#",
-      "S",
+      "#",
       "#",
       "O",
       "#",
@@ -148,10 +148,10 @@
       "#",
       "R",
       "#",
-      "#",
       "T",
       "#",
       "N",
+      "#",
       "#",
       "A",
       "R",
@@ -349,6 +349,13 @@
         "clue": "Ballooning of mitral valve into LA is mitral valve __"
       },
       {
+        "number": 6,
+        "row": 3,
+        "col": 9,
+        "len": 9,
+        "clue": "Gold standard marker for MI"
+      },
+      {
         "number": 9,
         "row": 6,
         "col": 5,
@@ -361,6 +368,13 @@
         "col": 2,
         "len": 4,
         "clue": "__ useful in detecting reinfarction post initial MI"
+      },
+      {
+        "number": 11,
+        "row": 7,
+        "col" : 7,
+        "len": 8,
+        "clue": "Narrowing of aortic valve orifice"
       },
       {
         "number": 13,
