@@ -1,0 +1,409 @@
+{
+  "date": "2026-04-11",
+  "topic": "Antiparkinsonian Drugs",
+  "next_topic": "TBD",
+  "size": 15,
+  "solution": [
+    [
+      "#",
+      "F",
+      "#",
+      "R",
+      "E",
+      "S",
+      "E",
+      "R",
+      "P",
+      "I",
+      "N",
+      "E",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "U",
+      "#",
+      "#",
+      "R",
+      "O",
+      "T",
+      "I",
+      "G",
+      "O",
+      "T",
+      "I",
+      "N",
+      "E",
+      "#"
+    ],
+    [
+      "T",
+      "R",
+      "U",
+      "E",
+      "#",
+      "#",
+      "#",
+      "S",
+      "#",
+      "#",
+      "H",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "A",
+      "#",
+      "#",
+      "#",
+      "D",
+      "#",
+      "S",
+      "E",
+      "B",
+      "O",
+      "R",
+      "R",
+      "H",
+      "E",
+      "A"
+    ],
+    [
+      "C",
+      "V",
+      "S",
+      "#",
+      "O",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "R",
+      "#"
+    ],
+    [
+      "H",
+      "#",
+      "#",
+      "#",
+      "P",
+      "#",
+      "F",
+      "A",
+      "L",
+      "S",
+      "E",
+      "#",
+      "#",
+      "G",
+      "#"
+    ],
+    [
+      "Y",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "I",
+      "#",
+      "E",
+      "#",
+      "#",
+      "T",
+      "W",
+      "O",
+      "#"
+    ],
+    [
+      "C",
+      "#",
+      "#",
+      "#",
+      "M",
+      "#",
+      "N",
+      "#",
+      "V",
+      "#",
+      "#",
+      "#",
+      "#",
+      "T",
+      "#"
+    ],
+    [
+      "A",
+      "#",
+      "O",
+      "P",
+      "I",
+      "C",
+      "A",
+      "P",
+      "O",
+      "N",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "R",
+      "#",
+      "#",
+      "#",
+      "N",
+      "#",
+      "M",
+      "#",
+      "D",
+      "#",
+      "#",
+      "#",
+      "F",
+      "#",
+      "#"
+    ],
+    [
+      "D",
+      "O",
+      "M",
+      "P",
+      "E",
+      "R",
+      "I",
+      "D",
+      "O",
+      "N",
+      "E",
+      "#",
+      "I",
+      "#",
+      "#"
+    ],
+    [
+      "I",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "D",
+      "#",
+      "P",
+      "#",
+      "#",
+      "#",
+      "V",
+      "#",
+      "#"
+    ],
+    [
+      "A",
+      "#",
+      "B",
+      "E",
+      "N",
+      "S",
+      "E",
+      "R",
+      "A",
+      "Z",
+      "I",
+      "D",
+      "E",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 2,
+        "row": 0,
+        "col": 3,
+        "len": 9,
+        "clue": "Medicinal herb based drug causing parkinsonism"
+      },
+      {
+        "number": 4,
+        "row": 2,
+        "col": 4,
+        "len": 10,
+        "clue": "DA agonist that was used as a transdermal patch"
+      },
+      {
+        "number": 6,
+        "row": 3,
+        "col": 0,
+        "len": 4,
+        "clue": "T or F - Dopamine suppresses prolactin secretion"
+      },
+      {
+        "number": 8,
+        "row": 4,
+        "col": 6,
+        "len": 9,
+        "clue": "Excessive secretion of sebum from sebaceous glands is called"
+      },
+      {
+        "number": 10,
+        "row": 5,
+        "col": 0,
+        "len": 3,
+        "clue": "Pergolide has been withdrawn due to toxicity in __ (system)"
+      },
+      {
+        "number": 11,
+        "row": 6,
+        "col": 6,
+        "len": 5,
+        "clue": "T or F - dopamine can cross the BBB"
+      },
+      {
+        "number": 13,
+        "row": 7,
+        "col": 11,
+        "len": 3,
+        "clue": "Striatum rich in D1 and D_ subtypes of dopaminergic neurons"
+      },
+      {
+        "number": 14,
+        "row": 9,
+        "col": 2,
+        "len": 9,
+        "clue": "Longest acting COMT inhibitor"
+      },
+      {
+        "number": 16,
+        "row": 11,
+        "col": 0,
+        "len": 11,
+        "clue": "Peripheral dopamine antagonist used for levodopa ADR"
+      },
+      {
+        "number": 17,
+        "row": 13,
+        "col": 2,
+        "len": 11,
+        "clue": "Peripheral dopa decarboxylase inhibitor (not carbidopa)"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 1,
+        "len": 4,
+        "clue": "Carbidopa can allow us to reduce levodopa conc by _ times"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 7,
+        "len": 5,
+        "clue": "Levodopa may _ intraocular pressure (raise or reduce)"
+      },
+      {
+        "number": 5,
+        "row": 2,
+        "col": 10,
+        "len": 5,
+        "clue": "Pramipexole is a selective D__ agonist"
+      },
+      {
+        "number": 6,
+        "row": 3,
+        "col": 0,
+        "len": 11,
+        "clue": "Side effect of dopamine on CVS is"
+      },
+      {
+        "number": 7,
+        "row": 4,
+        "col": 4,
+        "len": 8,
+        "clue": "__ is deficient in Parkinsonism"
+      },
+      {
+        "number": 8,
+        "row": 4,
+        "col": 6,
+        "len": 10,
+        "clue": "Reversible MAO-B inhibitor"
+      },
+      {
+        "number": 9,
+        "row": 4,
+        "col": 13,
+        "len": 5,
+        "clue": "Bromocriptine and Pergolide are __ derivatives"
+      },
+      {
+        "number": 12,
+        "row": 6,
+        "col": 8,
+        "len": 8,
+        "clue": "Dopamine precursor"
+      },
+      {
+        "number": 15,
+        "row": 10,
+        "col": 12,
+        "len": 4,
+        "clue": "How many subtypes of dopamine receptors"
+      },
+      {
+        "number": 18,
+        "row": 13,
+        "col": 4,
+        "len": 2,
+        "clue": "Can carbidopa cross the BBB?"
+      }
+    ]
+  }
+}
