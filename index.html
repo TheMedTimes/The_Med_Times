@@ -230,7 +230,6 @@
   .success-icon{margin-bottom:12px;display:flex;justify-content:center;}
   .success-title{font-family:var(--font-display);font-size:28px;font-weight:900;color:var(--accent);margin-bottom:6px;}
   .success-time{font-family:var(--font-mono);font-size:36px;color:var(--text);margin:12px 0;}
-  .success-streak{font-size:15px;font-weight:600;color:var(--text);margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:6px;}
   .success-meta{font-size:13px;color:var(--text-muted);margin-bottom:6px;}
   .success-rank{font-size:15px;font-weight:700;color:var(--accent);margin-bottom:4px;}
   .success-penalty{font-size:13px;color:var(--wrong);font-weight:600;margin-bottom:4px;display:none;}
@@ -264,11 +263,26 @@
   .consent-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted);margin:8px 0 12px;}
   .consent-row input{margin-top:0;}
   .year-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin:4px 0 8px;text-align:left;width:100%;}
+
+  /* COMING SOON SCREEN */
+  #coming-soon-screen{align-items:center;justify-content:center;padding:32px 24px 48px;min-height:100svh;min-height:100dvh;position:relative;overflow-y:auto;}
+  .coming-soon-topbar{position:absolute;top:16px;right:20px;z-index:2;}
+  .coming-soon-inner{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;width:100%;max-width:360px;text-align:center;}
+  .coming-soon-logo{font-family:var(--font-display);font-size:clamp(32px,10vw,48px);font-weight:900;color:var(--accent);letter-spacing:-1px;margin-bottom:6px;}
+  .coming-soon-icon{color:var(--accent);margin-bottom:20px;}
+  .coming-soon-badge{background:var(--accent-light);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:20px;margin-bottom:20px;border:1px solid var(--accent);}
+  .coming-soon-title{font-family:var(--font-display);font-size:32px;font-weight:900;color:var(--text);margin-bottom:12px;}
+  .coming-soon-sub{font-size:15px;color:var(--text-muted);line-height:1.7;margin-bottom:28px;}
+  .coming-soon-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px 24px;width:100%;box-shadow:0 4px 24px rgba(0,0,0,0.07);margin-bottom:20px;}
+  .coming-soon-year{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:4px;}
+  .coming-soon-card-sub{font-size:13px;color:var(--text-muted);}
 </style>
 </head>
 <body data-theme="light">
 
 <!-- LOADING -->
+<!-- FIX 4: Loading screen starts visible and is only hidden once auth+data is ready,
+     preventing the auth screen flash on PWA open -->
 <div class="loading-wrap" id="loading">
   <div class="loading-logo">TheMedTimes</div>
   <div class="loading-spinner" id="loading-spinner"></div>
@@ -286,7 +300,7 @@
     <div class="auth-tagline">The daily crossword for MBBS students</div>
     <div class="auth-card">
       <div class="auth-mode-title" id="auth-title">Welcome</div>
-      <div class="auth-card-sub" id="auth-sub">Sign in with Google to track your streak and compete on today's leaderboard.</div>
+      <div class="auth-card-sub" id="auth-sub">Sign in with Google to compete on today's leaderboard.</div>
       <button class="google-btn" onclick="signInWithGoogle()">
         <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
         Continue with Google
@@ -325,6 +339,30 @@
   </div>
 </div>
 
+<!-- COMING SOON SCREEN (FIX 3: for non-2nd year users) -->
+<div id="coming-soon-screen" class="screen">
+  <div class="start-bg-grid" id="coming-soon-bg-grid"></div>
+  <div class="coming-soon-topbar">
+    <button class="start-icon-btn" onclick="openSettingsModal()" title="Settings">
+      <span class="ic" data-lucide="settings" style="width:20px;height:20px;"></span>
+    </button>
+  </div>
+  <div class="coming-soon-inner">
+    <div class="coming-soon-logo">TheMedTimes</div>
+    <div class="coming-soon-badge">Coming Soon</div>
+    <div class="coming-soon-icon">
+      <span class="ic" data-lucide="clock" style="width:56px;height:56px;"></span>
+    </div>
+    <div class="coming-soon-title">We're Working On It</div>
+    <div class="coming-soon-sub">TheMedTimes currently has daily crosswords for 2nd year MBBS students. Puzzles for your year are on the way!</div>
+    <div class="coming-soon-card">
+      <div class="coming-soon-year" id="coming-soon-year-label">—</div>
+      <div class="coming-soon-card-sub">Puzzles for this year are in development. Check back soon.</div>
+    </div>
+    <div style="font-size:12px;color:var(--text-muted);line-height:1.7;">Wrong year? Tap the settings icon above to change it.</div>
+  </div>
+</div>
+
 <!-- START SCREEN -->
 <div id="start-screen" class="screen">
   <div class="start-bg-grid" id="start-bg-grid"></div>
@@ -360,13 +398,6 @@
         <div>
           <div class="start-card-label">Signed in as</div>
           <div class="start-card-value" id="start-username">—</div>
-        </div>
-      </div>
-      <div class="start-card-row">
-        <div class="start-card-icon"><span class="ic" data-lucide="flame" style="width:20px;height:20px;"></span></div>
-        <div>
-          <div class="start-card-label">Your Streak</div>
-          <div class="start-card-value" id="start-streak">—</div>
         </div>
       </div>
     </div>
@@ -622,7 +653,6 @@
     <div class="success-icon" id="success-icon"></div>
     <div class="success-title" id="success-title">Puzzle Complete!</div>
     <div class="success-time" id="final-time">—</div>
-    <div class="success-streak" id="final-streak"></div>
     <div class="success-rank" id="final-rank"></div>
     <div class="success-penalty" id="final-penalty"></div>
     <div class="success-meta" id="success-date"></div>
@@ -646,7 +676,7 @@ const SUPABASE_URL='https://ojxzzfjapjwpxitnruqa.supabase.co';
 const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeHp6ZmphcGp3cHhpdG5ydXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDQ5MDksImV4cCI6MjA4ODcyMDkwOX0.yTq0aXLd6L8Grjsc4IWAbJ3TTnIGOnJdM3ciFz7JJe4';
 const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON):null;
 
-let PUZZLE=null,currentUser=null,userProfile=null,userStreak=0;
+let PUZZLE=null,currentUser=null,userProfile=null;
 let YESTERDAY_PUZZLE=null,PUZZLE_INDEX=[];
 let userGrid=[],selectedRow=-1,selectedCol=-1;
 let direction='across';
@@ -668,6 +698,8 @@ const _bootTimer=setTimeout(()=>{
 },10000);
 function hideLoading(){clearTimeout(_bootTimer);document.getElementById('loading').style.display='none';}
 
+// FIX 6: Use a stable date string based on local date, not cached at boot time
+// so that crossing midnight always gives the correct date.
 function getTodayString(){
   const d=new Date();
   return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -684,10 +716,6 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-function streakDisplay(n){
-  if(n<=0)return'Start your streak today!';
-  return`${n} day${n>1?'s':''} ${n>=30?'🔥🔥🔥':n>=7?'🔥🔥':'🔥'}`;
-}
 function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2,'0')}`;}
 
 // ── LUCIDE INIT ──
@@ -695,6 +723,26 @@ function initIcons(){if(window.lucide)lucide.createIcons();}
 
 // ── AUTH ──
 async function boot(){
+  // FIX 5: On PWA open, check for a new version via the service worker
+  // and reload if an update is waiting, so users always get the latest push.
+  if('serviceWorker' in navigator){
+    const reg=await navigator.serviceWorker.getRegistration();
+    if(reg){
+      reg.addEventListener('updatefound',()=>{
+        const newWorker=reg.installing;
+        newWorker.addEventListener('statechange',()=>{
+          if(newWorker.state==='installed'&&navigator.serviceWorker.controller){
+            // New content available — reload once to activate it
+            navigator.serviceWorker.controller.postMessage({type:'SKIP_WAITING'});
+            navigator.serviceWorker.addEventListener('controllerchange',()=>location.reload());
+          }
+        });
+      });
+      // Also trigger an immediate update check on every open
+      reg.update().catch(()=>{});
+    }
+  }
+
   if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
   try{
     sb.auth.startAutoRefresh();
@@ -702,10 +750,11 @@ async function boot(){
       if(event==='SIGNED_IN'&&session&&!currentUser){
         currentUser=session.user;
         const r=await loadUserProfile();
+        if(r==='coming-soon'){return;}
         if(r!=='needs-college')await loadPuzzle();
       }
       if(event==='SIGNED_OUT'){
-        currentUser=null;userProfile=null;userStreak=0;
+        currentUser=null;userProfile=null;
         hideLoading();buildAuthBg();showScreen('auth-screen');
       }
     });
@@ -716,6 +765,7 @@ async function boot(){
     if(session){
       currentUser=session.user;
       const r=await loadUserProfile();
+      if(r==='coming-soon'){return;}
       if(r!=='needs-college')await loadPuzzle();
     }else{hideLoading();buildAuthBg();showScreen('auth-screen');}
   }catch(err){
@@ -726,7 +776,7 @@ async function boot(){
 }
 
 function buildAuthBg(){
-  ['auth-bg-grid','college-bg-grid'].forEach(id=>{
+  ['auth-bg-grid','college-bg-grid','coming-soon-bg-grid'].forEach(id=>{
     const bg=document.getElementById(id);
     if(bg&&!bg.children.length){
       for(let i=0;i<300;i++){
@@ -746,6 +796,17 @@ async function signInWithGoogle(){
 }
 function setAuthError(msg){document.getElementById('auth-error').textContent=msg;}
 
+// FIX 3: Check year and show coming soon screen if not 2nd year
+function is2ndYear(year){
+  return year==='2nd Year';
+}
+function showComingSoon(year){
+  hideLoading();buildAuthBg();
+  document.getElementById('coming-soon-year-label').textContent=year||'Your Year';
+  showScreen('coming-soon-screen');
+  initIcons();
+}
+
 // ── PROFILE ──
 async function loadUserProfile(){
   if(!currentUser)return;
@@ -756,47 +817,39 @@ async function loadUserProfile(){
     if(!ins.error)data=ins.data;
   }
   userProfile=data||null;
-  userStreak=await calculateStreak();
   if(userProfile&&(!userProfile.college||userProfile.college==='')){
     hideLoading();buildAuthBg();
     showScreen('college-screen');
     setTimeout(()=>document.getElementById('college-input').focus(),300);
     return'needs-college';
   }
+  // FIX 3: After profile loaded, check year
+  if(userProfile&&userProfile.year&&!is2ndYear(userProfile.year)){
+    showComingSoon(userProfile.year);
+    return'coming-soon';
+  }
   return'ok';
-}
-
-async function calculateStreak(){
-  if(!currentUser)return 0;
-  const{data}=await sb.from('completions').select('puzzle_date').eq('user_id',currentUser.id).order('puzzle_date',{ascending:false});
-  if(!data||!data.length)return 0;
-  const dates=data.map(d=>d.puzzle_date);
-  const today=getTodayString();
-  let check=dates.includes(today)?today:null;
-  if(!check){
-    const y=getYesterdayString();
-    if(dates.includes(y))check=y;else return 0;
-  }
-  let streak=0;
-  while(dates.includes(check)){
-    streak++;
-    const cd=new Date(check+'T00:00:00');cd.setDate(cd.getDate()-1);
-    check=`${cd.getFullYear()}-${String(cd.getMonth()+1).padStart(2,'0')}-${String(cd.getDate()).padStart(2,'0')}`;
-  }
-  return streak;
 }
 
 async function checkAlreadyCompleted(){
   if(!currentUser)return false;
-  try{const{data}=await sb.from('completions').select('id').eq('user_id',currentUser.id).eq('puzzle_date',getTodayString());return!!(data&&data.length>0);}catch(e){return false;}
+  try{
+    // FIX 6: Always use fresh getTodayString() so post-midnight checks are correct
+    const{data}=await sb.from('completions').select('id').eq('user_id',currentUser.id).eq('puzzle_date',getTodayString());
+    return!!(data&&data.length>0);
+  }catch(e){return false;}
 }
 
 async function saveCompletion(t,r){
   if(!currentUser)return;
   try{
+    // FIX 6: Use fresh getTodayString() at save time, not a cached value
     await sb.from('completions').insert({user_id:currentUser.id,puzzle_date:getTodayString(),time_seconds:t,revealed:r});
-    userStreak=await calculateStreak();
-  }catch(e){console.log('Save error:',e);}
+  }catch(e){
+    // Uniqueness constraint violation = already submitted, silently ignore
+    if(e.code==='23505')return;
+    console.log('Save error:',e);
+  }
 }
 
 async function signOut(){await sb.auth.signOut();localStorage.removeItem('tmt_progress');}
@@ -812,6 +865,8 @@ async function saveCollegePrompt(){
   const{error}=await sb.from('profiles').update({college,year,show_on_leaderboard:consent}).eq('id',currentUser.id);
   if(error){document.getElementById('college-error').textContent='Something went wrong, try again';return;}
   userProfile.college=college;userProfile.year=year;userProfile.show_on_leaderboard=consent;
+  // FIX 3: Check year after saving
+  if(!is2ndYear(year)){showComingSoon(year);return;}
   await loadPuzzle();
 }
 
@@ -838,6 +893,10 @@ async function saveEditYear(){
     userProfile.year=val;
     document.getElementById('settings-year-val').textContent=val;
     document.getElementById('edit-year-modal').classList.remove('open');
+    document.getElementById('settings-modal').classList.remove('open');
+    // FIX 3: Re-evaluate year access after change
+    if(!is2ndYear(val)){showComingSoon(val);}
+    else{await loadPuzzle();}
   });
 }
 
@@ -873,10 +932,12 @@ function closeConfirm(){document.getElementById('confirm-overlay').classList.rem
 document.getElementById('confirm-ok-btn').onclick=()=>{const cb=_confirmCallback;closeConfirm();if(cb)cb();};
 
 // ── LEADERBOARD ──
+// FIX 1: Increased limit to 100
 async function fetchLeaderboard(){
+  // FIX 6: Always use fresh getTodayString() so post-midnight fetches use the new date
   const{data}=await sb.from('completions')
     .select(`user_id,time_seconds,profiles!inner(username,college,show_on_leaderboard)`)
-    .eq('puzzle_date',getTodayString()).order('time_seconds',{ascending:true}).limit(10);
+    .eq('puzzle_date',getTodayString()).order('time_seconds',{ascending:true}).limit(100);
   return data||[];
 }
 async function openLeaderboard(){
@@ -890,6 +951,7 @@ async function openLeaderboard(){
   let myRank=null;
   const html=rows.map((r,i)=>{
     const isMe=r.user_id===currentUser?.id;if(isMe)myRank=i+1;
+    // FIX 1: Medals for top 3, plain numbers for the rest — no visual degradation
     const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
     const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
     const prof=Array.isArray(r.profiles)?r.profiles[0]:r.profiles;
@@ -909,7 +971,9 @@ async function loadPuzzle(){
   const today=getTodayString();
   try{
     const ctrl=new AbortController();const ft=setTimeout(()=>ctrl.abort(),8000);
-    const res=await fetch(`puzzles/${today}.json?v=${Date.now()}`,{signal:ctrl.signal});
+    // FIX 5: Cache-bust with today's date string (not just Date.now()) so the
+    // service worker serves the correct puzzle for the actual current date
+    const res=await fetch(`puzzles/${today}.json?d=${today}`,{signal:ctrl.signal,cache:'no-store'});
     clearTimeout(ft);if(!res.ok)throw new Error('not found');
     PUZZLE=await res.json();
     puzzleAlreadyCompleted=await checkAlreadyCompleted();
@@ -921,13 +985,11 @@ async function loadPuzzle(){
 async function loadArchiveData(){
   const yesterday=getYesterdayString();
   const today=getTodayString();
-  // Load yesterday
   try{
     const r=await fetch(`puzzles/${yesterday}.json`);
     if(r.ok){YESTERDAY_PUZZLE=await r.json();document.getElementById('archive-btn').classList.remove('hidden');document.getElementById('archive-yesterday-sub').textContent=`${new Date(yesterday+'T00:00:00').toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'})} · ${YESTERDAY_PUZZLE.topic}`;}
     else{YESTERDAY_PUZZLE=null;}
   }catch(e){YESTERDAY_PUZZLE=null;}
-  // Load puzzle index for random — fall back to probing if index.json missing
   try{
     const r=await fetch(`puzzles/index.json`);
     if(r.ok){
@@ -948,16 +1010,15 @@ async function loadArchiveData(){
 }
 
 async function probePuzzleDates(today,yesterday){
-  // Walk backwards up to 60 days to find available puzzles
   const found=[];
   const d=new Date(yesterday+'T00:00:00');
-  d.setDate(d.getDate()-1); // start day before yesterday
+  d.setDate(d.getDate()-1);
   for(let i=0;i<60;i++){
     const ds=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     try{
       const r=await fetch(`puzzles/${ds}.json`,{method:'HEAD'});
       if(r.ok)found.push(ds);
-      else break; // stop at first gap
+      else break;
     }catch(e){break;}
     d.setDate(d.getDate()-1);
   }
@@ -982,7 +1043,6 @@ async function startArchiveGame(type){
   PUZZLE=puzzleData;
   archiveMode=true;
   document.getElementById('game-screen').setAttribute('data-archive','true');
-  // Update badge for random vs yesterday
   document.querySelector('.archive-badge').textContent=type==='random'?'Archive Puzzle':'Yesterday\'s Puzzle';
   showScreen('game-screen');
   initGame();
@@ -1009,7 +1069,6 @@ function showStartScreen(){
     document.getElementById('start-topic-label').textContent="Tomorrow's Topic";
   }
   document.getElementById('start-username').textContent=userProfile?.username||currentUser?.email?.split('@')[0]||'—';
-  document.getElementById('start-streak').textContent=streakDisplay(userStreak);
   const banner=document.getElementById('completed-banner');
   const playBtn=document.getElementById('play-btn');
   if(puzzleAlreadyCompleted){
@@ -1034,7 +1093,6 @@ async function showNoPuzzle(today){
   showScreen('no-puzzle-screen');
   initIcons();
   startCountdown();
-  // Load archive data so the archive button shows if past puzzles exist
   await loadArchiveData();
   try{
     const r=await fetch(`puzzles/${getYesterdayString()}.json`);
@@ -1062,7 +1120,9 @@ function saveProgress(){
 function loadProgress(){
   try{
     const raw=localStorage.getItem('tmt_progress');if(!raw)return false;
-    const state=JSON.parse(raw);if(state.date!==getTodayString())return false;
+    const state=JSON.parse(raw);
+    // FIX 6: Validate saved progress against fresh today string
+    if(state.date!==getTodayString())return false;
     const S=PUZZLE.size;userGrid=state.grid;seconds=state.seconds||0;instantCheck=state.instantCheck!==undefined?state.instantCheck:true;completedCells=new Set(state.completedCells||[]);
     const toggle=document.getElementById('instant-check-toggle');if(toggle)toggle.checked=instantCheck;
     for(let r=0;r<S;r++)for(let c=0;c<S;c++){if(PUZZLE.solution[r][c]==='#')continue;const lt=document.getElementById(`letter-${r}-${c}`);if(lt)lt.textContent=userGrid[r][c]||'';const cell=document.getElementById(`cell-${r}-${c}`);const st=state.cellStates[r]&&state.cellStates[r][c];if(cell&&st)cell.classList.add(st);}
@@ -1245,9 +1305,12 @@ function checkCompletion(){
   localStorage.removeItem('tmt_progress');puzzleAlreadyCompleted=true;
   showSuccess(0);
   saveCompletion(seconds,usedReveal).then(async()=>{
-    userStreak=await calculateStreak();
-    document.getElementById('final-streak').innerHTML=streakDisplay(userStreak);
-    fetchLeaderboard().then(rows=>{const mr=rows.findIndex(r=>r.user_id===currentUser?.id)+1;if(mr>0)document.getElementById('final-rank').textContent=`#${mr} on today's leaderboard`;});
+    // FIX 2: Fetch actual rank from leaderboard after saving
+    const rows=await fetchLeaderboard();
+    const myRank=rows.findIndex(r=>r.user_id===currentUser?.id)+1;
+    if(myRank>0){
+      document.getElementById('final-rank').textContent=`#${myRank} on today's leaderboard`;
+    }
   });
 }
 
@@ -1258,7 +1321,6 @@ function showSuccess(myRank){
     iconEl.innerHTML=`<span class="ic" data-lucide="check-circle-2" style="width:52px;height:52px;color:var(--correct)"></span>`;
     document.getElementById('success-title').textContent='Well Done!';
     document.getElementById('final-time').style.display='none';
-    document.getElementById('final-streak').innerHTML='';
     document.getElementById('final-rank').textContent='';
     document.getElementById('final-penalty').style.display='none';
     document.getElementById('archive-success-note').style.display='block';
@@ -1270,8 +1332,7 @@ function showSuccess(myRank){
     document.getElementById('success-title').textContent='Puzzle Complete!';
     document.getElementById('final-time').style.display='';
     document.getElementById('final-time').textContent=formatTime(seconds);
-    document.getElementById('final-streak').innerHTML=userStreak>0?streakDisplay(userStreak):'';
-    document.getElementById('final-rank').textContent=myRank>0?`#${myRank} on today's leaderboard`:'';
+    document.getElementById('final-rank').textContent='Fetching your rank…';
     document.getElementById('archive-success-note').style.display='none';
     document.getElementById('success-lb-btn').style.display='';
     document.getElementById('success-home-btn').textContent='Back to Home';
