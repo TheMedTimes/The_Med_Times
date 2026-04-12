@@ -10,7 +10,7 @@
   *{box-sizing:border-box;margin:0;padding:0;}
   body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 64px;}
   .top-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:10;}
-  .back-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+  .back-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
   .back-btn:hover{background:var(--border);}
   .top-bar-logo{font-family:'Playfair Display',Georgia,serif;font-size:20px;font-weight:900;color:var(--accent);}
   .container{max-width:680px;margin:0 auto;padding:40px 24px;}
@@ -18,124 +18,101 @@
   .page-sub{font-size:13px;color:var(--text-muted);margin-bottom:40px;line-height:1.6;}
   .section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;}
   .section-title{font-family:'Playfair Display',Georgia,serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
-  .section-title .num{background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .num{background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;}
   p{font-size:14px;line-height:1.8;color:var(--text);margin-bottom:12px;}
   p:last-child{margin-bottom:0;}
   ul{padding-left:20px;margin-bottom:12px;}
-  ul li{font-size:14px;line-height:1.8;color:var(--text);margin-bottom:4px;}
+  li{font-size:14px;line-height:1.8;margin-bottom:4px;}
   .highlight-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-top:12px;}
   .highlight-box p{font-size:13px;color:var(--text-muted);}
   .contact-card{background:var(--bg);border:1.5px solid var(--accent);border-radius:12px;padding:16px 20px;margin-top:12px;}
-  .contact-card p{font-size:14px;color:var(--text);}
   .contact-card a{color:var(--accent);font-weight:600;text-decoration:none;}
   .footer{text-align:center;margin-top:40px;font-size:12px;color:var(--text-muted);line-height:1.8;}
   .badge{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:20px;}
 </style>
 </head>
 <body>
-
 <div class="top-bar">
   <a class="back-btn" href="javascript:history.back()">← Back</a>
   <div class="top-bar-logo">TheMedTimes</div>
 </div>
-
 <div class="container">
   <div class="badge">Legal</div>
   <div class="page-title">Privacy Policy</div>
-  <div class="page-sub">
-    Effective date: April 2026 &nbsp;·&nbsp; Last updated: April 2026<br>
-    This policy explains what data TheMedTimes collects, why, and how it is used and protected.
-  </div>
+  <div class="page-sub">Effective date: April 2026 · Last updated: April 2026<br>This policy explains what data TheMedTimes collects, why, and how it is used and protected.</div>
 
   <div class="section">
     <div class="section-title"><span class="num">1</span> Who We Are</div>
-    <p>TheMedTimes is a daily crossword puzzle application built for MBBS students in India. It is operated as an independent student project. References to "we", "us", or "our" in this policy refer to TheMedTimes.</p>
-    <p>The app is accessible at <strong>themedtimes.github.io/The_Med_Times</strong> and as a Progressive Web App (PWA) on mobile devices.</p>
+    <p>TheMedTimes is a daily crossword puzzle application built for MBBS students in India, operated as an independent student project. The app is accessible at themedtimes.github.io/The_Med_Times and as a Progressive Web App on mobile devices.</p>
   </div>
 
   <div class="section">
     <div class="section-title"><span class="num">2</span> What Data We Collect</div>
-    <p>We collect only the minimum data required to make the app work. Specifically:</p>
+    <p>We collect only the minimum data required to make the app work:</p>
     <ul>
-      <li><strong>Google Account information</strong> — your name and email address, obtained when you sign in with Google. We use your name to display on the leaderboard.</li>
-      <li><strong>College abbreviation</strong> — entered by you during onboarding, used to identify you on the leaderboard.</li>
+      <li><strong>Google Account information</strong> — your name and email, obtained when you sign in with Google.</li>
+      <li><strong>College abbreviation</strong> — entered by you during onboarding, used for the leaderboard.</li>
       <li><strong>Year of study</strong> — selected by you during onboarding, used to tailor your experience.</li>
-      <li><strong>Puzzle completion data</strong> — the date you completed a puzzle, the time taken, and whether you used the Reveal feature.</li>
+      <li><strong>Puzzle completion data</strong> — the date you completed a puzzle, time taken, and whether you used Reveal.</li>
       <li><strong>Leaderboard visibility preference</strong> — your choice of whether your name and college appear publicly.</li>
     </ul>
-    <div class="highlight-box">
-      <p>We do not collect your phone number, location, device identifiers, or any sensitive personal information. We do not collect data from users under the age of 18.</p>
-    </div>
+    <div class="highlight-box"><p>We do not collect your phone number, location, device identifiers, or any sensitive personal information. We do not collect data from users under the age of 18.</p></div>
   </div>
 
   <div class="section">
     <div class="section-title"><span class="num">3</span> How We Use Your Data</div>
-    <p>Your data is used exclusively to operate TheMedTimes. Specifically:</p>
-    <ul>
-      <li>Your name and college are shown on the leaderboard if you have opted in.</li>
-      <li>Your completion data is used to calculate your position on the daily leaderboard.</li>
-      <li>Your year of study is used to route you to the correct puzzle content.</li>
-    </ul>
-    <p>We do not use your data for advertising, profiling, or any purpose unrelated to running the app. We do not sell your data to any third party.</p>
+    <p>Your data is used exclusively to operate TheMedTimes — showing your name on the leaderboard if opted in, calculating your position, and routing you to the correct puzzle content. We do not use your data for advertising, profiling, or any unrelated purpose. We do not sell your data.</p>
   </div>
 
   <div class="section">
     <div class="section-title"><span class="num">4</span> Third-Party Services</div>
-    <p>TheMedTimes uses the following third-party services to function:</p>
     <ul>
-      <li><strong>Supabase</strong> — our database and authentication backend. Your profile and completion data are stored on Supabase servers located in Singapore (ap-southeast-1). Supabase is SOC 2 compliant. See <a href="https://supabase.com/privacy" style="color:var(--accent);">supabase.com/privacy</a>.</li>
-      <li><strong>Google OAuth (via Supabase)</strong> — used for sign-in. Google processes your sign-in request and shares your name and email with us. See <a href="https://policies.google.com/privacy" style="color:var(--accent);">Google's Privacy Policy</a>.</li>
-      <li><strong>GitHub Pages</strong> — the app is hosted on GitHub Pages. GitHub may log basic request metadata. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" style="color:var(--accent);">GitHub's Privacy Statement</a>.</li>
+      <li><strong>Supabase</strong> — database and authentication backend, servers in Singapore (ap-southeast-1), SOC 2 compliant.</li>
+      <li><strong>Google OAuth</strong> — used for sign-in. Google shares your name and email with us upon login.</li>
+      <li><strong>GitHub Pages</strong> — app hosting. GitHub may log basic request metadata.</li>
+      <li><strong>Sentry</strong> — error tracking. Anonymous error reports are sent to help us fix bugs. No personal data is included in error reports.</li>
     </ul>
   </div>
 
   <div class="section">
     <div class="section-title"><span class="num">5</span> Cookies and Local Storage</div>
-    <p>TheMedTimes does not use advertising cookies or tracking cookies.</p>
-    <p>We use the following browser storage:</p>
+    <p>We do not use advertising or tracking cookies. We use:</p>
     <ul>
-      <li><strong>Supabase session cookie</strong> — stores your login session so you stay signed in between visits. This is essential for the app to function.</li>
-      <li><strong>localStorage (tmt_progress)</strong> — stores your in-progress puzzle state locally on your device only, so your work is not lost if you close the app mid-puzzle. This data never leaves your device.</li>
+      <li><strong>Supabase session cookie</strong> — keeps you signed in between visits. Essential for the app to function.</li>
+      <li><strong>localStorage (tmt_progress)</strong> — stores your in-progress puzzle state on your device only. Never leaves your device.</li>
     </ul>
   </div>
 
   <div class="section">
     <div class="section-title"><span class="num">6</span> Data Retention</div>
-    <p>Your profile and completion data are retained for as long as your account exists. Completion records are kept to maintain leaderboard history and allow streak calculation.</p>
-    <p>If you delete your account (see section 7), all your personal data is permanently deleted from our database within 30 days.</p>
+    <p>Your profile and completion data are retained for as long as your account exists. If you delete your account, all your personal data is permanently deleted from our database within 30 days.</p>
   </div>
 
   <div class="section">
     <div class="section-title"><span class="num">7</span> Your Rights</div>
-    <p>You have the right to:</p>
-    <ul>
-      <li><strong>Access</strong> the personal data we hold about you.</li>
-      <li><strong>Correct</strong> your name or college — you can do this directly in the app via Settings.</li>
-      <li><strong>Delete</strong> your account and all associated data by contacting us (see section 8).</li>
-      <li><strong>Opt out</strong> of appearing on the leaderboard at any time via Settings → Account → Leaderboard visibility.</li>
-    </ul>
-    <p>These rights are provided in accordance with India's Digital Personal Data Protection Act (DPDP) 2023.</p>
+    <p>You have the right to access, correct, or delete your data. You can correct your name or college directly in Settings. To delete your account and all associated data, use the "Delete my account" option in Settings, or contact us. These rights are provided in accordance with India's Digital Personal Data Protection Act (DPDP) 2023.</p>
   </div>
 
   <div class="section">
     <div class="section-title"><span class="num">8</span> Contact Us</div>
-    <p>If you have any questions about this policy, want to request deletion of your data, or want to report a concern, please reach out:</p>
+    <p>Questions about this policy or data deletion requests:</p>
     <div class="contact-card">
-      <p>📧 Email: <a href="mailto:themedicalpuzzler@gmail.com">themedicalpuzzler@gmail.com</a></p>
+      <p>📧 <a href="mailto:themedicalpuzzler@gmail.com">themedicalpuzzler@gmail.com</a></p>
       <p style="margin-top:6px;font-size:13px;color:var(--text-muted);">We aim to respond to all privacy requests within 7 days.</p>
     </div>
   </div>
 
   <div class="section">
     <div class="section-title"><span class="num">9</span> Changes to This Policy</div>
-    <p>We may update this privacy policy as the app grows. If we make significant changes, we will update the effective date at the top of this page. Continued use of the app after changes are posted constitutes acceptance of the updated policy.</p>
+    <p>We may update this privacy policy as the app grows. If we make significant changes, we will update the effective date at the top. Continued use of the app after changes are posted constitutes acceptance.</p>
   </div>
 
   <div class="footer">
     © 2026 TheMedTimes · The daily crossword for MBBS students<br>
+    <a href="terms.html" style="color:var(--accent);text-decoration:none;font-weight:600;">Terms of Use</a>
+    &nbsp;·&nbsp;
     <a href="javascript:history.back()" style="color:var(--accent);text-decoration:none;font-weight:600;">← Back to app</a>
   </div>
 </div>
-
 </body>
 </html>
