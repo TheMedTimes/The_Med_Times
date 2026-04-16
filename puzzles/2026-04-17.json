@@ -263,6 +263,13 @@
   "clues": {
     "across": [
       {
+        "number": 1,
+        "row": 0,
+        "col": 2,
+        "len": 5,
+        "clue": "T or F - The CTZ is protected by the BBB"
+      },
+      {
         "number": 2,
         "row": 1,
         "col": 2,
