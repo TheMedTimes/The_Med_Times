@@ -538,43 +538,39 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 function initIcons(){if(window.lucide)lucide.createIcons();}
 
 // ── BOOT ──
-// Checks all known Supabase v2 localStorage key formats for a valid cached session.
-// This is the key fix for iOS PWA "swipe away and reopen" — the session is always
-// in localStorage, we just need to find it before hitting the network.
-function getCachedSession(){
-  try{
-    // Supabase v2 uses this key format
-    const keys=[
-      'sb-ojxzzfjapjwpxitnruqa-auth-token',
-      'supabase.auth.token',
-    ];
-    // Also scan all localStorage keys for any supabase session key
-    for(let i=0;i<localStorage.length;i++){
-      const k=localStorage.key(i);
-      if(k&&(k.includes('supabase')&&k.includes('auth'))||k.includes('sb-')&&k.includes('-auth-token')){
-        if(!keys.includes(k))keys.push(k);
-      }
-    }
-    for(const key of keys){
-      const raw=localStorage.getItem(key);
-      if(!raw)continue;
-      const parsed=JSON.parse(raw);
-      // Handle both direct session object and nested {currentSession} format
-      const sess=parsed?.currentSession||parsed;
-      if(sess&&sess.access_token&&sess.expires_at){
-        // Give a 60s buffer so we don't use a token that expires in seconds
-        if(sess.expires_at*1000>Date.now()+60000)return true;
-      }
-    }
-  }catch(e){}
-  return false;
-}
-
 async function boot(){
-  // SW update check — ensures PWA always loads latest version on open
+  if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
+
+  // Step 1: Check for an existing session. Supabase getSession() reads from
+  // localStorage and is synchronous in practice — no network needed.
+  // We do this BEFORE the SW update check so iOS PWA reopen is instant.
+  let initialSession=null;
+  try{
+    const{data}=await sb.auth.getSession();
+    initialSession=data?.session||null;
+  }catch(e){initialSession=null;}
+
+  // Step 2: If we have a session, go straight to the app — no auth screen flash.
+  if(initialSession){
+    currentUser=initialSession.user;
+    if(window.Sentry)Sentry.setUser({id:currentUser.id});
+    sb.auth.startAutoRefresh();
+    setupAuthListener();
+    const r=await loadUserProfile();
+    if(r==='coming-soon')return;
+    if(r!=='needs-college')await loadPuzzle();
+  }else{
+    // No session — show auth screen immediately, no waiting.
+    hideLoading();buildAuthBg();showScreen('auth-screen');
+    sb.auth.startAutoRefresh();
+    setupAuthListener();
+  }
+
+  // Step 3: SW update check runs in the background after the app is visible.
+  // This prevents the update check network request from delaying boot on iOS.
   if('serviceWorker' in navigator){
-    const reg=await navigator.serviceWorker.getRegistration();
-    if(reg){
+    navigator.serviceWorker.getRegistration().then(reg=>{
+      if(!reg)return;
       reg.addEventListener('updatefound',()=>{
         const nw=reg.installing;
         nw.addEventListener('statechange',()=>{
@@ -585,76 +581,30 @@ async function boot(){
         });
       });
       reg.update().catch(()=>{});
-    }
+    }).catch(()=>{});
   }
-  if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
+}
 
-  // FIX: If we detect a valid cached session in localStorage, keep the loading
-  // screen up (no flash of auth screen) while we restore the session.
-  // If no cached session found, show the auth screen immediately.
-  const hasCachedSession=getCachedSession();
-  if(!hasCachedSession){
-    hideLoading();buildAuthBg();showScreen('auth-screen');
-  }
-  // If hasCachedSession is true, loading screen stays up until session restores.
-
-  try{
-    sb.auth.startAutoRefresh();
-    sb.auth.onAuthStateChange(async(event,session)=>{
-      if(event==='SIGNED_IN'&&session&&!currentUser){
-        currentUser=session.user;
-        if(window.Sentry)Sentry.setUser({id:currentUser.id});
-        const r=await loadUserProfile();
-        if(r==='coming-soon')return;
-        if(r!=='needs-college')await loadPuzzle();
-      }
-      if(event==='SIGNED_OUT'){
-        currentUser=null;userProfile=null;
-        if(window.Sentry)Sentry.setUser(null);
-        hideLoading();buildAuthBg();showScreen('auth-screen');
-      }
-    });
-
-    // getSession() reads from localStorage when available — no network needed.
-    // On iOS PWA reopen this is essentially instant.
-    // We give a long timeout only as a last resort for genuinely slow connections.
-    const timeout=hasCachedSession?5000:12000;
-    let session=null;
-    try{
-      const result=await Promise.race([
-        sb.auth.getSession(),
-        new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),timeout))
-      ]);
-      session=result.data?.session||null;
-    }catch(e){
-      if(e.message!=='session timeout')throw e;
-    }
-
-    if(session){
+function setupAuthListener(){
+  sb.auth.onAuthStateChange(async(event,session)=>{
+    if(event==='SIGNED_IN'&&session&&!currentUser){
       currentUser=session.user;
       if(window.Sentry)Sentry.setUser({id:currentUser.id});
       const r=await loadUserProfile();
       if(r==='coming-soon')return;
       if(r!=='needs-college')await loadPuzzle();
-    }else{
-      // No session found — make sure auth screen is showing
-      if(hasCachedSession){
-        // Cached session existed but getSession() returned nothing
-        // (token expired or was revoked) — show auth screen now
-        hideLoading();buildAuthBg();showScreen('auth-screen');
-      }
-      // else auth screen is already showing from above
     }
-  }catch(err){
-    const isRealConnErr=err&&err.message&&(err.message.includes('fetch')||err.message.includes('network')||err.message.includes('Failed to')||err.message.includes('supabase')||err.message.includes('NetworkError'));
-    if(window.Sentry&&err.message!=='session timeout')Sentry.captureException(err);
-    if(err.message!=='session timeout')console.error('Boot error:',err);
-    // Only show auth screen if it isn't already showing
-    if(hasCachedSession){hideLoading();buildAuthBg();showScreen('auth-screen');}
-    if(isRealConnErr)setAuthError('Could not connect. Check internet and refresh.');
-  }
+    if(event==='TOKEN_REFRESHED'&&session&&currentUser){
+      // Silently update the current user reference on token refresh
+      currentUser=session.user;
+    }
+    if(event==='SIGNED_OUT'){
+      currentUser=null;userProfile=null;
+      if(window.Sentry)Sentry.setUser(null);
+      hideLoading();buildAuthBg();showScreen('auth-screen');
+    }
+  });
 }
-
 function buildAuthBg(){
   ['auth-bg-grid','college-bg-grid','coming-soon-bg-grid'].forEach(id=>{
     const bg=document.getElementById(id);
