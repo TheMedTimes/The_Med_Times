@@ -41,8 +41,6 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
   :root{--bg:#f7f4ef;--surface:#ffffff;--border:#d4cfc8;--text:#1a1a1a;--text-muted:#7a7570;--accent:#c8392b;--accent-light:#f5e6e4;--highlight:#fef3c7;--highlight-active:#fde68a;--correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--black:#1a1a1a;--font-display:'Playfair Display',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;--font-mono:'DM Mono',monospace;--cell-size:min(calc((100vw - 41px) / 15),40px);}
-  [data-theme="dark"]{--bg:#141414;--surface:#242424;--border:#404040;--text:#f0ede8;--text-muted:#a8a8a8;--accent:#ff6b5b;--accent-light:#3d1f1c;--highlight:#332e00;--highlight-active:#554a00;--correct:#4ade80;--correct-bg:#0f3320;--wrong:#f87171;--wrong-bg:#3d0f0f;--black:#0a0a0a;}
-  [data-theme="medical"]{--bg:#edf5f1;--surface:#ffffff;--border:#9ecabb;--text:#0a2018;--text-muted:#3d6b5a;--accent:#0a5c43;--accent-light:#d4eddf;--highlight:#bbf0d8;--highlight-active:#52c990;--correct:#047857;--correct-bg:#d1fae5;--wrong:#dc2626;--wrong-bg:#fee2e2;--black:#0a2018;}
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior:none;}
   body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100svh;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:background 0.3s,color 0.3s;overscroll-behavior:none;}
@@ -158,7 +156,6 @@
   .kb-key.wide{max-width:52px;font-size:12px;}
   .kb-key.del{max-width:52px;font-size:16px;}
   .kb-key:active,.kb-key.pressed{background:var(--border);transform:scale(0.88);box-shadow:none;}
-  [data-theme="dark"] .kb-key:active,[data-theme="dark"] .kb-key.pressed{background:#3a3a3c;}
   .loading-wrap{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:500;gap:16px;}
   .loading-logo{font-family:var(--font-display);font-size:32px;font-weight:900;color:var(--accent);}
   .loading-spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
@@ -169,11 +166,7 @@
   @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
   .modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
   .modal-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:16px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;}
-  .theme-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
-  .theme-opt{border:2px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;background:var(--bg);}
-  .theme-opt.selected{border-color:var(--accent);background:var(--accent-light);}
-  .theme-swatch{width:36px;height:36px;border-radius:50%;margin:0 auto 8px;}
-  .theme-name{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text);}
+
   .modal-close{width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);-webkit-appearance:none;}
   .settings-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:16px 0 10px;}
   .settings-row{display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border);}
@@ -267,7 +260,7 @@
   .coming-soon-card-sub{font-size:13px;color:var(--text-muted);}
 </style>
 </head>
-<body data-theme="light">
+<body>
 
 <div class="loading-wrap" id="loading">
   <div class="loading-logo">TheMedTimes</div>
@@ -422,12 +415,6 @@
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title"><span class="ic" data-lucide="settings" style="width:20px;height:20px;color:var(--accent)"></span>Settings</div>
-    <div class="settings-section-title">Theme</div>
-    <div class="theme-options">
-      <div class="theme-opt selected" onclick="setTheme('light')" id="opt-light"><div class="theme-swatch" style="background:linear-gradient(135deg,#f7f4ef,#c8392b)"></div><div class="theme-name">Classic</div></div>
-      <div class="theme-opt" onclick="setTheme('dark')" id="opt-dark"><div class="theme-swatch" style="background:linear-gradient(135deg,#0f0f0f,#ff6b5b)"></div><div class="theme-name">Dark</div></div>
-      <div class="theme-opt" onclick="setTheme('medical')" id="opt-medical"><div class="theme-swatch" style="background:linear-gradient(135deg,#f0f7f4,#0d6e52)"></div><div class="theme-name">Medical</div></div>
-    </div>
     <div class="settings-section-title">Gameplay</div>
     <div class="settings-row"><div class="settings-row-left"><div class="settings-row-label">Live Check</div><div class="settings-row-sub">Instantly marks correct / wrong letters</div></div><label class="toggle"><input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)" checked><span class="slider"></span></label></div>
     <div class="settings-section-title">Account</div>
@@ -551,6 +538,38 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 function initIcons(){if(window.lucide)lucide.createIcons();}
 
 // ── BOOT ──
+// Checks all known Supabase v2 localStorage key formats for a valid cached session.
+// This is the key fix for iOS PWA "swipe away and reopen" — the session is always
+// in localStorage, we just need to find it before hitting the network.
+function getCachedSession(){
+  try{
+    // Supabase v2 uses this key format
+    const keys=[
+      'sb-ojxzzfjapjwpxitnruqa-auth-token',
+      'supabase.auth.token',
+    ];
+    // Also scan all localStorage keys for any supabase session key
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(k&&(k.includes('supabase')&&k.includes('auth'))||k.includes('sb-')&&k.includes('-auth-token')){
+        if(!keys.includes(k))keys.push(k);
+      }
+    }
+    for(const key of keys){
+      const raw=localStorage.getItem(key);
+      if(!raw)continue;
+      const parsed=JSON.parse(raw);
+      // Handle both direct session object and nested {currentSession} format
+      const sess=parsed?.currentSession||parsed;
+      if(sess&&sess.access_token&&sess.expires_at){
+        // Give a 60s buffer so we don't use a token that expires in seconds
+        if(sess.expires_at*1000>Date.now()+60000)return true;
+      }
+    }
+  }catch(e){}
+  return false;
+}
+
 async function boot(){
   // SW update check — ensures PWA always loads latest version on open
   if('serviceWorker' in navigator){
@@ -569,6 +588,16 @@ async function boot(){
     }
   }
   if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
+
+  // FIX: If we detect a valid cached session in localStorage, keep the loading
+  // screen up (no flash of auth screen) while we restore the session.
+  // If no cached session found, show the auth screen immediately.
+  const hasCachedSession=getCachedSession();
+  if(!hasCachedSession){
+    hideLoading();buildAuthBg();showScreen('auth-screen');
+  }
+  // If hasCachedSession is true, loading screen stays up until session restores.
+
   try{
     sb.auth.startAutoRefresh();
     sb.auth.onAuthStateChange(async(event,session)=>{
@@ -586,40 +615,19 @@ async function boot(){
       }
     });
 
-    // SESSION RESTORE: Try to get the cached session from localStorage first
-    // (instantaneous on reopen — no network needed). If that fails or returns
-    // nothing, fall back to a full network check with a generous 15s timeout.
-    // This is what makes "swipe away and reopen" stay logged in on iOS PWA.
+    // getSession() reads from localStorage when available — no network needed.
+    // On iOS PWA reopen this is essentially instant.
+    // We give a long timeout only as a last resort for genuinely slow connections.
+    const timeout=hasCachedSession?5000:12000;
     let session=null;
     try{
-      // First attempt: read from local storage (instant, no network)
-      const stored=localStorage.getItem('sb-ojxzzfjapjwpxitnruqa-auth-token');
-      if(stored){
-        const parsed=JSON.parse(stored);
-        // Check the token hasn't expired
-        if(parsed&&parsed.expires_at&&parsed.expires_at*1000>Date.now()){
-          // Token looks valid — use getSession() which will use the cached value
-          const r1=await Promise.race([
-            sb.auth.getSession(),
-            new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),4000))
-          ]);
-          session=r1.data?.session||null;
-        }
-      }
-    }catch(e){/* cached check failed, fall through to network check */}
-
-    // Second attempt: full network session check with longer timeout
-    if(!session){
-      try{
-        const r2=await Promise.race([
-          sb.auth.getSession(),
-          new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),15000))
-        ]);
-        session=r2.data?.session||null;
-      }catch(e2){
-        if(e2.message!=='session timeout')throw e2;
-        // Timed out — no session found, show auth screen silently
-      }
+      const result=await Promise.race([
+        sb.auth.getSession(),
+        new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),timeout))
+      ]);
+      session=result.data?.session||null;
+    }catch(e){
+      if(e.message!=='session timeout')throw e;
     }
 
     if(session){
@@ -628,12 +636,21 @@ async function boot(){
       const r=await loadUserProfile();
       if(r==='coming-soon')return;
       if(r!=='needs-college')await loadPuzzle();
-    }else{hideLoading();buildAuthBg();showScreen('auth-screen');}
+    }else{
+      // No session found — make sure auth screen is showing
+      if(hasCachedSession){
+        // Cached session existed but getSession() returned nothing
+        // (token expired or was revoked) — show auth screen now
+        hideLoading();buildAuthBg();showScreen('auth-screen');
+      }
+      // else auth screen is already showing from above
+    }
   }catch(err){
     const isRealConnErr=err&&err.message&&(err.message.includes('fetch')||err.message.includes('network')||err.message.includes('Failed to')||err.message.includes('supabase')||err.message.includes('NetworkError'));
     if(window.Sentry&&err.message!=='session timeout')Sentry.captureException(err);
     if(err.message!=='session timeout')console.error('Boot error:',err);
-    hideLoading();buildAuthBg();showScreen('auth-screen');
+    // Only show auth screen if it isn't already showing
+    if(hasCachedSession){hideLoading();buildAuthBg();showScreen('auth-screen');}
     if(isRealConnErr)setAuthError('Could not connect. Check internet and refresh.');
   }
 }
@@ -1119,8 +1136,7 @@ function showSuccess(){
 }
 
 function spawnConfetti(){
-  const theme=document.body.dataset.theme;
-  const colors=theme==='dark'?['#ff6b5b','#fde68a','#34d399','#60a5fa','#c084fc']:theme==='medical'?['#0d6e52','#34d399','#6ee7b7','#059669','#d1fae5']:['#c8392b','#f59e0b','#16a34a','#2563eb','#9333ea'];
+  const colors=['#c8392b','#f59e0b','#16a34a','#2563eb','#9333ea'];
   for(let i=0;i<60;i++)setTimeout(()=>{const el=document.createElement('div');el.className='confetti-piece';el.style.left=Math.random()*100+'vw';el.style.top='-10px';el.style.background=colors[Math.floor(Math.random()*colors.length)];el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=Math.random()*0.5+'s';document.body.appendChild(el);setTimeout(()=>el.remove(),4000);},i*30);
 }
 
@@ -1144,8 +1160,6 @@ function openClueList(){
 function closeClueList(e){if(!e||e.target===document.getElementById('clue-list-modal'))document.getElementById('clue-list-modal').classList.remove('open');}
 function jumpToClueFromList(number,dir){const idx=allClues.findIndex(cl=>cl.number===number&&cl.dir===dir);if(idx!==-1)jumpToClueIndex(idx);closeClueList();}
 
-// ── THEME ──
-function setTheme(t){document.body.dataset.theme=t;['light','dark','medical'].forEach(n=>document.getElementById(`opt-${n}`).classList.toggle('selected',n===t));}
 
 boot();
 </script>
