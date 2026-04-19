@@ -522,12 +522,13 @@ function checkRateLimit(){
 }
 
 // ── LOADING SAFETY NET ──
+// Reduced to 7s. If boot hasn't completed by then, show the refresh button.
 const _bootTimer=setTimeout(()=>{
   if(document.getElementById('loading').style.display!=='none'){
     document.getElementById('loading-spinner').style.display='none';
     document.getElementById('loading-stuck').style.display='block';
   }
-},10000);
+},7000);
 function hideLoading(){clearTimeout(_bootTimer);document.getElementById('loading').style.display='none';}
 
 function getTodayString(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -541,33 +542,46 @@ function initIcons(){if(window.lucide)lucide.createIcons();}
 async function boot(){
   if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
 
-  // Step 1: Check for an existing session. Supabase getSession() reads from
-  // localStorage and is synchronous in practice — no network needed.
-  // We do this BEFORE the SW update check so iOS PWA reopen is instant.
+  // getSession() can hang on iOS PWA cold starts if Supabase needs to refresh
+  // the token internally. We wrap it in a hard 4s timeout — if it doesn't
+  // resolve in time, we fall through to showing the auth screen.
+  // On subsequent opens (session cached), this resolves in <100ms.
   let initialSession=null;
   try{
-    const{data}=await sb.auth.getSession();
-    initialSession=data?.session||null;
-  }catch(e){initialSession=null;}
-
-  // Step 2: If we have a session, go straight to the app — no auth screen flash.
-  if(initialSession){
-    currentUser=initialSession.user;
-    if(window.Sentry)Sentry.setUser({id:currentUser.id});
-    sb.auth.startAutoRefresh();
-    setupAuthListener();
-    const r=await loadUserProfile();
-    if(r==='coming-soon')return;
-    if(r!=='needs-college')await loadPuzzle();
-  }else{
-    // No session — show auth screen immediately, no waiting.
-    hideLoading();buildAuthBg();showScreen('auth-screen');
-    sb.auth.startAutoRefresh();
-    setupAuthListener();
+    const result=await Promise.race([
+      sb.auth.getSession(),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('boot timeout')),4000))
+    ]);
+    initialSession=result?.data?.session||null;
+  }catch(e){
+    // Either getSession() threw or timed out — treat as no session
+    if(window.Sentry&&e.message!=='boot timeout')Sentry.captureException(e);
+    initialSession=null;
   }
 
-  // Step 3: SW update check runs in the background after the app is visible.
-  // This prevents the update check network request from delaying boot on iOS.
+  // Set up the auth state listener regardless of session outcome
+  sb.auth.startAutoRefresh();
+  setupAuthListener();
+
+  if(initialSession){
+    // Session found — go straight to app, loading screen stays up until puzzle loads
+    currentUser=initialSession.user;
+    if(window.Sentry)Sentry.setUser({id:currentUser.id});
+    try{
+      const r=await loadUserProfile();
+      if(r==='coming-soon')return;
+      if(r!=='needs-college')await loadPuzzle();
+    }catch(e){
+      if(window.Sentry)Sentry.captureException(e);
+      // Profile/puzzle load failed — still get them into the app
+      hideLoading();showScreen('start-screen');
+    }
+  }else{
+    // No session or timeout — show auth screen immediately
+    hideLoading();buildAuthBg();showScreen('auth-screen');
+  }
+
+  // SW update check runs in the background — never blocks boot
   if('serviceWorker' in navigator){
     navigator.serviceWorker.getRegistration().then(reg=>{
       if(!reg)return;
