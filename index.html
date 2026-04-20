@@ -37,7 +37,7 @@
   })();
 </script>
 
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
   :root{--bg:#f7f4ef;--surface:#ffffff;--border:#d4cfc8;--text:#1a1a1a;--text-muted:#7a7570;--accent:#c8392b;--accent-light:#f5e6e4;--highlight:#fef3c7;--highlight-active:#fde68a;--correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--black:#1a1a1a;--font-display:'Playfair Display',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;--font-mono:'DM Mono',monospace;--cell-size:min(calc((100vw - 41px) / 15),40px);}
@@ -486,34 +486,11 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL='https://ojxzzfjapjwpxitnruqa.supabase.co';
 const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeHp6ZmphcGp3cHhpdG5ydXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDQ5MDksImV4cCI6MjA4ODcyMDkwOX0.yTq0aXLd6L8Grjsc4IWAbJ3TTnIGOnJdM3ciFz7JJe4';
-let sb=null;
-
-// Load Supabase asynchronously — never blocks page render
-function _loadSupabase(){
-  var s=document.createElement('script');
-  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-  s.onload=function(){
-    if(window.supabase&&window.supabase.createClient){
-      sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{
-        auth:{persistSession:true,storageKey:'tmt-auth',storage:window.localStorage,autoRefreshToken:true,detectSessionInUrl:true}
-      });
-    }
-    // Wait for lucide too if not ready
-    if(window.lucide){boot();}
-    else{document.querySelector('[defer]')
-      ?document.querySelector('script[src*="lucide"]').addEventListener('load',boot)
-      :boot();}
-  };
-  s.onerror=function(){
-    document.getElementById('loading-spinner').style.display='none';
-    document.getElementById('loading-stuck').style.display='block';
-  };
-  document.head.appendChild(s);
-}
-_loadSupabase();
+const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON):null;
 
 let PUZZLE=null,currentUser=null,userProfile=null;
 let YESTERDAY_PUZZLE=null,PUZZLE_INDEX=[];
@@ -550,7 +527,7 @@ const _bootTimer=setTimeout(()=>{
     document.getElementById('loading-spinner').style.display='none';
     document.getElementById('loading-stuck').style.display='block';
   }
-},8000);
+},10000);
 function hideLoading(){clearTimeout(_bootTimer);document.getElementById('loading').style.display='none';}
 
 function getTodayString(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -561,50 +538,43 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 function initIcons(){if(window.lucide)lucide.createIcons();}
 
 // ── BOOT ──
-// Called once Supabase has loaded. sb is guaranteed to be set.
-async function boot(){
-  if(!sb){
-    document.getElementById('loading-spinner').style.display='none';
-    document.getElementById('loading-stuck').style.display='block';
-    return;
-  }
-
-  // getSession() reads from localStorage — instant, no network needed.
-  // 5s timeout as a safety net only.
-  let initialSession=null;
+// Checks all known Supabase v2 localStorage key formats for a valid cached session.
+// This is the key fix for iOS PWA "swipe away and reopen" — the session is always
+// in localStorage, we just need to find it before hitting the network.
+function getCachedSession(){
   try{
-    const result=await Promise.race([
-      sb.auth.getSession(),
-      new Promise((_,rej)=>setTimeout(()=>rej(new Error('boot timeout')),5000))
-    ]);
-    initialSession=result?.data?.session||null;
-  }catch(e){
-    if(window.Sentry&&e.message!=='boot timeout')Sentry.captureException(e);
-    initialSession=null;
-  }
-
-  sb.auth.startAutoRefresh();
-  setupAuthListener();
-
-  if(initialSession){
-    currentUser=initialSession.user;
-    if(window.Sentry)Sentry.setUser({id:currentUser.id});
-    try{
-      const r=await loadUserProfile();
-      if(r==='coming-soon')return;
-      if(r!=='needs-college')await loadPuzzle();
-    }catch(e){
-      if(window.Sentry)Sentry.captureException(e);
-      hideLoading();buildAuthBg();showScreen('auth-screen');
+    // Supabase v2 uses this key format
+    const keys=[
+      'sb-ojxzzfjapjwpxitnruqa-auth-token',
+      'supabase.auth.token',
+    ];
+    // Also scan all localStorage keys for any supabase session key
+    for(let i=0;i<localStorage.length;i++){
+      const k=localStorage.key(i);
+      if(k&&(k.includes('supabase')&&k.includes('auth'))||k.includes('sb-')&&k.includes('-auth-token')){
+        if(!keys.includes(k))keys.push(k);
+      }
     }
-  }else{
-    hideLoading();buildAuthBg();showScreen('auth-screen');
-  }
+    for(const key of keys){
+      const raw=localStorage.getItem(key);
+      if(!raw)continue;
+      const parsed=JSON.parse(raw);
+      // Handle both direct session object and nested {currentSession} format
+      const sess=parsed?.currentSession||parsed;
+      if(sess&&sess.access_token&&sess.expires_at){
+        // Give a 60s buffer so we don't use a token that expires in seconds
+        if(sess.expires_at*1000>Date.now()+60000)return true;
+      }
+    }
+  }catch(e){}
+  return false;
+}
 
-  // SW update check in background — never blocks boot
+async function boot(){
+  // SW update check — ensures PWA always loads latest version on open
   if('serviceWorker' in navigator){
-    navigator.serviceWorker.getRegistration().then(reg=>{
-      if(!reg)return;
+    const reg=await navigator.serviceWorker.getRegistration();
+    if(reg){
       reg.addEventListener('updatefound',()=>{
         const nw=reg.installing;
         nw.addEventListener('statechange',()=>{
@@ -615,29 +585,76 @@ async function boot(){
         });
       });
       reg.update().catch(()=>{});
-    }).catch(()=>{});
+    }
   }
-}
+  if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
 
-function setupAuthListener(){
-  sb.auth.onAuthStateChange(async(event,session)=>{
-    if(event==='SIGNED_IN'&&session&&!currentUser){
+  // FIX: If we detect a valid cached session in localStorage, keep the loading
+  // screen up (no flash of auth screen) while we restore the session.
+  // If no cached session found, show the auth screen immediately.
+  const hasCachedSession=getCachedSession();
+  if(!hasCachedSession){
+    hideLoading();buildAuthBg();showScreen('auth-screen');
+  }
+  // If hasCachedSession is true, loading screen stays up until session restores.
+
+  try{
+    sb.auth.startAutoRefresh();
+    sb.auth.onAuthStateChange(async(event,session)=>{
+      if(event==='SIGNED_IN'&&session&&!currentUser){
+        currentUser=session.user;
+        if(window.Sentry)Sentry.setUser({id:currentUser.id});
+        const r=await loadUserProfile();
+        if(r==='coming-soon')return;
+        if(r!=='needs-college')await loadPuzzle();
+      }
+      if(event==='SIGNED_OUT'){
+        currentUser=null;userProfile=null;
+        if(window.Sentry)Sentry.setUser(null);
+        hideLoading();buildAuthBg();showScreen('auth-screen');
+      }
+    });
+
+    // getSession() reads from localStorage when available — no network needed.
+    // On iOS PWA reopen this is essentially instant.
+    // We give a long timeout only as a last resort for genuinely slow connections.
+    const timeout=hasCachedSession?5000:12000;
+    let session=null;
+    try{
+      const result=await Promise.race([
+        sb.auth.getSession(),
+        new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),timeout))
+      ]);
+      session=result.data?.session||null;
+    }catch(e){
+      if(e.message!=='session timeout')throw e;
+    }
+
+    if(session){
       currentUser=session.user;
       if(window.Sentry)Sentry.setUser({id:currentUser.id});
       const r=await loadUserProfile();
       if(r==='coming-soon')return;
       if(r!=='needs-college')await loadPuzzle();
+    }else{
+      // No session found — make sure auth screen is showing
+      if(hasCachedSession){
+        // Cached session existed but getSession() returned nothing
+        // (token expired or was revoked) — show auth screen now
+        hideLoading();buildAuthBg();showScreen('auth-screen');
+      }
+      // else auth screen is already showing from above
     }
-    if(event==='TOKEN_REFRESHED'&&session&&currentUser){
-      currentUser=session.user;
-    }
-    if(event==='SIGNED_OUT'){
-      currentUser=null;userProfile=null;
-      if(window.Sentry)Sentry.setUser(null);
-      hideLoading();buildAuthBg();showScreen('auth-screen');
-    }
-  });
+  }catch(err){
+    const isRealConnErr=err&&err.message&&(err.message.includes('fetch')||err.message.includes('network')||err.message.includes('Failed to')||err.message.includes('supabase')||err.message.includes('NetworkError'));
+    if(window.Sentry&&err.message!=='session timeout')Sentry.captureException(err);
+    if(err.message!=='session timeout')console.error('Boot error:',err);
+    // Only show auth screen if it isn't already showing
+    if(hasCachedSession){hideLoading();buildAuthBg();showScreen('auth-screen');}
+    if(isRealConnErr)setAuthError('Could not connect. Check internet and refresh.');
+  }
 }
+
 function buildAuthBg(){
   ['auth-bg-grid','college-bg-grid','coming-soon-bg-grid'].forEach(id=>{
     const bg=document.getElementById(id);
@@ -1144,7 +1161,7 @@ function closeClueList(e){if(!e||e.target===document.getElementById('clue-list-m
 function jumpToClueFromList(number,dir){const idx=allClues.findIndex(cl=>cl.number===number&&cl.dir===dir);if(idx!==-1)jumpToClueIndex(idx);closeClueList();}
 
 
-// boot() called by _loadSupabase() above
+boot();
 </script>
 </body>
 </html>
