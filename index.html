@@ -37,7 +37,7 @@
   })();
 </script>
 
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js" defer></script>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
   :root{--bg:#f7f4ef;--surface:#ffffff;--border:#d4cfc8;--text:#1a1a1a;--text-muted:#7a7570;--accent:#c8392b;--accent-light:#f5e6e4;--highlight:#fef3c7;--highlight-active:#fde68a;--correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--black:#1a1a1a;--font-display:'Playfair Display',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;--font-mono:'DM Mono',monospace;--cell-size:min(calc((100vw - 41px) / 15),40px);}
@@ -491,34 +491,29 @@ const SUPABASE_URL='https://ojxzzfjapjwpxitnruqa.supabase.co';
 const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeHp6ZmphcGp3cHhpdG5ydXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDQ5MDksImV4cCI6MjA4ODcyMDkwOX0.yTq0aXLd6L8Grjsc4IWAbJ3TTnIGOnJdM3ciFz7JJe4';
 let sb=null;
 
-// Load Supabase asynchronously so it never blocks page render on slow connections.
-// boot() is called once it loads. If CDN fails within 8s we show an error.
-(function(){
-  const script=document.createElement('script');
-  script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-  script.async=true;
-  script.onload=function(){
+// Load Supabase asynchronously — never blocks page render
+function _loadSupabase(){
+  var s=document.createElement('script');
+  s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload=function(){
     if(window.supabase&&window.supabase.createClient){
       sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{
-        auth:{
-          persistSession:true,
-          storageKey:'tmt-auth',
-          storage:window.localStorage,
-          autoRefreshToken:true,
-          detectSessionInUrl:true,
-        }
+        auth:{persistSession:true,storageKey:'tmt-auth',storage:window.localStorage,autoRefreshToken:true,detectSessionInUrl:true}
       });
     }
-    boot();
+    // Wait for lucide too if not ready
+    if(window.lucide){boot();}
+    else{document.querySelector('[defer]')
+      ?document.querySelector('script[src*="lucide"]').addEventListener('load',boot)
+      :boot();}
   };
-  script.onerror=function(){
-    // CDN failed — show error immediately rather than waiting for safety net
+  s.onerror=function(){
     document.getElementById('loading-spinner').style.display='none';
     document.getElementById('loading-stuck').style.display='block';
-    document.querySelector('#loading-stuck div').textContent='Could not load. Check your connection and tap to retry.';
   };
-  document.head.appendChild(script);
-})();
+  document.head.appendChild(s);
+}
+_loadSupabase();
 
 let PUZZLE=null,currentUser=null,userProfile=null;
 let YESTERDAY_PUZZLE=null,PUZZLE_INDEX=[];
@@ -550,13 +545,12 @@ function checkRateLimit(){
 }
 
 // ── LOADING SAFETY NET ──
-// Reduced to 7s. If boot hasn't completed by then, show the refresh button.
 const _bootTimer=setTimeout(()=>{
   if(document.getElementById('loading').style.display!=='none'){
     document.getElementById('loading-spinner').style.display='none';
     document.getElementById('loading-stuck').style.display='block';
   }
-},7000);
+},8000);
 function hideLoading(){clearTimeout(_bootTimer);document.getElementById('loading').style.display='none';}
 
 function getTodayString(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -567,7 +561,7 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 function initIcons(){if(window.lucide)lucide.createIcons();}
 
 // ── BOOT ──
-// Called by the async Supabase loader — sb is guaranteed to be set here.
+// Called once Supabase has loaded. sb is guaranteed to be set.
 async function boot(){
   if(!sb){
     document.getElementById('loading-spinner').style.display='none';
@@ -575,29 +569,24 @@ async function boot(){
     return;
   }
 
-  // getSession() can hang on iOS PWA cold starts if Supabase needs to refresh
-  // the token internally. We wrap it in a hard 4s timeout — if it doesn't
-  // resolve in time, we fall through to showing the auth screen.
-  // On subsequent opens (session cached), this resolves in <100ms.
+  // getSession() reads from localStorage — instant, no network needed.
+  // 5s timeout as a safety net only.
   let initialSession=null;
   try{
     const result=await Promise.race([
       sb.auth.getSession(),
-      new Promise((_,rej)=>setTimeout(()=>rej(new Error('boot timeout')),4000))
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('boot timeout')),5000))
     ]);
     initialSession=result?.data?.session||null;
   }catch(e){
-    // Either getSession() threw or timed out — treat as no session
     if(window.Sentry&&e.message!=='boot timeout')Sentry.captureException(e);
     initialSession=null;
   }
 
-  // Set up the auth state listener regardless of session outcome
   sb.auth.startAutoRefresh();
   setupAuthListener();
 
   if(initialSession){
-    // Session found — go straight to app, loading screen stays up until puzzle loads
     currentUser=initialSession.user;
     if(window.Sentry)Sentry.setUser({id:currentUser.id});
     try{
@@ -606,15 +595,13 @@ async function boot(){
       if(r!=='needs-college')await loadPuzzle();
     }catch(e){
       if(window.Sentry)Sentry.captureException(e);
-      // Profile/puzzle load failed — still get them into the app
-      hideLoading();showScreen('start-screen');
+      hideLoading();buildAuthBg();showScreen('auth-screen');
     }
   }else{
-    // No session or timeout — show auth screen immediately
     hideLoading();buildAuthBg();showScreen('auth-screen');
   }
 
-  // SW update check runs in the background — never blocks boot
+  // SW update check in background — never blocks boot
   if('serviceWorker' in navigator){
     navigator.serviceWorker.getRegistration().then(reg=>{
       if(!reg)return;
@@ -642,7 +629,6 @@ function setupAuthListener(){
       if(r!=='needs-college')await loadPuzzle();
     }
     if(event==='TOKEN_REFRESHED'&&session&&currentUser){
-      // Silently update the current user reference on token refresh
       currentUser=session.user;
     }
     if(event==='SIGNED_OUT'){
@@ -1158,7 +1144,7 @@ function closeClueList(e){if(!e||e.target===document.getElementById('clue-list-m
 function jumpToClueFromList(number,dir){const idx=allClues.findIndex(cl=>cl.number===number&&cl.dir===dir);if(idx!==-1)jumpToClueIndex(idx);closeClueList();}
 
 
-// boot() is called by the async Supabase script loader above
+// boot() called by _loadSupabase() above
 </script>
 </body>
 </html>
