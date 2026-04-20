@@ -41,8 +41,6 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
   :root{--bg:#f7f4ef;--surface:#ffffff;--border:#d4cfc8;--text:#1a1a1a;--text-muted:#7a7570;--accent:#c8392b;--accent-light:#f5e6e4;--highlight:#fef3c7;--highlight-active:#fde68a;--correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--black:#1a1a1a;--font-display:'Playfair Display',Georgia,serif;--font-body:'DM Sans',system-ui,sans-serif;--font-mono:'DM Mono',monospace;--cell-size:min(calc((100vw - 41px) / 15),40px);}
-  [data-theme="dark"]{--bg:#0f0f0f;--surface:#1c1c1e;--border:#3a3a3c;--text:#f5f5f0;--text-muted:#8e8e93;--accent:#ff6b5b;--accent-light:#2d1a18;--highlight:#2d2810;--highlight-active:#4a3f0a;--correct:#34d399;--correct-bg:#052e16;--wrong:#f87171;--wrong-bg:#2d0a0a;--black:#000;}
-  [data-theme="medical"]{--bg:#f0f7f4;--surface:#ffffff;--border:#b8d8cc;--text:#0f2d24;--text-muted:#5a8a78;--accent:#0d6e52;--accent-light:#e0f2ec;--highlight:#d1fae5;--highlight-active:#6ee7b7;--correct:#059669;--correct-bg:#d1fae5;--wrong:#dc2626;--wrong-bg:#fee2e2;--black:#0f2d24;}
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
   html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overscroll-behavior:none;}
   body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100svh;min-height:100dvh;display:flex;flex-direction:column;overflow:hidden;transition:background 0.3s,color 0.3s;overscroll-behavior:none;}
@@ -158,7 +156,6 @@
   .kb-key.wide{max-width:52px;font-size:12px;}
   .kb-key.del{max-width:52px;font-size:16px;}
   .kb-key:active,.kb-key.pressed{background:var(--border);transform:scale(0.88);box-shadow:none;}
-  [data-theme="dark"] .kb-key:active,[data-theme="dark"] .kb-key.pressed{background:#3a3a3c;}
   .loading-wrap{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:500;gap:16px;}
   .loading-logo{font-family:var(--font-display);font-size:32px;font-weight:900;color:var(--accent);}
   .loading-spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
@@ -169,11 +166,7 @@
   @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
   .modal-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px;}
   .modal-title{font-family:var(--font-display);font-size:20px;font-weight:700;margin-bottom:16px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px;}
-  .theme-options{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
-  .theme-opt{border:2px solid var(--border);border-radius:12px;padding:14px 10px;text-align:center;cursor:pointer;background:var(--bg);}
-  .theme-opt.selected{border-color:var(--accent);background:var(--accent-light);}
-  .theme-swatch{width:36px;height:36px;border-radius:50%;margin:0 auto 8px;}
-  .theme-name{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text);}
+
   .modal-close{width:100%;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;font-family:var(--font-body);-webkit-appearance:none;}
   .settings-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:16px 0 10px;}
   .settings-row{display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid var(--border);}
@@ -267,7 +260,7 @@
   .coming-soon-card-sub{font-size:13px;color:var(--text-muted);}
 </style>
 </head>
-<body data-theme="light">
+<body>
 
 <div class="loading-wrap" id="loading">
   <div class="loading-logo">TheMedTimes</div>
@@ -422,12 +415,6 @@
   <div class="modal">
     <div class="modal-handle"></div>
     <div class="modal-title"><span class="ic" data-lucide="settings" style="width:20px;height:20px;color:var(--accent)"></span>Settings</div>
-    <div class="settings-section-title">Theme</div>
-    <div class="theme-options">
-      <div class="theme-opt selected" onclick="setTheme('light')" id="opt-light"><div class="theme-swatch" style="background:linear-gradient(135deg,#f7f4ef,#c8392b)"></div><div class="theme-name">Classic</div></div>
-      <div class="theme-opt" onclick="setTheme('dark')" id="opt-dark"><div class="theme-swatch" style="background:linear-gradient(135deg,#0f0f0f,#ff6b5b)"></div><div class="theme-name">Dark</div></div>
-      <div class="theme-opt" onclick="setTheme('medical')" id="opt-medical"><div class="theme-swatch" style="background:linear-gradient(135deg,#f0f7f4,#0d6e52)"></div><div class="theme-name">Medical</div></div>
-    </div>
     <div class="settings-section-title">Gameplay</div>
     <div class="settings-row"><div class="settings-row-left"><div class="settings-row-label">Live Check</div><div class="settings-row-sub">Instantly marks correct / wrong letters</div></div><label class="toggle"><input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)" checked><span class="slider"></span></label></div>
     <div class="settings-section-title">Account</div>
@@ -499,11 +486,39 @@
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 const SUPABASE_URL='https://ojxzzfjapjwpxitnruqa.supabase.co';
 const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9qeHp6ZmphcGp3cHhpdG5ydXFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDQ5MDksImV4cCI6MjA4ODcyMDkwOX0.yTq0aXLd6L8Grjsc4IWAbJ3TTnIGOnJdM3ciFz7JJe4';
-const sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON):null;
+let sb=null;
+
+// Load Supabase asynchronously so it never blocks page render on slow connections.
+// boot() is called once it loads. If CDN fails within 8s we show an error.
+(function(){
+  const script=document.createElement('script');
+  script.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  script.async=true;
+  script.onload=function(){
+    if(window.supabase&&window.supabase.createClient){
+      sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON,{
+        auth:{
+          persistSession:true,
+          storageKey:'tmt-auth',
+          storage:window.localStorage,
+          autoRefreshToken:true,
+          detectSessionInUrl:true,
+        }
+      });
+    }
+    boot();
+  };
+  script.onerror=function(){
+    // CDN failed — show error immediately rather than waiting for safety net
+    document.getElementById('loading-spinner').style.display='none';
+    document.getElementById('loading-stuck').style.display='block';
+    document.querySelector('#loading-stuck div').textContent='Could not load. Check your connection and tap to retry.';
+  };
+  document.head.appendChild(script);
+})();
 
 let PUZZLE=null,currentUser=null,userProfile=null;
 let YESTERDAY_PUZZLE=null,PUZZLE_INDEX=[];
@@ -535,12 +550,13 @@ function checkRateLimit(){
 }
 
 // ── LOADING SAFETY NET ──
+// Reduced to 7s. If boot hasn't completed by then, show the refresh button.
 const _bootTimer=setTimeout(()=>{
   if(document.getElementById('loading').style.display!=='none'){
     document.getElementById('loading-spinner').style.display='none';
     document.getElementById('loading-stuck').style.display='block';
   }
-},10000);
+},7000);
 function hideLoading(){clearTimeout(_bootTimer);document.getElementById('loading').style.display='none';}
 
 function getTodayString(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
@@ -551,11 +567,57 @@ function formatTime(s){return`${Math.floor(s/60)}:${(s%60).toString().padStart(2
 function initIcons(){if(window.lucide)lucide.createIcons();}
 
 // ── BOOT ──
+// Called by the async Supabase loader — sb is guaranteed to be set here.
 async function boot(){
-  // SW update check — ensures PWA always loads latest version on open
+  if(!sb){
+    document.getElementById('loading-spinner').style.display='none';
+    document.getElementById('loading-stuck').style.display='block';
+    return;
+  }
+
+  // getSession() can hang on iOS PWA cold starts if Supabase needs to refresh
+  // the token internally. We wrap it in a hard 4s timeout — if it doesn't
+  // resolve in time, we fall through to showing the auth screen.
+  // On subsequent opens (session cached), this resolves in <100ms.
+  let initialSession=null;
+  try{
+    const result=await Promise.race([
+      sb.auth.getSession(),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('boot timeout')),4000))
+    ]);
+    initialSession=result?.data?.session||null;
+  }catch(e){
+    // Either getSession() threw or timed out — treat as no session
+    if(window.Sentry&&e.message!=='boot timeout')Sentry.captureException(e);
+    initialSession=null;
+  }
+
+  // Set up the auth state listener regardless of session outcome
+  sb.auth.startAutoRefresh();
+  setupAuthListener();
+
+  if(initialSession){
+    // Session found — go straight to app, loading screen stays up until puzzle loads
+    currentUser=initialSession.user;
+    if(window.Sentry)Sentry.setUser({id:currentUser.id});
+    try{
+      const r=await loadUserProfile();
+      if(r==='coming-soon')return;
+      if(r!=='needs-college')await loadPuzzle();
+    }catch(e){
+      if(window.Sentry)Sentry.captureException(e);
+      // Profile/puzzle load failed — still get them into the app
+      hideLoading();showScreen('start-screen');
+    }
+  }else{
+    // No session or timeout — show auth screen immediately
+    hideLoading();buildAuthBg();showScreen('auth-screen');
+  }
+
+  // SW update check runs in the background — never blocks boot
   if('serviceWorker' in navigator){
-    const reg=await navigator.serviceWorker.getRegistration();
-    if(reg){
+    navigator.serviceWorker.getRegistration().then(reg=>{
+      if(!reg)return;
       reg.addEventListener('updatefound',()=>{
         const nw=reg.installing;
         nw.addEventListener('statechange',()=>{
@@ -566,47 +628,30 @@ async function boot(){
         });
       });
       reg.update().catch(()=>{});
-    }
+    }).catch(()=>{});
   }
-  if(!sb){hideLoading();buildAuthBg();showScreen('auth-screen');setAuthError('Connection issue. Please refresh.');return;}
-  try{
-    sb.auth.startAutoRefresh();
-    sb.auth.onAuthStateChange(async(event,session)=>{
-      if(event==='SIGNED_IN'&&session&&!currentUser){
-        currentUser=session.user;
-        if(window.Sentry)Sentry.setUser({id:currentUser.id});
-        const r=await loadUserProfile();
-        if(r==='coming-soon')return;
-        if(r!=='needs-college')await loadPuzzle();
-      }
-      if(event==='SIGNED_OUT'){
-        currentUser=null;userProfile=null;
-        if(window.Sentry)Sentry.setUser(null);
-        hideLoading();buildAuthBg();showScreen('auth-screen');
-      }
-    });
-    const{data:{session}}=await Promise.race([
-      sb.auth.getSession(),
-      new Promise((_,rej)=>setTimeout(()=>rej(new Error('session timeout')),8000))
-    ]);
-    if(session){
+}
+
+function setupAuthListener(){
+  sb.auth.onAuthStateChange(async(event,session)=>{
+    if(event==='SIGNED_IN'&&session&&!currentUser){
       currentUser=session.user;
       if(window.Sentry)Sentry.setUser({id:currentUser.id});
       const r=await loadUserProfile();
       if(r==='coming-soon')return;
       if(r!=='needs-college')await loadPuzzle();
-    }else{hideLoading();buildAuthBg();showScreen('auth-screen');}
-  }catch(err){
-    // Only show user-facing error for genuine network/Supabase failures.
-    // Third-party script errors (e.g. Sentry CDN) should never surface to the user.
-    const isRealConnErr=err&&err.message&&(err.message.includes('fetch')||err.message.includes('network')||err.message.includes('Failed to')||err.message.includes('supabase')||err.message.includes('NetworkError'));
-    if(window.Sentry&&err.message!=='session timeout')Sentry.captureException(err);
-    if(err.message!=='session timeout')console.error('Boot error:',err);
-    hideLoading();buildAuthBg();showScreen('auth-screen');
-    if(isRealConnErr)setAuthError('Could not connect. Check internet and refresh.');
-  }
+    }
+    if(event==='TOKEN_REFRESHED'&&session&&currentUser){
+      // Silently update the current user reference on token refresh
+      currentUser=session.user;
+    }
+    if(event==='SIGNED_OUT'){
+      currentUser=null;userProfile=null;
+      if(window.Sentry)Sentry.setUser(null);
+      hideLoading();buildAuthBg();showScreen('auth-screen');
+    }
+  });
 }
-
 function buildAuthBg(){
   ['auth-bg-grid','college-bg-grid','coming-soon-bg-grid'].forEach(id=>{
     const bg=document.getElementById(id);
@@ -1088,8 +1133,7 @@ function showSuccess(){
 }
 
 function spawnConfetti(){
-  const theme=document.body.dataset.theme;
-  const colors=theme==='dark'?['#ff6b5b','#fde68a','#34d399','#60a5fa','#c084fc']:theme==='medical'?['#0d6e52','#34d399','#6ee7b7','#059669','#d1fae5']:['#c8392b','#f59e0b','#16a34a','#2563eb','#9333ea'];
+  const colors=['#c8392b','#f59e0b','#16a34a','#2563eb','#9333ea'];
   for(let i=0;i<60;i++)setTimeout(()=>{const el=document.createElement('div');el.className='confetti-piece';el.style.left=Math.random()*100+'vw';el.style.top='-10px';el.style.background=colors[Math.floor(Math.random()*colors.length)];el.style.animationDuration=(1.5+Math.random()*2)+'s';el.style.animationDelay=Math.random()*0.5+'s';document.body.appendChild(el);setTimeout(()=>el.remove(),4000);},i*30);
 }
 
@@ -1113,10 +1157,8 @@ function openClueList(){
 function closeClueList(e){if(!e||e.target===document.getElementById('clue-list-modal'))document.getElementById('clue-list-modal').classList.remove('open');}
 function jumpToClueFromList(number,dir){const idx=allClues.findIndex(cl=>cl.number===number&&cl.dir===dir);if(idx!==-1)jumpToClueIndex(idx);closeClueList();}
 
-// ── THEME ──
-function setTheme(t){document.body.dataset.theme=t;['light','dark','medical'].forEach(n=>document.getElementById(`opt-${n}`).classList.toggle('selected',n===t));}
 
-boot();
+// boot() is called by the async Supabase script loader above
 </script>
 </body>
 </html>
