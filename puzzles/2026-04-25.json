@@ -1,0 +1,416 @@
+{
+  "date": "2026-04-25",
+  "topic": "GIT Pharmacology",
+  "next_topic": "TBD",
+  "size": 15,
+  "solution": [
+    [
+      "R",
+      "E",
+      "C",
+      "T",
+      "A",
+      "L",
+      "#",
+      "#",
+      "F",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "P"
+    ],
+    [
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "A"
+    ],
+    [
+      "C",
+      "I",
+      "T",
+      "R",
+      "A",
+      "T",
+      "E",
+      "#",
+      "S",
+      "U",
+      "P",
+      "E",
+      "R",
+      "#",
+      "R"
+    ],
+    [
+      "H",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "N",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "I"
+    ],
+    [
+      "E",
+      "#",
+      "#",
+      "Q",
+      "#",
+      "#",
+      "K",
+      "#",
+      "P",
+      "#",
+      "F",
+      "A",
+      "L",
+      "S",
+      "E"
+    ],
+    [
+      "L",
+      "#",
+      "#",
+      "T",
+      "R",
+      "U",
+      "E",
+      "#",
+      "R",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "T"
+    ],
+    [
+      "L",
+      "#",
+      "H",
+      "#",
+      "E",
+      "#",
+      "P",
+      "N",
+      "E",
+      "U",
+      "M",
+      "O",
+      "N",
+      "I",
+      "A"
+    ],
+    [
+      "E",
+      "#",
+      "Y",
+      "#",
+      "B",
+      "#",
+      "H",
+      "#",
+      "P",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "L"
+    ],
+    [
+      "S",
+      "C",
+      "O",
+      "P",
+      "O",
+      "L",
+      "A",
+      "M",
+      "I",
+      "N",
+      "E",
+      "#",
+      "W",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "S",
+      "#",
+      "U",
+      "#",
+      "L",
+      "#",
+      "T",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "C",
+      "#",
+      "N",
+      "#",
+      "I",
+      "#",
+      "A",
+      "#",
+      "#",
+      "C",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "I",
+      "#",
+      "D",
+      "#",
+      "N",
+      "#",
+      "N",
+      "#",
+      "#",
+      "I",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "Z",
+      "I",
+      "N",
+      "C",
+      "#",
+      "#",
+      "A",
+      "N",
+      "T",
+      "I",
+      "#",
+      "D",
+      "O",
+      "S",
+      "S"
+    ],
+    [
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "S",
+      "#",
+      "#",
+      "#",
+      "#",
+      "I",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "M",
+      "E",
+      "T",
+      "I",
+      "C",
+      "S",
+      "#",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 6,
+        "clue": "Bisacodyl is usually given via __ route"
+      },
+      {
+        "number": 5,
+        "row": 2,
+        "col": 0,
+        "len": 7,
+        "clue": "Sodium __ can be used in the place of sodium bicarbonate"
+      },
+      {
+        "number": 7,
+        "row": 2,
+        "col": 8,
+        "len": 5,
+        "clue": "__ ORS contains added amino acids"
+      },
+      {
+        "number": 9,
+        "row": 4,
+        "col": 10,
+        "len": 5,
+        "clue": "T or F - The CTZ is protected by the BBB"
+      },
+      {
+        "number": 10,
+        "row": 5,
+        "col": 3,
+        "len": 4,
+        "clue": "T or F - Domperidone is a prokinetic"
+      },
+      {
+        "number": 13,
+        "row": 6,
+        "col": 6,
+        "len": 9,
+        "clue": "Aspiration of liquid paraffin may cause lipid ___"
+      },
+      {
+        "number": 15,
+        "row": 8,
+        "col": 0,
+        "len": 11,
+        "clue": "Another name for hyoscine"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 0,
+        "len": 4,
+        "clue": "Young children are given _ supplementation along with ORS"
+      },
+      {
+        "number": 18,
+        "row": 12,
+        "col": 6,
+        "len": 4,
+        "clue": "Cimetidine can cause __-androgenic effects"
+      },
+      {
+        "number": 19,
+        "row": 12,
+        "col": 11,
+        "len": 4,
+        "clue": "Stool Softener - Anionic Detergent - Short form?"
+      },
+      {
+        "number": 20,
+        "row": 14,
+        "col": 6,
+        "len": 7,
+        "clue": "Drugs that produce vomiting are called"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 9,
+        "clue": "Sodium Potassium Tartarate - ___ Salt"
+      },
+      {
+        "number": 2,
+        "row": 0,
+        "col": 8,
+        "len": 13,
+        "clue": "Neurokinin receptor antagonist given intravenously"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 14,
+        "len": 8,
+        "clue": "PPIs function by accumulating in __ cells"
+      },
+      {
+        "number": 4,
+        "row": 1,
+        "col": 12,
+        "len": 4,
+        "clue": "Most PPIs are given via which route"
+      },
+      {
+        "number": 6,
+        "row": 2,
+        "col": 6,
+        "len": 13,
+        "clue": "Thiorphan is a selective inhibitor of __"
+      },
+      {
+        "number": 8,
+        "row": 4,
+        "col": 3,
+        "len": 2,
+        "clue": "Dolasetron may prolong __ interval"
+      },
+      {
+        "number": 11,
+        "row": 5,
+        "col": 4,
+        "len": 7,
+        "clue": "Discontinuing the PPI may result in __ hyperacidity"
+      },
+      {
+        "number": 12,
+        "row": 6,
+        "col": 2,
+        "len": 8,
+        "clue": "Labyrinthine sedative useful in motion sickness"
+      },
+      {
+        "number": 14,
+        "row": 6,
+        "col": 12,
+        "len": 3,
+        "clue": "Osmolarity of _ ORS solution is 245 mOsm/L (old or new)"
+      },
+      {
+        "number": 16,
+        "row": 9,
+        "col": 11,
+        "len": 6,
+        "clue": "PPIs require __ environment for activation"
+      }
+    ]
+  }
+}
