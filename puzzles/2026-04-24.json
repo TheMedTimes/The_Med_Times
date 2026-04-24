@@ -1,0 +1,402 @@
+{
+  "date": "2026-04-24",
+  "topic": "Viral Hepatitis",
+  "next_topic": "GIT Pharmacology",
+  "size": 15,
+  "solution": [
+    [
+      "F",
+      "A",
+      "T",
+      "T",
+      "Y",
+      "#",
+      "H",
+      "B",
+      "X",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "W",
+      "#",
+      "#",
+      "#",
+      "B",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "W"
+    ],
+    [
+      "#",
+      "N",
+      "O",
+      "N",
+      "E",
+      "N",
+      "V",
+      "E",
+      "L",
+      "O",
+      "P",
+      "E",
+      "D",
+      "#",
+      "A"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "I",
+      "#",
+      "R",
+      "#",
+      "N",
+      "#",
+      "T"
+    ],
+    [
+      "#",
+      "S",
+      "#",
+      "#",
+      "#",
+      "#",
+      "H",
+      "C",
+      "V",
+      "#",
+      "E",
+      "#",
+      "A",
+      "G",
+      "E"
+    ],
+    [
+      "#",
+      "I",
+      "G",
+      "M",
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "G",
+      "#",
+      "#",
+      "#",
+      "R"
+    ],
+    [
+      "#",
+      "N",
+      "#",
+      "#",
+      "#",
+      "#",
+      "C",
+      "H",
+      "R",
+      "O",
+      "N",
+      "I",
+      "C",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "G",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "B",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "L",
+      "#",
+      "#",
+      "F",
+      "A",
+      "L",
+      "S",
+      "E",
+      "#",
+      "N",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "D",
+      "E",
+      "L",
+      "T",
+      "A",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#",
+      "T",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "I",
+      "#",
+      "#",
+      "G",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "L",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "G",
+      "R",
+      "O",
+      "U",
+      "N",
+      "D",
+      "G",
+      "L",
+      "A",
+      "S",
+      "S",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 5,
+        "clue": "HCV is often associated with __ change"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 6,
+        "len": 3,
+        "clue": "_ protein in HBV acts as a transcriptional transactivator"
+      },
+      {
+        "number": 5,
+        "row": 2,
+        "col": 1,
+        "len": 12,
+        "clue": "Is HAV enveloped or nonenveloped?"
+      },
+      {
+        "number": 10,
+        "row": 4,
+        "col": 6,
+        "len": 3,
+        "clue": "Mainly HBV and __ cause chronic hepatitis"
+      },
+      {
+        "number": 11,
+        "row": 4,
+        "col": 12,
+        "len": 3,
+        "clue": "HBV risk of chronic infection is inversely related to _"
+      },
+      {
+        "number": 12,
+        "row": 5,
+        "col": 1,
+        "len": 3,
+        "clue": "Immunoglobulin that appears in blood against HAV (first)"
+      },
+      {
+        "number": 13,
+        "row": 6,
+        "col": 6,
+        "len": 7,
+        "clue": "HCV causes __ liver disease (chronic or acute)"
+      },
+      {
+        "number": 15,
+        "row": 8,
+        "col": 4,
+        "len": 5,
+        "clue": "T or F - HAV causes chronic hepatitis"
+      },
+      {
+        "number": 16,
+        "row": 9,
+        "col": 0,
+        "len": 5,
+        "clue": "HDV also called __ agent"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 1,
+        "len": 11,
+        "clue": "In chronic HBV, __ appearance of hepatocytes is a hallmark"
+      }
+    ],
+    "down": [
+      {
+        "number": 2,
+        "row": 0,
+        "col": 2,
+        "len": 3,
+        "clue": "Chronic HDV has __ phases (how many?)"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 6,
+        "len": 3,
+        "clue": "HDV is dependent on __ for its life cycle"
+      },
+      {
+        "number": 4,
+        "row": 1,
+        "col": 14,
+        "len": 5,
+        "clue": "HEV is a __-borne infection"
+      },
+      {
+        "number": 6,
+        "row": 2,
+        "col": 8,
+        "len": 5,
+        "clue": "Hepatotropic viruses have a specific tropism for the _"
+      },
+      {
+        "number": 7,
+        "row": 2,
+        "col": 10,
+        "len": 8,
+        "clue": "Characteristic to HEV is high mortality in __ women"
+      },
+      {
+        "number": 8,
+        "row": 2,
+        "col": 12,
+        "len": 3,
+        "clue": "Is HBV nuclear material DNA or RNA?"
+      },
+      {
+        "number": 9,
+        "row": 4,
+        "col": 1,
+        "len": 6,
+        "clue": "HCV is an enveloped, __-stranded RNA virus"
+      },
+      {
+        "number": 14,
+        "row": 6,
+        "col": 7,
+        "len": 5,
+        "clue": "HBV serum marker appearing before onset of symptoms"
+      },
+      {
+        "number": 15,
+        "row": 8,
+        "col": 4,
+        "len": 7,
+        "clue": "HEV causes acute liver __ in pregnant women"
+      }
+    ]
+  }
+}
