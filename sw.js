@@ -1,4 +1,4 @@
-const CACHE_NAME = 'themedtimes-v21';
+const CACHE_NAME = 'themedtimes-v22';
 
 // App shell — always cached locally
 const ASSETS = [
