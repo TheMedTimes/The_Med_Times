@@ -245,6 +245,19 @@
   .clue-list-scroll{max-height:65vh;overflow-y:auto;padding-bottom:4px;}
   #college-screen{align-items:center;justify-content:center;padding:32px 24px 48px;min-height:100svh;min-height:100dvh;position:relative;overflow-y:auto;}
   .consent-row{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text-muted);margin:8px 0 12px;}
+  .college-search-wrap{position:relative;width:100%;margin-bottom:12px;}
+  .college-search-input{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);font-size:15px;font-family:var(--font-body);text-align:left;display:block;}
+  .college-search-input::placeholder{color:var(--text-muted);}
+  .college-search-input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(200,57,43,0.18);}
+  .college-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface);border:1.5px solid var(--accent);border-radius:12px;max-height:220px;overflow-y:auto;z-index:50;box-shadow:0 8px 24px rgba(0,0,0,0.12);display:none;}
+  .college-dropdown.open{display:block;}
+  .college-option{padding:11px 14px;font-size:14px;color:var(--text);cursor:pointer;border-bottom:1px solid var(--border);line-height:1.3;}
+  .college-option:last-child{border-bottom:none;}
+  .college-option:active,.college-option.highlighted{background:var(--accent-light);color:var(--accent);}
+  .college-option .college-short{font-size:11px;color:var(--text-muted);margin-top:2px;}
+  .college-selected-pill{display:none;align-items:center;gap:8px;background:var(--accent-light);border:1px solid var(--accent);border-radius:10px;padding:8px 12px;margin-bottom:12px;font-size:13px;color:var(--accent);font-weight:600;}
+  .college-selected-pill.show{display:flex;}
+  .college-pill-clear{background:none;border:none;color:var(--accent);cursor:pointer;font-size:16px;margin-left:auto;padding:0;line-height:1;}
   .consent-row input{margin-top:0;}
   .year-section-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--text-muted);margin:4px 0 8px;text-align:left;width:100%;}
   #coming-soon-screen{align-items:center;justify-content:center;padding:32px 24px 48px;min-height:100svh;min-height:100dvh;position:relative;overflow-y:auto;}
@@ -297,7 +310,16 @@
     <div class="auth-card">
       <div class="auth-mode-title">About You</div>
       <div class="auth-card-sub">This helps you appear correctly on the leaderboard</div>
-      <input class="auth-input" type="text" id="college-input" placeholder="College (e.g. BJMC, KEM, BAVMC)" style="text-transform:uppercase;" oninput="this.value=this.value.toUpperCase()">
+      <!-- College searchable picker -->
+      <div class="college-search-wrap" id="college-search-wrap">
+        <input class="college-search-input" type="text" id="college-search-input" placeholder="Search your college…" autocomplete="off" oninput="filterColleges(this.value)" onfocus="openCollegeDropdown()" />
+        <div class="college-dropdown" id="college-dropdown"></div>
+      </div>
+      <div class="college-selected-pill" id="college-selected-pill">
+        <span id="college-pill-text">—</span>
+        <button class="college-pill-clear" onclick="clearCollegeSelection()" type="button">✕</button>
+      </div>
+      <input type="hidden" id="college-input" />
       <div class="year-section-label">Your Year</div>
       <select class="auth-select" id="year-input">
         <option value="">— Select your year —</option>
@@ -337,7 +359,10 @@
   <div class="start-bg-grid" id="start-bg-grid"></div>
   <div class="start-topbar">
     <button class="start-icon-btn hidden" id="archive-btn" onclick="openArchiveModal()" title="Practice puzzles"><span class="ic" data-lucide="book-open" style="width:20px;height:20px;"></span></button>
-    <button class="start-icon-btn" onclick="openSettingsModal()" title="Settings"><span class="ic" data-lucide="settings" style="width:20px;height:20px;"></span></button>
+    <div style="display:flex;gap:8px;">
+      <button class="start-icon-btn" onclick="location.reload()" title="Refresh"><span class="ic" data-lucide="refresh-cw" style="width:20px;height:20px;"></span></button>
+      <button class="start-icon-btn" onclick="openSettingsModal()" title="Settings"><span class="ic" data-lucide="settings" style="width:20px;height:20px;"></span></button>
+    </div>
   </div>
   <div class="start-content">
     <div class="start-badge">Daily Puzzle</div>
@@ -358,7 +383,10 @@
 <div id="no-puzzle-screen" class="screen">
   <div class="start-topbar">
     <button class="start-icon-btn hidden" id="no-puzzle-archive-btn" onclick="openArchiveModal()" title="Practice puzzles"><span class="ic" data-lucide="book-open" style="width:20px;height:20px;"></span></button>
-    <button class="start-icon-btn" onclick="openSettingsModal()" title="Settings"><span class="ic" data-lucide="settings" style="width:20px;height:20px;"></span></button>
+    <div style="display:flex;gap:8px;">
+      <button class="start-icon-btn" onclick="location.reload()" title="Refresh"><span class="ic" data-lucide="refresh-cw" style="width:20px;height:20px;"></span></button>
+      <button class="start-icon-btn" onclick="openSettingsModal()" title="Settings"><span class="ic" data-lucide="settings" style="width:20px;height:20px;"></span></button>
+    </div>
   </div>
   <div class="no-puzzle-inner">
     <div class="no-puzzle-icon"><span class="ic" data-lucide="stethoscope" style="width:64px;height:64px;"></span></div>
@@ -422,7 +450,14 @@
     <div class="settings-row" style="border-bottom:none;"><div class="settings-row-left"><div class="settings-row-label">College</div><div class="settings-row-value" id="settings-college-val">—</div></div><button class="settings-edit-btn" onclick="openEditCollege()">Change</button></div>
     <button class="settings-signout" onclick="confirmSignOut()"><span class="ic" data-lucide="log-out" style="width:16px;height:16px;"></span>Sign out</button>
     <button class="settings-delete" onclick="confirmDeleteAccount()"><span class="ic" data-lucide="trash-2" style="width:16px;height:16px;"></span>Delete my account</button>
-    <div class="settings-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a></div>
+    <div class="settings-section-title" style="margin-top:20px;">About</div>
+    <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--text-muted);line-height:1.75;">
+      <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:6px;">TheMedTimes</div>
+      Hello there! TheMedTimes is a daily crossword website built for MBBS students — a new medical puzzle every day to make studying a little more fun.<br><br>
+      Created by a simple 2nd year MBBS student who wanted to do something different.<br><br>
+      <span style="font-size:11px;color:var(--text-muted);font-weight:600;letter-spacing:0.5px;">Version v21</span>
+    </div>
+    <div class="settings-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a><a href="mailto:themedicalpuzzler@gmail.com">Contact</a></div>
     <button class="modal-close" style="margin-top:12px;" onclick="closeSettingsModal()">Done</button>
   </div>
 </div>
@@ -438,7 +473,15 @@
 
 <div class="modal-overlay" id="edit-college-modal" onclick="closeEditCollege(event)">
   <div class="modal"><div class="modal-handle"></div><div class="modal-title">Change College</div>
-    <input class="auth-input" type="text" id="edit-college-input" placeholder="e.g. BJMC, KEM, BAVMC" style="text-transform:uppercase;margin-bottom:8px;" oninput="this.value=this.value.toUpperCase()">
+    <div class="college-search-wrap" id="edit-college-search-wrap">
+      <input class="college-search-input" type="text" id="edit-college-search-input" placeholder="Search your college…" autocomplete="off" oninput="filterEditColleges(this.value)" onfocus="openEditCollegeDropdown()" />
+      <div class="college-dropdown" id="edit-college-dropdown"></div>
+    </div>
+    <div class="college-selected-pill" id="edit-college-selected-pill">
+      <span id="edit-college-pill-text">—</span>
+      <button class="college-pill-clear" onclick="clearEditCollegeSelection()" type="button">✕</button>
+    </div>
+    <input type="hidden" id="edit-college-input" />
     <div class="auth-error" id="edit-college-error"></div>
     <button class="modal-close" onclick="saveEditCollege()">Save</button>
     <button class="modal-close" style="background:none;border:1.5px solid var(--border);color:var(--text);margin-top:10px;" onclick="closeEditCollege()">Cancel</button>
@@ -750,10 +793,10 @@ async function deleteAccount(){
 
 // ── COLLEGE PROMPT ──
 async function saveCollegePrompt(){
-  const college=document.getElementById('college-input').value.trim().toUpperCase();
+  const college=document.getElementById('college-input').value.trim();
   const year=document.getElementById('year-input').value;
   const consent=document.getElementById('lb-consent').checked;
-  if(!college){document.getElementById('college-error').textContent='Please enter your college abbreviation';return;}
+  if(!college){document.getElementById('college-error').textContent='Please select your college from the list';return;}
   if(!year){document.getElementById('college-error').textContent='Please select your year';return;}
   document.getElementById('college-error').textContent='';
   const{error}=await sb.from('profiles').update({college,year,show_on_leaderboard:consent}).eq('id',currentUser.id);
@@ -785,11 +828,51 @@ async function saveEditYear(){
     if(!is2ndYear(val)){showComingSoon(val);}else{await loadPuzzle();}
   });
 }
-function openEditCollege(){document.getElementById('edit-college-input').value=userProfile?.college||'';document.getElementById('edit-college-error').textContent='';document.getElementById('edit-college-modal').classList.add('open');}
+function openEditCollege(){
+  document.getElementById('edit-college-error').textContent='';
+  document.getElementById('edit-college-input').value='';
+  document.getElementById('edit-college-search-input').value='';
+  document.getElementById('edit-college-dropdown').classList.remove('open');
+  // Pre-select current college if it matches a known one
+  const cur=userProfile?.college||'';
+  const match=COLLEGE_LIST.find(c=>c.short===cur);
+  if(match&&cur){
+    document.getElementById('edit-college-input').value=match.short;
+    document.getElementById('edit-college-pill-text').textContent=match.name==='Other'?'Other (not listed)':match.name;
+    document.getElementById('edit-college-selected-pill').classList.add('show');
+    document.getElementById('edit-college-search-wrap').style.display='none';
+  } else {
+    document.getElementById('edit-college-selected-pill').classList.remove('show');
+    document.getElementById('edit-college-search-wrap').style.display='block';
+  }
+  document.getElementById('edit-college-modal').classList.add('open');
+}
 function closeEditCollege(e){if(!e||e.target===document.getElementById('edit-college-modal'))document.getElementById('edit-college-modal').classList.remove('open');}
+function filterEditColleges(query){
+  const dropdown=document.getElementById('edit-college-dropdown');
+  const q=query.trim().toLowerCase();
+  const filtered=q.length===0?COLLEGE_LIST:COLLEGE_LIST.filter(c=>c.name.toLowerCase().includes(q)||c.short.toLowerCase().includes(q));
+  dropdown.innerHTML=filtered.length===0?'<div class="college-option" style="color:var(--text-muted);">No colleges found</div>':filtered.map(c=>`<div class="college-option" onmousedown="selectEditCollege('${c.name.replace(/'/g,"\\'")}','${c.short.replace(/'/g,"\\'")}')"><div>${c.name}</div>${c.short!==c.name?`<div class="college-short">${c.short}</div>`:''}</div>`).join('');
+  dropdown.classList.add('open');
+}
+function openEditCollegeDropdown(){filterEditColleges(document.getElementById('edit-college-search-input').value);}
+function selectEditCollege(name,short){
+  document.getElementById('edit-college-input').value=short;
+  document.getElementById('edit-college-search-input').value='';
+  document.getElementById('edit-college-dropdown').classList.remove('open');
+  document.getElementById('edit-college-pill-text').textContent=name==='Other'?'Other (not listed)':name;
+  document.getElementById('edit-college-selected-pill').classList.add('show');
+  document.getElementById('edit-college-search-wrap').style.display='none';
+}
+function clearEditCollegeSelection(){
+  document.getElementById('edit-college-input').value='';
+  document.getElementById('edit-college-selected-pill').classList.remove('show');
+  document.getElementById('edit-college-search-wrap').style.display='block';
+  setTimeout(()=>document.getElementById('edit-college-search-input').focus(),50);
+}
 async function saveEditCollege(){
-  const val=document.getElementById('edit-college-input').value.trim().toUpperCase();
-  if(!val){document.getElementById('edit-college-error').textContent='Please enter your college';return;}
+  const val=document.getElementById('edit-college-input').value.trim();
+  if(!val){document.getElementById('edit-college-error').textContent='Please select your college from the list';return;}
   showConfirm('Change College',`Set your college to "${val}"?`,async()=>{
     const{error}=await sb.from('profiles').update({college:val}).eq('id',currentUser.id);
     if(error){document.getElementById('edit-college-error').textContent='Something went wrong';return;}
@@ -828,20 +911,28 @@ async function openLeaderboard(){
   document.getElementById('lb-content').innerHTML='<div class="lb-loading">Loading...</div>';
   document.getElementById('lb-your-rank').style.display='none';
   const rows=await fetchLeaderboard();
-  if(!rows.length){document.getElementById('lb-content').innerHTML='<div class="lb-empty">No completions yet today — be the first!</div>';return;}
-  let myRank=null;
-  const html=rows.map((r,i)=>{
-    const isMe=r.user_id===currentUser?.id;if(isMe)myRank=i+1;
-    const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
-    const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
-    const prof=Array.isArray(r.profiles)?r.profiles[0]:r.profiles;
-    const show=prof?.show_on_leaderboard!==false;
-    const name=show?(prof?.username||'Anonymous'):'Anonymous';
-    const college=show&&prof?.college?`<span class="lb-college"> · ${prof.college}</span>`:'';
-    return`<div class="lb-row${isMe?' me':''}"><div class="lb-rank ${rc}">${medal}</div><div class="lb-name">${name}${isMe?' (you)':''}${college}</div><div class="lb-time">${formatTime(r.time_seconds)}</div></div>`;
-  }).join('');
-  document.getElementById('lb-content').innerHTML=`<div class="lb-list">${html}</div>`;
-  if(myRank){document.getElementById('lb-your-rank').style.display='block';document.getElementById('lb-rank-val').textContent=`#${myRank} today`;}
+  // Split: visible rows (show_on_leaderboard=true) and check if current user opted out
+  const visibleRows=rows.filter(r=>{const prof=Array.isArray(r.profiles)?r.profiles[0]:r.profiles;return prof?.show_on_leaderboard!==false;});
+  const myFullRow=rows.find(r=>r.user_id===currentUser?.id);
+  const iOptedOut=myFullRow&&(Array.isArray(myFullRow.profiles)?myFullRow.profiles[0]:myFullRow.profiles)?.show_on_leaderboard===false;
+  if(!visibleRows.length&&!myFullRow){document.getElementById('lb-content').innerHTML='<div class="lb-empty">No completions yet today — be the first!</div>';return;}
+  if(!visibleRows.length){document.getElementById('lb-content').innerHTML='<div class="lb-empty">No public completions yet today.</div>';}
+  else{
+    let myRank=null;
+    const html=visibleRows.map((r,i)=>{
+      const isMe=r.user_id===currentUser?.id;if(isMe)myRank=i+1;
+      const rc=i===0?'gold':i===1?'silver':i===2?'bronze':'';
+      const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':`${i+1}`;
+      const prof=Array.isArray(r.profiles)?r.profiles[0]:r.profiles;
+      const name=prof?.username||'Anonymous';
+      const college=prof?.college?`<span class="lb-college"> · ${prof.college}</span>`:'';
+      return`<div class="lb-row${isMe?' me':''}"><div class="lb-rank ${rc}">${medal}</div><div class="lb-name">${name}${isMe?' (you)':''}${college}</div><div class="lb-time">${formatTime(r.time_seconds)}</div></div>`;
+    }).join('');
+    document.getElementById('lb-content').innerHTML=`<div class="lb-list">${html}</div>`;
+    if(myRank){document.getElementById('lb-your-rank').style.display='block';document.getElementById('lb-rank-val').textContent=`#${myRank} today`;}
+    else if(iOptedOut){document.getElementById('lb-your-rank').style.display='block';document.getElementById('lb-rank-val').textContent='No rank available (leaderboard hidden in settings)';}
+    else if(myFullRow){document.getElementById('lb-your-rank').style.display='block';document.getElementById('lb-rank-val').textContent=`#${visibleRows.findIndex(r=>r.user_id===currentUser?.id)+1} today`;}
+  }
 }
 function closeLbModal(e){if(!e||e.target===document.getElementById('lb-modal'))document.getElementById('lb-modal').classList.remove('open');}
 function openLeaderboardFromSuccess(){document.getElementById('success-overlay').classList.remove('open');openLeaderboard();}
@@ -1068,7 +1159,9 @@ function retreatSelection(){
 // ── CHECK / REVEAL ──
 function checkWord(){getCurrentWordCells().forEach(([r,c])=>{if(!userGrid[r][c])return;const cell=document.getElementById(`cell-${r}-${c}`);cell.classList.remove('correct','wrong');const ok=PUZZLE.solution[r][c]===userGrid[r][c];cell.classList.add(ok?'correct':'wrong');if(ok)completedCells.add(`${r},${c}`);});saveProgress();}
 function revealLetter(){
-  if(selectedRow===-1)return;const sol=PUZZLE.solution[selectedRow][selectedCol];if(sol==='#')return;
+  if(selectedRow===-1)return;
+  if(puzzleAlreadyCompleted&&!archiveMode)return;
+  const sol=PUZZLE.solution[selectedRow][selectedCol];if(sol==='#')return;
   usedReveal=true;
   if(!started&&!archiveMode)startTimer();else if(!started)started=true;
   userGrid[selectedRow][selectedCol]=sol;
@@ -1091,7 +1184,9 @@ function toggleInstantCheck(val){
 
 // ── COMPLETION ──
 function checkCompletion(){
-  if(completionHandled)return;const S=PUZZLE.size;
+  if(completionHandled)return;
+  if(puzzleAlreadyCompleted&&!archiveMode)return;
+  const S=PUZZLE.size;
   for(let r=0;r<S;r++)for(let c=0;c<S;c++){if(PUZZLE.solution[r][c]==='#')continue;if(userGrid[r][c]!==PUZZLE.solution[r][c])return;}
   completionHandled=true;stopTimer();
   if(archiveMode){showSuccess();return;}
@@ -1099,8 +1194,11 @@ function checkCompletion(){
   showSuccess();
   saveCompletion(seconds,usedReveal).then(async()=>{
     const rows=await fetchLeaderboard();
-    const myRank=rows.findIndex(r=>r.user_id===currentUser?.id)+1;
-    if(myRank>0)document.getElementById('final-rank').textContent=`#${myRank} on today's leaderboard`;
+    const visibleRows=rows.filter(r=>{const prof=Array.isArray(r.profiles)?r.profiles[0]:r.profiles;return prof?.show_on_leaderboard!==false;});
+    const myVisibleRank=visibleRows.findIndex(r=>r.user_id===currentUser?.id)+1;
+    const iOptedOut=userProfile?.show_on_leaderboard===false;
+    if(iOptedOut)document.getElementById('final-rank').textContent='No rank available';
+    else if(myVisibleRank>0)document.getElementById('final-rank').textContent=`#${myVisibleRank} on today's leaderboard`;
   });
 }
 
@@ -1160,6 +1258,144 @@ function openClueList(){
 function closeClueList(e){if(!e||e.target===document.getElementById('clue-list-modal'))document.getElementById('clue-list-modal').classList.remove('open');}
 function jumpToClueFromList(number,dir){const idx=allClues.findIndex(cl=>cl.number===number&&cl.dir===dir);if(idx!==-1)jumpToClueIndex(idx);closeClueList();}
 
+
+// ── COLLEGE LIST ──
+const COLLEGE_LIST = [
+  // Special
+  {name:'Other',short:'Other'},
+  // Jubilee (requested)
+  {name:'Jubilee Mission Medical College and Research Institute',short:'JMMRCI'},
+  // Maharashtra Government
+  {name:'All India Institute of Medical Sciences, Nagpur',short:'AIIMS Nagpur'},
+  {name:'Armed Forces Medical College, Pune',short:'AFMC'},
+  {name:'B. J. Government Medical College, Pune',short:'BJMC Pune'},
+  {name:'Dr Vaishampayan Memorial Medical College, Solapur',short:'DVVPF Solapur'},
+  {name:'Dr. Shankarrao Chavan Govt. Medical College, Nanded',short:'GMC Nanded'},
+  {name:'Government Medical College, Alibag',short:'GMC Alibag'},
+  {name:'Government Medical College, Amravati',short:'GMC Amravati'},
+  {name:'Government Medical College & Hospital, Baramati',short:'GMC Baramati'},
+  {name:'Government Medical College, Akola',short:'GMC Akola'},
+  {name:'Government Medical College, Ambernath',short:'GMC Ambernath'},
+  {name:'Government Medical College, Aurangabad',short:'GMC Aurangabad'},
+  {name:'Government Medical College, Bhandara',short:'GMC Bhandara'},
+  {name:'Government Medical College, Buldhana',short:'GMC Buldhana'},
+  {name:'Government Medical College, Chandrapur',short:'GMC Chandrapur'},
+  {name:'Government Medical College, Gadchiroli',short:'GMC Gadchiroli'},
+  {name:'Government Medical College, Gondia',short:'GMC Gondia'},
+  {name:'Government Medical College, Hingoli',short:'GMC Hingoli'},
+  {name:'Government Medical College, Jalgaon',short:'GMC Jalgaon'},
+  {name:'Government Medical College, Jalna',short:'GMC Jalna'},
+  {name:'Government Medical College, Latur',short:'GMC Latur'},
+  {name:'Government Medical College, Miraj',short:'GMC Miraj'},
+  {name:'Government Medical College, Nagpur',short:'GMC Nagpur'},
+  {name:'Government Medical College, Nandurbar',short:'GMC Nandurbar'},
+  {name:'Government Medical College, Nashik',short:'GMC Nashik'},
+  {name:'Government Medical College, Osmanabad',short:'GMC Osmanabad'},
+  {name:'Government Medical College, Parbhani',short:'GMC Parbhani'},
+  {name:'Government Medical College and District Hospital, Ratnagiri',short:'GMC Ratnagiri'},
+  {name:'Government Medical College, Satara',short:'GMC Satara'},
+  {name:'Government Medical College, Sindhudurg',short:'GMC Sindhudurg'},
+  {name:'Government Medical College, Washim',short:'GMC Washim'},
+  {name:'Government Medical College, Mumbai',short:'GMC Mumbai'},
+  {name:'Grant Medical College, Mumbai',short:'Grant Mumbai'},
+  {name:'H.B.T. Medical College & Dr. R.N. Cooper Municipal General Hospital, Juhu, Mumbai',short:'HBT Cooper Mumbai'},
+  {name:'Indira Gandhi Medical College & Hospital, Nagpur',short:'IGMC Nagpur'},
+  {name:'Lokmanya Tilak Municipal Medical College, Sion, Mumbai',short:'LTMC Sion'},
+  {name:'Rajashree Chatrapati Shahu Maharaj Government Medical College, Kolhapur',short:'RCSMGMC Kolhapur'},
+  {name:'Rajiv Gandhi Medical College and Chhatrapati Shivaji Maharaj Hospital, Thane',short:'RGMC Thane'},
+  {name:'Seth GS Medical College, Mumbai',short:'Seth GS Mumbai'},
+  {name:'Shri Vasant Rao Naik Govt. Medical College, Yavatmal',short:'VRNMC Yavatmal'},
+  {name:'Sri Bhausaheb Hire Government Medical College, Dhule',short:'SBHGMC Dhule'},
+  {name:'SRTR Medical College, Ambajogai',short:'SRTR Ambajogai'},
+  {name:'Topiwala National Medical College, Mumbai',short:'TNMC Mumbai'},
+  // Maharashtra Trust/Private
+  {name:'ACPM Medical College, Dhule',short:'ACPM Dhule'},
+  {name:'Ashwini Rural Medical College, Hospital & Research Centre, Solapur',short:'ARMC Solapur'},
+  {name:'B.K.L. Walawalkar Rural Medical College, Ratnagiri',short:'BKLW Ratnagiri'},
+  {name:'Bharati Vidyapeeth Deemed University Medical College & Hospital, Sangli',short:'BVDU Sangli'},
+  {name:'Bharati Vidyapeeth University Medical College, Pune',short:'BVMC Pune'},
+  {name:'Bharatratna Atal Bihari Vajpayee Medical College, Pune',short:'BAVMC Pune'},
+  {name:'Datta Meghe Medical College, Nagpur',short:'DMMC Nagpur'},
+  {name:'Dr. D Y Patil Medical College, Hospital and Research Centre, Pimpri, Pune',short:'DYP Pimpri'},
+  {name:'Dr. D Y Patil Medical College, Kolhapur',short:'DYP Kolhapur'},
+  {name:'Dr. N Y Tasgaonkar Institute of Medical Science, Raigad',short:'NYTS Raigad'},
+  {name:'Dr. Panjabrao Alias Bhausaheb Deshmukh Memorial Medical College, Amravati',short:'PDMMC Amravati'},
+  {name:'Dr. Rajendra Gode Medical College, Amravati',short:'RGMC Amravati'},
+  {name:'Dr. Ulhas Patil Medical College & Hospital, Jalgaon',short:'UPMC Jalgaon'},
+  {name:'Dr. Vasantrao Pawar Med. Col. Hosp. & Research Centre, Nashik',short:'NDMVP Nashik'},
+  {name:'Dr. Vithalrao Vikhe Patil Foundations Medical College & Hospital, Ahmednagar',short:'VVPF Ahmednagar'},
+  {name:'Jawaharlal Nehru Medical College, Sawangi (Meghe), Wardha',short:'JNMC Wardha'},
+  {name:'KJ Somaiyya Medical College & Research Centre, Mumbai',short:'KJSMC Mumbai'},
+  {name:'Krishna Institute of Medical Sciences, Karad',short:'KIMS Karad'},
+  {name:'Maharashtra Institute of Medical Sciences & Research, Latur',short:'MIMSR Latur'},
+  {name:'Maharashtra Institute of Medical Education & Research, Talegaon, Pune',short:'MIMER Pune'},
+  {name:'Mahatma Gandhi Institute of Medical Sciences, Sevagram, Wardha',short:'MGIMS Sevagram'},
+  {name:'Mahatma Gandhi Missions Medical College, Aurangabad',short:'MGM Aurangabad'},
+  {name:'Mahatma Gandhi Missions Medical College, Navi Mumbai',short:'MGM Navi Mumbai'},
+  {name:'Mahatma Gandhi Mission Medical College, Vashi',short:'MGM Vashi'},
+  {name:'N. K. P. Salve Instt. of Medical Sciences and Research Centre and Lata Mangeshkar Hospital, Nagpur',short:'NKPSIMS Nagpur'},
+  {name:'Padmashree Dr. D.Y. Patil Medical College, Navi Mumbai',short:'PDYP Navi Mumbai'},
+  {name:'Parbhani Medical College, Parbhani',short:'PMC Parbhani'},
+  {name:'Prakash Institute of Medical Sciences & Research, Sangli',short:'PIMS Sangli'},
+  {name:'Rural Medical College, Loni',short:'RMC Loni'},
+  {name:'SMBT Institute of Medical Sciences & Research Centre, Nashik',short:'SMBT Nashik'},
+  {name:'Sindhudurg Shikshan Prasarak Mandal (SSPM) Medical College & Lifetime Hospital, Padave, Sindhudurg',short:'SSPM Sindhudurg'},
+  {name:'Smt. Kashibai Navale Medical College and General Hospital, Pune',short:'SKNMC Pune'},
+  {name:'Symbiosis Medical College for Women, Pune',short:'SMCW Pune'},
+  {name:'Terna Medical College, Navi Mumbai',short:'Terna Navi Mumbai'},
+  {name:'Vedantaa Institute of Medical Sciences, Palghar',short:'VIMS Palghar'},
+  {name:'Shri Ramchandra Institute of Medical Sciences, Aurangabad',short:'SRIMS Aurangabad'},
+  {name:'Indian Institute of Medical Science & Research, Badnapur, Jalna (Muslim Minority)',short:'IIMSR Jalna'},
+];
+
+let _selectedCollegeShort='';
+
+function filterColleges(query){
+  const dropdown=document.getElementById('college-dropdown');
+  const q=query.trim().toLowerCase();
+  const filtered=q.length===0?COLLEGE_LIST:COLLEGE_LIST.filter(c=>c.name.toLowerCase().includes(q)||c.short.toLowerCase().includes(q));
+  renderCollegeDropdown(filtered);
+  dropdown.classList.add('open');
+}
+
+function renderCollegeDropdown(list){
+  const dropdown=document.getElementById('college-dropdown');
+  if(!list.length){dropdown.innerHTML='<div class="college-option" style="color:var(--text-muted);">No colleges found</div>';return;}
+  dropdown.innerHTML=list.map((c,i)=>`<div class="college-option" onmousedown="selectCollege('${c.name.replace(/'/g,"\\'")}','${c.short.replace(/'/g,"\\'")}')"><div>${c.name}</div>${c.short!==c.name?`<div class="college-short">${c.short}</div>`:''}</div>`).join('');
+}
+
+function openCollegeDropdown(){
+  const input=document.getElementById('college-search-input');
+  filterColleges(input.value);
+}
+
+function selectCollege(name,short){
+  _selectedCollegeShort=short;
+  document.getElementById('college-input').value=short;
+  document.getElementById('college-search-input').value='';
+  document.getElementById('college-dropdown').classList.remove('open');
+  document.getElementById('college-pill-text').textContent=name==='Other'?'Other (not listed)':name;
+  document.getElementById('college-selected-pill').classList.add('show');
+  document.getElementById('college-search-wrap').style.display='none';
+}
+
+function clearCollegeSelection(){
+  _selectedCollegeShort='';
+  document.getElementById('college-input').value='';
+  document.getElementById('college-selected-pill').classList.remove('show');
+  document.getElementById('college-search-wrap').style.display='block';
+  setTimeout(()=>document.getElementById('college-search-input').focus(),50);
+}
+
+// Close college dropdowns when clicking outside
+document.addEventListener('click',e=>{
+  const wrap=document.getElementById('college-search-wrap');
+  const dropdown=document.getElementById('college-dropdown');
+  if(wrap&&!wrap.contains(e.target))dropdown.classList.remove('open');
+  const ewrap=document.getElementById('edit-college-search-wrap');
+  const edropdown=document.getElementById('edit-college-dropdown');
+  if(ewrap&&!ewrap.contains(e.target))edropdown.classList.remove('open');
+});
 
 boot();
 </script>
