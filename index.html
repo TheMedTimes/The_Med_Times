@@ -726,13 +726,14 @@ async function loadUserProfile(){
   let{data}=await sb.from('profiles').select('*').eq('id',currentUser.id).single();
   if(!data){
     const username=currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||(currentUser.email?currentUser.email.split('@')[0]:'Player');
-    const ins=await sb.from('profiles').insert({id:currentUser.id,username,college:'',show_on_leaderboard:true}).select('*').single();
+    const ins=await sb.from('profiles').insert({id:currentUser.id,username,college:'',year:'',show_on_leaderboard:true}).select('*').single();
     if(!ins.error)data=ins.data;
   }
   userProfile=data||null;
-  if(userProfile&&(!userProfile.college||userProfile.college==='')){
-    hideLoading();buildAuthBg();showScreen('college-screen');
-    setTimeout(()=>document.getElementById('college-input').focus(),300);
+  const missingCollege=!userProfile?.college||userProfile.college.trim()==='';
+  const missingYear=!userProfile?.year||userProfile.year.trim()==='';
+  if(missingCollege||missingYear){
+    hideLoading();buildAuthBg();showScreen('college-screen');initIcons();
     return'needs-college';
   }
   if(userProfile&&userProfile.year&&!is2ndYear(userProfile.year)){showComingSoon(userProfile.year);return'coming-soon';}
@@ -939,6 +940,11 @@ function openLeaderboardFromSuccess(){document.getElementById('success-overlay')
 
 // ── PUZZLE LOADER ──
 async function loadPuzzle(){
+  // Safety net — never load puzzle if college or year not set
+  if(!userProfile?.college||userProfile.college.trim()===''||!userProfile?.year||userProfile.year.trim()===''){
+    hideLoading();buildAuthBg();showScreen('college-screen');initIcons();
+    return;
+  }
   const today=getTodayString();
   try{
     const ctrl=new AbortController();const ft=setTimeout(()=>ctrl.abort(),8000);
