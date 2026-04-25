@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — TheMedTimes</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap');
+  :root{--bg:#f7f4ef;--surface:#ffffff;--border:#d4cfc8;--text:#1a1a1a;--text-muted:#7a7570;--accent:#c8392b;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'DM Sans',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:0 0 64px;}
+  .top-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:16px;position:sticky;top:0;z-index:10;}
+  .back-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-size:14px;font-weight:600;color:var(--text);text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+  .back-btn:hover{background:var(--border);}
+  .top-bar-logo{font-family:'Playfair Display',Georgia,serif;font-size:20px;font-weight:900;color:var(--accent);}
+  .container{max-width:680px;margin:0 auto;padding:40px 24px;}
+  .page-title{font-family:'Playfair Display',Georgia,serif;font-size:clamp(28px,6vw,40px);font-weight:900;color:var(--accent);margin-bottom:8px;}
+  .page-sub{font-size:13px;color:var(--text-muted);margin-bottom:40px;line-height:1.6;}
+  .badge{display:inline-block;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600;color:var(--text-muted);margin-bottom:20px;}
+  .contact-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;display:flex;align-items:center;gap:20px;text-decoration:none;color:var(--text);transition:border-color 0.15s,box-shadow 0.15s;}
+  .contact-card:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(200,57,43,0.1);}
+  .contact-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:26px;}
+  .contact-icon.email{background:#fef2f1;}
+  .contact-icon.insta{background:linear-gradient(135deg,#f9ce54,#ee2a7b,#6228d7);font-size:22px;}
+  .contact-info{flex:1;}
+  .contact-label{font-size:11px;font-weight:700;letter-spacing:0.8px;color:var(--text-muted);text-transform:uppercase;margin-bottom:4px;}
+  .contact-value{font-size:15px;font-weight:600;color:var(--text);}
+  .contact-desc{font-size:12px;color:var(--text-muted);margin-top:3px;}
+  .contact-arrow{font-size:18px;color:var(--text-muted);flex-shrink:0;}
+  .footer{text-align:center;margin-top:40px;font-size:12px;color:var(--text-muted);line-height:1.8;}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <a class="back-btn" href="javascript:history.back()">← Back</a>
+  <div class="top-bar-logo">TheMedTimes</div>
+</div>
+<div class="container">
+  <div class="badge">Contact</div>
+  <div class="page-title">Get in Touch</div>
+  <div class="page-sub">Have a question, found an error in a puzzle, or just want to say hello? Reach out — we'd love to hear from you.</div>
+
+  <a class="contact-card" href="mailto:themedtimescontactmail@gmail.com">
+    <div class="contact-icon email">📧</div>
+    <div class="contact-info">
+      <div class="contact-label">Email</div>
+      <div class="contact-value">themedtimescontactmail@gmail.com</div>
+      <div class="contact-desc">We aim to respond within 7 days</div>
+    </div>
+    <div class="contact-arrow">→</div>
+  </a>
+
+  <a class="contact-card" href="https://www.instagram.com/the.med.times" target="_blank" rel="noopener">
+    <div class="contact-icon insta">📸</div>
+    <div class="contact-info">
+      <div class="contact-label">Instagram</div>
+      <div class="contact-value">@the.med.times</div>
+      <div class="contact-desc">Follow us for updates and announcements</div>
+    </div>
+    <div class="contact-arrow">→</div>
+  </a>
+
+  <div class="footer">
+    © 2026 TheMedTimes · The daily crossword for MBBS students<br>
+    <a href="privacy.html" style="color:var(--accent);text-decoration:none;font-weight:600;">Privacy Policy</a>
+    &nbsp;·&nbsp;
+    <a href="terms.html" style="color:var(--accent);text-decoration:none;font-weight:600;">Terms of Use</a>
+    &nbsp;·&nbsp;
+    <a href="javascript:history.back()" style="color:var(--accent);text-decoration:none;font-weight:600;">← Back to app</a>
+  </div>
+</div>
+</body>
+</html>
