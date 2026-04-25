@@ -457,7 +457,7 @@
       Created by a simple 2nd year MBBS student who wanted to do something different.<br><br>
       <span style="font-size:11px;color:var(--text-muted);font-weight:600;letter-spacing:0.5px;">Version v22</span>
     </div>
-    <div class="settings-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a><a href="mailto:themedicalpuzzler@gmail.com">Contact</a></div>
+    <div class="settings-legal"><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Use</a><a href="contact.html">Contact</a></div>
     <button class="modal-close" style="margin-top:12px;" onclick="closeSettingsModal()">Done</button>
   </div>
 </div>
@@ -787,7 +787,7 @@ async function deleteAccount(){
   }catch(e){
     if(window.Sentry)Sentry.captureException(e);
     console.error('Delete account error:',e);
-    showConfirm('Something went wrong','Your account could not be fully deleted. Please email themedicalpuzzler@gmail.com',()=>{},false);
+    showConfirm('Something went wrong','Your account could not be fully deleted. Please email themedtimescontactmail@gmail.com',()=>{},false);
   }
 }
 
