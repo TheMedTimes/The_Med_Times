@@ -1,0 +1,402 @@
+{
+  "date": "2026-04-28",
+  "topic": "RS Pharmacology",
+  "next_topic": "Liver Pathology",
+  "size": 15,
+  "solution": [
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "I",
+      "#",
+      "#",
+      "M",
+      "#",
+      "Z",
+      "#",
+      "#",
+      "D"
+    ],
+    [
+      "S",
+      "#",
+      "#",
+      "D",
+      "O",
+      "R",
+      "N",
+      "A",
+      "S",
+      "E",
+      "#",
+      "I",
+      "V",
+      "#",
+      "U"
+    ],
+    [
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "H",
+      "#",
+      "#",
+      "D",
+      "#",
+      "L",
+      "#",
+      "#",
+      "O"
+    ],
+    [
+      "C",
+      "A",
+      "M",
+      "P",
+      "#",
+      "B",
+      "A",
+      "M",
+      "B",
+      "U",
+      "T",
+      "E",
+      "R",
+      "O",
+      "L"
+    ],
+    [
+      "O",
+      "#",
+      "#",
+      "D",
+      "#",
+      "#",
+      "L",
+      "#",
+      "#",
+      "L",
+      "#",
+      "U",
+      "#",
+      "#",
+      "I"
+    ],
+    [
+      "N",
+      "#",
+      "D",
+      "E",
+      "G",
+      "R",
+      "A",
+      "N",
+      "U",
+      "L",
+      "A",
+      "T",
+      "I",
+      "O",
+      "N"
+    ],
+    [
+      "D",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "T",
+      "#",
+      "#",
+      "A",
+      "#",
+      "O",
+      "#",
+      "M",
+      "#"
+    ],
+    [
+      "#",
+      "A",
+      "S",
+      "P",
+      "I",
+      "R",
+      "I",
+      "N",
+      "#",
+      "#",
+      "#",
+      "N",
+      "#",
+      "A",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "L",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "E",
+      "O",
+      "S",
+      "I",
+      "N",
+      "O",
+      "P",
+      "H",
+      "I",
+      "L",
+      "L",
+      "I",
+      "C"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "Z",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "L",
+      "#",
+      "L",
+      "#",
+      "#",
+      "G",
+      "#",
+      "#",
+      "#",
+      "U",
+      "#"
+    ],
+    [
+      "#",
+      "L",
+      "I",
+      "P",
+      "I",
+      "D",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "M",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "N",
+      "#",
+      "#",
+      "K",
+      "A",
+      "L",
+      "E",
+      "M",
+      "I",
+      "A",
+      "#"
+    ],
+    [
+      "F",
+      "A",
+      "L",
+      "S",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#",
+      "D",
+      "#",
+      "#",
+      "#",
+      "B",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 6,
+        "row": 1,
+        "col": 3,
+        "len": 7,
+        "clue": "Deoxyribonuclease mucolytic agent -  ____ alpha"
+      },
+      {
+        "number": 7,
+        "row": 1,
+        "col": 11,
+        "len": 2,
+        "clue": "In Status Asthmaticus glucocorticoids are given via __ route"
+      },
+      {
+        "number": 8,
+        "row": 3,
+        "col": 0,
+        "len": 4,
+        "clue": "Sympathomimetics act as bronchodilators by increasing _ levels"
+      },
+      {
+        "number": 10,
+        "row": 3,
+        "col": 5,
+        "len": 10,
+        "clue": "LABA that is a prodrug of terbutaline"
+      },
+      {
+        "number": 11,
+        "row": 5,
+        "col": 2,
+        "len": 13,
+        "clue": "Cromolyn acts by inhibiting the __ of mast cells"
+      },
+      {
+        "number": 13,
+        "row": 7,
+        "col": 1,
+        "len": 7,
+        "clue": "LT antagonists are particularly useful in __-induced asthma"
+      },
+      {
+        "number": 14,
+        "row": 9,
+        "col": 2,
+        "len": 13,
+        "clue": "Type 2 asthma shows ___ inflammation"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 1,
+        "len": 5,
+        "clue": "LABAs are long acting as they are __ soluble"
+      },
+      {
+        "number": 18,
+        "row": 13,
+        "col": 7,
+        "len": 7,
+        "clue": "SABAs cause hypo____ (electrolyte imbalance ADR)"
+      },
+      {
+        "number": 19,
+        "row": 14,
+        "col": 0,
+        "len": 5,
+        "clue": "T or F - Inhaled glucocorticoids are useful in acute asthma"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 6,
+        "len": 12,
+        "clue": "SABAs are given via __ route"
+      },
+      {
+        "number": 2,
+        "row": 0,
+        "col": 9,
+        "len": 7,
+        "clue": "Cough center is in the __"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 11,
+        "len": 8,
+        "clue": "Inhibitor of lipoxygenase causing rise in liver enzymes"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 14,
+        "len": 6,
+        "clue": "FDC of Ipratropium bromide and Salbutamol is called"
+      },
+      {
+        "number": 5,
+        "row": 1,
+        "col": 0,
+        "len": 6,
+        "clue": "Theophylline is a __-line drug in bronchial asthma"
+      },
+      {
+        "number": 9,
+        "row": 3,
+        "col": 3,
+        "len": 3,
+        "clue": "__ (abbr.) is the enzyme that degrades cAMP"
+      },
+      {
+        "number": 12,
+        "row": 5,
+        "col": 13,
+        "len": 10,
+        "clue": "Anti IgE antibody drug"
+      },
+      {
+        "number": 15,
+        "row": 9,
+        "col": 4,
+        "len": 6,
+        "clue": "Drug solution of a SABA is diluted in __ for nebulization"
+      },
+      {
+        "number": 16,
+        "row": 11,
+        "col": 9,
+        "len": 4,
+        "clue": "__ grading classifies COPD based on severity into 4 groups"
+      }
+    ]
+  }
+}
