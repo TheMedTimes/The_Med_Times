@@ -1,0 +1,409 @@
+{
+  "date": "2026-04-27",
+  "topic": "Viral Encephalitis and Encephalopathy",
+  "next_topic": "RS Pharmacology",
+  "size": 15,
+  "solution": [
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "H",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "T",
+      "O",
+      "X",
+      "O",
+      "P",
+      "L",
+      "A",
+      "S",
+      "M",
+      "A",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "#",
+      "#",
+      "#",
+      "F",
+      "#",
+      "#",
+      "#",
+      "M",
+      "A",
+      "C"
+    ],
+    [
+      "#",
+      "#",
+      "H",
+      "I",
+      "P",
+      "P",
+      "O",
+      "C",
+      "A",
+      "M",
+      "P",
+      "U",
+      "S",
+      "#",
+      "U"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "G",
+      "#",
+      "#",
+      "N",
+      "#",
+      "C",
+      "#",
+      "#",
+      "#",
+      "T",
+      "#",
+      "L"
+    ],
+    [
+      "#",
+      "P",
+      "#",
+      "E",
+      "#",
+      "W",
+      "E",
+      "S",
+      "T",
+      "N",
+      "I",
+      "L",
+      "E",
+      "#",
+      "E"
+    ],
+    [
+      "#",
+      "U",
+      "#",
+      "M",
+      "#",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "X"
+    ],
+    [
+      "#",
+      "R",
+      "#",
+      "I",
+      "C",
+      "E",
+      "B",
+      "E",
+      "R",
+      "G",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#"
+    ],
+    [
+      "#",
+      "K",
+      "#",
+      "N",
+      "#",
+      "#",
+      "U",
+      "#",
+      "Y",
+      "#",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#"
+    ],
+    [
+      "N",
+      "I",
+      "P",
+      "A",
+      "H",
+      "#",
+      "L",
+      "#",
+      "#",
+      "U",
+      "G",
+      "A",
+      "N",
+      "D",
+      "A"
+    ],
+    [
+      "#",
+      "N",
+      "#",
+      "L",
+      "#",
+      "#",
+      "L",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#"
+    ],
+    [
+      "#",
+      "J",
+      "#",
+      "#",
+      "P",
+      "L",
+      "E",
+      "O",
+      "C",
+      "Y",
+      "T",
+      "O",
+      "S",
+      "I",
+      "S"
+    ],
+    [
+      "N",
+      "E",
+      "G",
+      "R",
+      "I",
+      "#",
+      "T",
+      "#",
+      "#",
+      "#",
+      "R",
+      "#",
+      "#",
+      "D",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "G",
+      "#",
+      "#",
+      "K",
+      "U",
+      "R",
+      "U",
+      "#",
+      "#",
+      "#",
+      "#"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "#"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 3,
+        "row": 1,
+        "col": 3,
+        "len": 10,
+        "clue": "Most common cause of encephalitis in HIV/AIDS patients"
+      },
+      {
+        "number": 4,
+        "row": 2,
+        "col": 12,
+        "len": 3,
+        "clue": "Inclusion bodies in SSPE look like _"
+      },
+      {
+        "number": 6,
+        "row": 3,
+        "col": 2,
+        "len": 11,
+        "clue": "Brain region most affected in HSV encephalitis"
+      },
+      {
+        "number": 9,
+        "row": 5,
+        "col": 5,
+        "len": 8,
+        "clue": "Flavivirus encephalitis transmitted by Culex mosquito"
+      },
+      {
+        "number": 10,
+        "row": 7,
+        "col": 3,
+        "len": 7,
+        "clue": "Most West Nile infections are subclinical \u2014 _ phenomenon"
+      },
+      {
+        "number": 13,
+        "row": 9,
+        "col": 0,
+        "len": 5,
+        "clue": "Paramyxovirus encephalitis with pigs as intermediate host"
+      },
+      {
+        "number": 14,
+        "row": 9,
+        "col": 9,
+        "len": 6,
+        "clue": "Country of origin of Marburg virus"
+      },
+      {
+        "number": 15,
+        "row": 11,
+        "col": 4,
+        "len": 11,
+        "clue": "Excess white cells in CSF \u2014 hallmark of viral encephalitis"
+      },
+      {
+        "number": 17,
+        "row": 12,
+        "col": 0,
+        "len": 5,
+        "clue": "_ bodies are pathognomonic inclusion in rabies"
+      },
+      {
+        "number": 18,
+        "row": 13,
+        "col": 7,
+        "len": 4,
+        "clue": "Prion disease caused by ritual cannibalism in Fore tribe"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 8,
+        "len": 9,
+        "clue": "Route of entry for Naegleria fowleri into the brain"
+      },
+      {
+        "number": 2,
+        "row": 0,
+        "col": 12,
+        "len": 7,
+        "clue": "Animal model used for prion disease research"
+      },
+      {
+        "number": 3,
+        "row": 1,
+        "col": 3,
+        "len": 10,
+        "clue": "Nerve used by HSV to reach the brain"
+      },
+      {
+        "number": 5,
+        "row": 2,
+        "col": 14,
+        "len": 5,
+        "clue": "Mosquito vector for West Nile and Japanese encephalitis"
+      },
+      {
+        "number": 7,
+        "row": 3,
+        "col": 6,
+        "len": 3,
+        "clue": "How many serotypes does rabies virus have?"
+      },
+      {
+        "number": 8,
+        "row": 5,
+        "col": 1,
+        "len": 8,
+        "clue": "Cerebellar cells lost in Kuru are _ cells"
+      },
+      {
+        "number": 11,
+        "row": 7,
+        "col": 6,
+        "len": 6,
+        "clue": "Shape of the rabies virus"
+      },
+      {
+        "number": 12,
+        "row": 7,
+        "col": 13,
+        "len": 6,
+        "clue": "Bird family (herons/egrets) that serve as West Nile reservoir"
+      },
+      {
+        "number": 15,
+        "row": 11,
+        "col": 4,
+        "len": 3,
+        "clue": "Intermediate host for Nipah virus"
+      },
+      {
+        "number": 16,
+        "row": 11,
+        "col": 10,
+        "len": 4,
+        "clue": "Is rabies a notifiable disease?"
+      }
+    ]
+  }
+}
