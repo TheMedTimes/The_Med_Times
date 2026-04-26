@@ -267,70 +267,70 @@
         "row": 1,
         "col": 3,
         "len": 10,
-        "clue": "Most common cause of encephalitis in HIV/AIDS patients"
+        "clue": "Most common cause of parasitic encephalitis"
       },
       {
         "number": 4,
         "row": 2,
         "col": 12,
         "len": 3,
-        "clue": "Inclusion bodies in SSPE look like _"
+        "clue": "__-ELISA is the recommended method for JE diagnosis"
       },
       {
         "number": 6,
         "row": 3,
         "col": 2,
         "len": 11,
-        "clue": "Brain region most affected in HSV encephalitis"
+        "clue": "Common sites of CNS infected by rabies are cerebellum and __"
       },
       {
         "number": 9,
         "row": 5,
         "col": 5,
         "len": 8,
-        "clue": "Flavivirus encephalitis transmitted by Culex mosquito"
+        "clue": "__ virus - most common cause of epidemic encephalitis in USA"
       },
       {
         "number": 10,
         "row": 7,
         "col": 3,
         "len": 7,
-        "clue": "Most West Nile infections are subclinical \u2014 _ phenomenon"
+        "clue": "Subclinical infections are common in JE showing __ phenomenon"
       },
       {
         "number": 13,
         "row": 9,
         "col": 0,
         "len": 5,
-        "clue": "Paramyxovirus encephalitis with pigs as intermediate host"
+        "clue": "Consumption of raw date palm sap may cause __ virus"
       },
       {
         "number": 14,
         "row": 9,
         "col": 9,
         "len": 6,
-        "clue": "Country of origin of Marburg virus"
+        "clue": "West Nile virus was first isolated in (country)"
       },
       {
         "number": 15,
         "row": 11,
         "col": 4,
         "len": 11,
-        "clue": "Excess white cells in CSF \u2014 hallmark of viral encephalitis"
+        "clue": "Increased WBC count in the CSF is called"
       },
       {
         "number": 17,
         "row": 12,
         "col": 0,
         "len": 5,
-        "clue": "_ bodies are pathognomonic inclusion in rabies"
+        "clue": "In rabies the brain parenchyma shows presence of __ bodies"
       },
       {
         "number": 18,
         "row": 13,
         "col": 7,
         "len": 4,
-        "clue": "Prion disease caused by ritual cannibalism in Fore tribe"
+        "clue": "Prion disease spread through cannibalism"
       }
     ],
     "down": [
@@ -339,42 +339,42 @@
         "row": 0,
         "col": 8,
         "len": 9,
-        "clue": "Route of entry for Naegleria fowleri into the brain"
+        "clue": "HSV mainly infects CNS through __ bulb in children"
       },
       {
         "number": 2,
         "row": 0,
         "col": 12,
         "len": 7,
-        "clue": "Animal model used for prion disease research"
+        "clue": "Primary __ kidney cell lines are used to develop LAV for JE"
       },
       {
         "number": 3,
         "row": 1,
         "col": 3,
         "len": 10,
-        "clue": "Nerve used by HSV to reach the brain"
+        "clue": "Adults get recurrent HSV infections through the __ nerve"
       },
       {
         "number": 5,
         "row": 2,
         "col": 14,
         "len": 5,
-        "clue": "Mosquito vector for West Nile and Japanese encephalitis"
+        "clue": "JE virus is transmitted by the bite of __ mosquito"
       },
       {
         "number": 7,
         "row": 3,
         "col": 6,
         "len": 3,
-        "clue": "How many serotypes does rabies virus have?"
+        "clue": "Commonly causes viral encephalitis - HSV-1 or 2?"
       },
       {
         "number": 8,
         "row": 5,
         "col": 1,
         "len": 8,
-        "clue": "Cerebellar cells lost in Kuru are _ cells"
+        "clue": "Negri bodies may be seen in the __ cells of the cerebellum"
       },
       {
         "number": 11,
@@ -388,21 +388,21 @@
         "row": 7,
         "col": 13,
         "len": 6,
-        "clue": "Bird family (herons/egrets) that serve as West Nile reservoir"
+        "clue": "__ (Wading) birds can be hosts for Japanese encephalitis"
       },
       {
         "number": 15,
         "row": 11,
         "col": 4,
         "len": 3,
-        "clue": "Intermediate host for Nipah virus"
+        "clue": "Amplifier host for Japanese encephalitis"
       },
       {
         "number": 16,
         "row": 11,
         "col": 10,
         "len": 4,
-        "clue": "Is rabies a notifiable disease?"
+        "clue": "T or F - Suturing should be avoided in wound care for rabies"
       }
     ]
   }
