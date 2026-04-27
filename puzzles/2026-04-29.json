@@ -1,0 +1,465 @@
+{
+  "date": "2026-04-29",
+  "topic": "Liver Pathology",
+  "next_topic": "Antiepileptics",
+  "size": 15,
+  "solution": [
+    [
+      "F",
+      "A",
+      "T",
+      "T",
+      "Y",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "I",
+      "G",
+      "M"
+    ],
+    [
+      "A",
+      "#",
+      "R",
+      "#",
+      "#",
+      "N",
+      "A",
+      "D",
+      "H",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "I"
+    ],
+    [
+      "L",
+      "#",
+      "U",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "B",
+      "E",
+      "#",
+      "#",
+      "D",
+      "I",
+      "C"
+    ],
+    [
+      "S",
+      "T",
+      "E",
+      "A",
+      "T",
+      "O",
+      "S",
+      "I",
+      "S",
+      "#",
+      "#",
+      "#",
+      "U",
+      "#",
+      "R"
+    ],
+    [
+      "E",
+      "#",
+      "#",
+      "C",
+      "#",
+      "#",
+      "#",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "C",
+      "#",
+      "O"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "U",
+      "#",
+      "P",
+      "R",
+      "E",
+      "G",
+      "N",
+      "A",
+      "N",
+      "T",
+      "#",
+      "#"
+    ],
+    [
+      "D",
+      "E",
+      "L",
+      "T",
+      "A",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "M",
+      "#",
+      "U",
+      "#",
+      "#"
+    ],
+    [
+      "N",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "G",
+      "#",
+      "#",
+      "#",
+      "M",
+      "#",
+      "L",
+      "D",
+      "H"
+    ],
+    [
+      "A",
+      "#",
+      "#",
+      "#",
+      "C",
+      "A",
+      "R",
+      "C",
+      "I",
+      "N",
+      "O",
+      "M",
+      "A",
+      "#",
+      "E"
+    ],
+    [
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "E",
+      "#",
+      "#",
+      "#",
+      "N",
+      "#",
+      "R",
+      "#",
+      "P"
+    ],
+    [
+      "#",
+      "C",
+      "H",
+      "O",
+      "L",
+      "E",
+      "S",
+      "T",
+      "A",
+      "S",
+      "I",
+      "S",
+      "#",
+      "#",
+      "C"
+    ],
+    [
+      "#",
+      "#",
+      "C",
+      "#",
+      "#",
+      "#",
+      "S",
+      "#",
+      "G",
+      "#",
+      "A",
+      "#",
+      "#",
+      "#",
+      "I"
+    ],
+    [
+      "H",
+      "B",
+      "V",
+      "#",
+      "S",
+      "P",
+      "I",
+      "D",
+      "E",
+      "R",
+      "#",
+      "#",
+      "#",
+      "#",
+      "D"
+    ],
+    [
+      "B",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "O",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "#",
+      "I"
+    ],
+    [
+      "X",
+      "#",
+      "#",
+      "#",
+      "S",
+      "I",
+      "N",
+      "G",
+      "L",
+      "E",
+      "#",
+      "I",
+      "R",
+      "O",
+      "N"
+    ]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 5,
+        "clue": "HCV is often associated with __ change"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 12,
+        "len": 3,
+        "clue": "Immunoglobulin that appears in blood against HAV (first)"
+      },
+      {
+        "number": 5,
+        "row": 1,
+        "col": 5,
+        "len": 4,
+        "clue": "Metabolism of ethanol ends up producing large amounts of __"
+      },
+      {
+        "number": 7,
+        "row": 2,
+        "col": 8,
+        "len": 2,
+        "clue": "Hep _  and _ are common causes of acute liver failure in Asia"
+      },
+      {
+        "number": 8,
+        "row": 2,
+        "col": 12,
+        "len": 3,
+        "clue": "Liver fails to remove activated coagulation factors causing"
+      },
+      {
+        "number": 9,
+        "row": 3,
+        "col": 0,
+        "len": 9,
+        "clue": "Accumulation of fat in hepatocytes"
+      },
+      {
+        "number": 11,
+        "row": 5,
+        "col": 5,
+        "len": 8,
+        "clue": "Characteristic to HEV is high mortality in __ women"
+      },
+      {
+        "number": 14,
+        "row": 6,
+        "col": 0,
+        "len": 5,
+        "clue": "HDV also called __ agent"
+      },
+      {
+        "number": 15,
+        "row": 7,
+        "col": 12,
+        "len": 3,
+        "clue": "AST, ALT and __ are markers of hepatocellular integrity"
+      },
+      {
+        "number": 17,
+        "row": 8,
+        "col": 4,
+        "len": 9,
+        "clue": "Chronic liver diseases predispose to hepatocellular __"
+      },
+      {
+        "number": 18,
+        "row": 10,
+        "col": 1,
+        "len": 11,
+        "clue": "Accumulation of bilirubin in hepatocytes"
+      },
+      {
+        "number": 21,
+        "row": 12,
+        "col": 0,
+        "len": 3,
+        "clue": "HDV is dependent on __ for its life cycle"
+      },
+      {
+        "number": 22,
+        "row": 12,
+        "col": 4,
+        "len": 6,
+        "clue": "Hyperestrogenemia in chronic liver failure shows _ angiomas"
+      },
+      {
+        "number": 23,
+        "row": 14,
+        "col": 4,
+        "len": 6,
+        "clue": "HCV is an enveloped, __-stranded RNA virus"
+      },
+      {
+        "number": 24,
+        "row": 14,
+        "col": 11,
+        "len": 4,
+        "clue": "Hemochromatosis is caused by excessive absorption of __"
+      }
+    ],
+    "down": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 5,
+        "clue": "T or F - HAV causes chronic hepatitis"
+      },
+      {
+        "number": 2,
+        "row": 0,
+        "col": 2,
+        "len": 4,
+        "clue": "T or F - In hepatorenal syndrome renal morphology is normal"
+      },
+      {
+        "number": 4,
+        "row": 0,
+        "col": 14,
+        "len": 5,
+        "clue": "Severe cases of hemochromatosis show __nodular cirrhosis"
+      },
+      {
+        "number": 6,
+        "row": 1,
+        "col": 8,
+        "len": 5,
+        "clue": "HBV serum marker appearing before onset of symptoms"
+      },
+      {
+        "number": 8,
+        "row": 2,
+        "col": 12,
+        "len": 8,
+        "clue": "_ reactions are markers of stem cell mediated liver regen"
+      },
+      {
+        "number": 10,
+        "row": 3,
+        "col": 3,
+        "len": 5,
+        "clue": "Liver failure may be __, chronic or acute on chronic"
+      },
+      {
+        "number": 12,
+        "row": 5,
+        "col": 6,
+        "len": 10,
+        "clue": "All cirrhotic livers show elements of both progression and _"
+      },
+      {
+        "number": 13,
+        "row": 5,
+        "col": 10,
+        "len": 7,
+        "clue": "Hepatic encephalopathy is caused due to elevated __ levels"
+      },
+      {
+        "number": 14,
+        "row": 6,
+        "col": 0,
+        "len": 3,
+        "clue": "Is HBV nuclear material DNA or RNA?"
+      },
+      {
+        "number": 16,
+        "row": 7,
+        "col": 14,
+        "len": 8,
+        "clue": "Erythroferrone suppresses __ production"
+      },
+      {
+        "number": 19,
+        "row": 10,
+        "col": 2,
+        "len": 3,
+        "clue": "Mainly HBV and __ cause chronic hepatitis"
+      },
+      {
+        "number": 20,
+        "row": 10,
+        "col": 8,
+        "len": 3,
+        "clue": "HBV risk of chronic infection is inversely related to _"
+      },
+      {
+        "number": 21,
+        "row": 12,
+        "col": 0,
+        "len": 3,
+        "clue": "_ protein in HBV acts as a transcriptional transactivator"
+      }
+    ]
+  }
+}
