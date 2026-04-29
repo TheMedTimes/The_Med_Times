@@ -447,7 +447,8 @@
     <div class="settings-row"><div class="settings-row-left"><div class="settings-row-label">Live Check</div><div class="settings-row-sub">Instantly marks correct / wrong letters</div></div><label class="toggle"><input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)" checked><span class="slider"></span></label></div>
     <div class="settings-section-title">Account</div>
     <div class="settings-row"><div class="settings-row-left"><div class="settings-row-label">Year</div><div class="settings-row-value" id="settings-year-val">—</div></div><button class="settings-edit-btn" onclick="openEditYear()">Change</button></div>
-    <div class="settings-row" style="border-bottom:none;"><div class="settings-row-left"><div class="settings-row-label">College</div><div class="settings-row-value" id="settings-college-val">—</div></div><button class="settings-edit-btn" onclick="openEditCollege()">Change</button></div>
+    <div class="settings-row"><div class="settings-row-left"><div class="settings-row-label">College</div><div class="settings-row-value" id="settings-college-val">—</div></div><button class="settings-edit-btn" onclick="openEditCollege()">Change</button></div>
+    <div class="settings-row" style="border-bottom:none;"><div class="settings-row-left"><div class="settings-row-label">Show on Leaderboard</div><div class="settings-row-sub">Your name &amp; college appear publicly</div></div><label class="toggle"><input type="checkbox" id="anon-toggle" onchange="toggleAnonymity(this)"><span class="slider"></span></label></div>
     <button class="settings-signout" onclick="confirmSignOut()"><span class="ic" data-lucide="log-out" style="width:16px;height:16px;"></span>Sign out</button>
     <button class="settings-delete" onclick="confirmDeleteAccount()"><span class="ic" data-lucide="trash-2" style="width:16px;height:16px;"></span>Delete my account</button>
     <div class="settings-section-title" style="margin-top:20px;">About</div>
@@ -811,7 +812,29 @@ async function saveCollegePrompt(){
 function openSettingsModal(){
   document.getElementById('settings-year-val').textContent=userProfile?.year||'Not set';
   document.getElementById('settings-college-val').textContent=userProfile?.college||'Not set';
+  document.getElementById('anon-toggle').checked=!!(userProfile?.show_on_leaderboard);
   document.getElementById('settings-modal').classList.add('open');
+}
+
+// ── ANONYMITY TOGGLE ──
+function toggleAnonymity(checkbox){
+  const newVal=checkbox.checked;
+  const action=newVal?'show':'hide';
+  const actionLabel=newVal?'Show on Leaderboard':'Go Anonymous';
+  // Revert toggle visually until user confirms
+  checkbox.checked=!newVal;
+  showConfirm(
+    actionLabel,
+    newVal
+      ?'Your name and college will appear on future leaderboards. Today\'s result is not affected.'
+      :'You will be hidden from future leaderboards. Today\'s result is not affected.',
+    async()=>{
+      const{error}=await sb.from('profiles').update({show_on_leaderboard:newVal}).eq('id',currentUser.id);
+      if(error){if(window.Sentry)Sentry.captureException(error);return;}
+      userProfile.show_on_leaderboard=newVal;
+      checkbox.checked=newVal;
+    }
+  );
 }
 function closeSettingsModal(e){if(!e||e.target===document.getElementById('settings-modal'))document.getElementById('settings-modal').classList.remove('open');}
 function openEditYear(){document.getElementById('edit-year-select').value=userProfile?.year||'';document.getElementById('edit-year-error').textContent='';document.getElementById('edit-year-modal').classList.add('open');}
@@ -1352,6 +1375,81 @@ const COLLEGE_LIST = [
   {name:'Vedantaa Institute of Medical Sciences, Palghar',short:'VIMS Palghar'},
   {name:'Shri Ramchandra Institute of Medical Sciences, Aurangabad',short:'SRIMS Aurangabad'},
   {name:'Indian Institute of Medical Science & Research, Badnapur, Jalna (Muslim Minority)',short:'IIMSR Jalna'},
+  // ── AIIMS (All India Institute of Medical Sciences) ──
+  {name:'AIIMS New Delhi',short:'AIIMS Delhi'},
+  {name:'AIIMS Bhopal',short:'AIIMS Bhopal'},
+  {name:'AIIMS Bhubaneswar',short:'AIIMS Bhubaneswar'},
+  {name:'AIIMS Jodhpur',short:'AIIMS Jodhpur'},
+  {name:'AIIMS Patna',short:'AIIMS Patna'},
+  {name:'AIIMS Raipur',short:'AIIMS Raipur'},
+  {name:'AIIMS Rishikesh',short:'AIIMS Rishikesh'},
+  {name:'AIIMS Nagpur',short:'AIIMS Nagpur'},
+  {name:'AIIMS Mangalagiri',short:'AIIMS Mangalagiri'},
+  {name:'AIIMS Gorakhpur',short:'AIIMS Gorakhpur'},
+  {name:'AIIMS Kalyani',short:'AIIMS Kalyani'},
+  {name:'AIIMS Bathinda',short:'AIIMS Bathinda'},
+  {name:'AIIMS Bibinagar',short:'AIIMS Bibinagar'},
+  {name:'AIIMS Deoghar',short:'AIIMS Deoghar'},
+  {name:'AIIMS Guwahati',short:'AIIMS Guwahati'},
+  {name:'AIIMS Jammu',short:'AIIMS Jammu'},
+  {name:'AIIMS Madurai',short:'AIIMS Madurai'},
+  {name:'AIIMS Raebareli',short:'AIIMS Raebareli'},
+  {name:'AIIMS Rajkot',short:'AIIMS Rajkot'},
+  {name:'AIIMS Srinagar',short:'AIIMS Srinagar'},
+  {name:'AIIMS Vijaypur',short:'AIIMS Vijaypur'},
+  {name:'AIIMS Bilaspur',short:'AIIMS Bilaspur'},
+  {name:'AIIMS Darbhanga',short:'AIIMS Darbhanga'},
+  {name:'AIIMS Hyderabad',short:'AIIMS Hyderabad'},
+  // ── Delhi — Government / Central ──
+  {name:'Maulana Azad Medical College, New Delhi',short:'MAMC Delhi'},
+  {name:'Lady Hardinge Medical College, New Delhi',short:'LHMC Delhi'},
+  {name:'Vardhman Mahavir Medical College & Safdarjung Hospital, New Delhi',short:'VMMC Delhi'},
+  {name:'University College of Medical Sciences, Delhi',short:'UCMS Delhi'},
+  {name:'Dr. Baba Saheb Ambedkar Medical College, Delhi',short:'BSAHMCH Delhi'},
+  {name:'Employees State Insurance Corporation Medical College, Faridabad (Delhi NCR)',short:'ESIC MC Faridabad'},
+  {name:'North Delhi Municipal Corporation Medical College, Delhi',short:'NDMC MC Delhi'},
+  {name:'Guru Gobind Singh Government Medical College, Faridabad',short:'GGSMC Faridabad'},
+  // ── Delhi — Private / Deemed ──
+  {name:'Hamdard Institute of Medical Sciences & Research, New Delhi',short:'HIMSR Delhi'},
+  {name:'Atal Bihari Vajpayee Institute of Medical Sciences, New Delhi',short:'ABVIMS Delhi'},
+  // ── Other Major Colleges — India ──
+  {name:'Christian Medical College, Vellore',short:'CMC Vellore'},
+  {name:'Christian Medical College, Ludhiana',short:'CMC Ludhiana'},
+  {name:'Armed Forces Medical College, Pune',short:'AFMC Pune'},
+  {name:'Jawaharlal Institute of Post Graduate Medical Education and Research, Puducherry',short:'JIPMER Puducherry'},
+  {name:'King George\'s Medical University, Lucknow',short:'KGMU Lucknow'},
+  {name:'Institute of Medical Sciences, Banaras Hindu University, Varanasi',short:'IMS BHU Varanasi'},
+  {name:'Grant Medical College, Mumbai',short:'GMC Mumbai'},
+  {name:'St. John\'s Medical College, Bangalore',short:'SJMC Bangalore'},
+  {name:'Kasturba Medical College, Manipal',short:'KMC Manipal'},
+  {name:'Kasturba Medical College, Mangalore',short:'KMC Mangalore'},
+  {name:'Sri Ramachandra Institute of Higher Education and Research, Chennai',short:'SRIHER Chennai'},
+  {name:'Amrita Institute of Medical Sciences, Kochi',short:'AIMS Kochi'},
+  {name:'JSS Medical College, Mysore',short:'JSSMC Mysore'},
+  {name:'Jawaharlal Nehru Medical College, Aligarh Muslim University',short:'JNMC AMU Aligarh'},
+  {name:'Government Medical College, Thiruvananthapuram',short:'GMC Thiruvananthapuram'},
+  {name:'Madras Medical College, Chennai',short:'MMC Chennai'},
+  {name:'Osmania Medical College, Hyderabad',short:'OMC Hyderabad'},
+  {name:'Gandhi Medical College, Hyderabad',short:'GMC Hyderabad'},
+  {name:'Bangalore Medical College and Research Institute',short:'BMCRI Bangalore'},
+  {name:'Sri Devaraj Urs Medical College, Kolar',short:'SDUMC Kolar'},
+  {name:'Government Medical College, Kozhikode',short:'GMC Kozhikode'},
+  {name:'Institute of Post Graduate Medical Education & Research, Kolkata',short:'IPGME&R Kolkata'},
+  {name:'Medical College Kolkata',short:'MCK Kolkata'},
+  {name:'R.G. Kar Medical College, Kolkata',short:'RGKMC Kolkata'},
+  {name:'Nil Ratan Sircar Medical College, Kolkata',short:'NRSMC Kolkata'},
+  {name:'SMS Medical College, Jaipur',short:'SMSMC Jaipur'},
+  {name:'Sawai Man Singh Medical College, Jaipur',short:'SMSMC Jaipur'},
+  {name:'Government Medical College, Amritsar',short:'GMC Amritsar'},
+  {name:'Government Medical College, Patiala',short:'GMC Patiala'},
+  {name:'Pt. B.D. Sharma Post Graduate Institute of Medical Sciences, Rohtak',short:'PGIMS Rohtak'},
+  {name:'Government Medical College, Nagpur',short:'GMC Nagpur'},
+  {name:'B.J. Government Medical College, Pune',short:'BJGMC Pune'},
+  {name:'Government Medical College, Aurangabad',short:'GMCA Aurangabad'},
+  {name:'Sri Venkateswara Institute of Medical Sciences, Tirupati',short:'SVIMS Tirupati'},
+  {name:'Rajendra Institute of Medical Sciences, Ranchi',short:'RIMS Ranchi'},
+  {name:'Gauhati Medical College, Guwahati',short:'GMC Guwahati'},
+  {name:'Silchar Medical College, Assam',short:'SMC Silchar'},
 ];
 
 let _selectedCollegeShort='';
