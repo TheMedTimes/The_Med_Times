@@ -1,0 +1,127 @@
+{
+  "date": "2026-05-12",
+  "topic": "Bacterial Meningitis",
+  "next_topic": "Drugs Modulating Autacoids",
+  "size": 15,
+  "solution": [
+    ["P","Y","O","G","E","N","I","C","#","#","#","#","#","#","M"],
+    ["#","#","#","#","#","#","#","O","#","#","#","#","#","#","E"],
+    ["#","P","#","B","#","#","#","B","#","#","B","#","N","#","N"],
+    ["#","N","#","A","#","#","#","W","#","#","R","#","E","#","I"],
+    ["K","E","R","N","I","G","#","E","F","F","U","S","I","O","N"],
+    ["#","U","#","N","#","#","#","B","#","#","D","#","S","#","G"],
+    ["#","M","#","W","#","P","#","#","#","#","Z","#","S","#","O"],
+    ["#","O","#","A","G","A","L","A","C","T","I","A","E","#","C"],
+    ["#","C","#","R","#","L","#","#","#","#","N","#","R","#","O"],
+    ["#","O","P","T","O","C","H","I","N","#","S","#","I","#","C"],
+    ["#","C","#","H","#","A","#","#","U","#","K","#","A","#","C"],
+    ["#","C","#","#","#","M","#","#","C","#","I","#","#","#","U"],
+    ["#","U","#","#","#","#","#","#","H","#","#","#","#","#","S"],
+    ["#","S","#","#","F","O","N","T","A","N","E","L","L","E","#"],
+    ["#","#","#","#","#","#","#","#","L","#","#","#","#","#","#"]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "row": 0,
+        "col": 0,
+        "len": 8,
+        "clue": "Acute bacterial meningitis is also called ____ meningitis"
+      },
+      {
+        "number": 8,
+        "row": 4,
+        "col": 0,
+        "len": 6,
+        "clue": "__ sign — Flexed hip leads to inability to straighten the leg"
+      },
+      {
+        "number": 9,
+        "row": 4,
+        "col": 7,
+        "len": 8,
+        "clue": "Hib may cause subdural __ following meningitis"
+      },
+      {
+        "number": 11,
+        "row": 7,
+        "col": 3,
+        "len": 10,
+        "clue": "Common causative agent of neonatal meningitis is S. ___"
+      },
+      {
+        "number": 12,
+        "row": 9,
+        "col": 1,
+        "len": 8,
+        "clue": "S. pneumoniae is ___ sensitive"
+      },
+      {
+        "number": 14,
+        "row": 13,
+        "col": 4,
+        "len": 10,
+        "clue": "Babies with pyogenic meningitis may show a bulging ___"
+      }
+    ],
+    "down": [
+      {
+        "number": 2,
+        "row": 0,
+        "col": 7,
+        "len": 6,
+        "clue": "CSF in tuberculous meningitis may form a ___ coagulum"
+      },
+      {
+        "number": 3,
+        "row": 0,
+        "col": 14,
+        "len": 13,
+        "clue": "Purpuric rashes with meningitis are due to __"
+      },
+      {
+        "number": 4,
+        "row": 2,
+        "col": 1,
+        "len": 12,
+        "clue": "Gram positive diplococci causing meningitis"
+      },
+      {
+        "number": 5,
+        "row": 2,
+        "col": 3,
+        "len": 9,
+        "clue": "Lyme disease may cause meningopolyneuritis called __ syndrome"
+      },
+      {
+        "number": 6,
+        "row": 2,
+        "col": 10,
+        "len": 10,
+        "clue": "___ sign — passive neck flexion causes flexion of the lower limb"
+      },
+      {
+        "number": 7,
+        "row": 2,
+        "col": 12,
+        "len": 9,
+        "clue": "Gram negative diplococci causing meningitis — ___ meningitidis"
+      },
+      {
+        "number": 10,
+        "row": 6,
+        "col": 5,
+        "len": 6,
+        "clue": "Selective media used for isolation of Listeria (agar)"
+      },
+      {
+        "number": 13,
+        "row": 9,
+        "col": 8,
+        "len": 6,
+        "clue": "__ rigidity — stiff neck, a classic sign of meningitis"
+      }
+    ]
+  }
+}
