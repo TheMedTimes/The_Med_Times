@@ -316,6 +316,8 @@
     <div class="auth-card">
       <div class="auth-mode-title">About You</div>
       <div class="auth-card-sub">This helps you appear correctly on the leaderboard</div>
+      <div class="year-section-label">Your Name</div>
+      <input class="auth-input" type="text" id="name-input" placeholder="What should we call you?" autocomplete="name" autocorrect="off" autocapitalize="words" maxlength="40" />
       <!-- College searchable picker -->
       <div class="college-search-wrap" id="college-search-wrap">
         <input class="college-search-input" type="text" id="college-search-input" placeholder="Search your college…" autocomplete="off" oninput="filterColleges(this.value)" onfocus="openCollegeDropdown()" />
@@ -452,6 +454,7 @@
     <div class="settings-section-title">Gameplay</div>
     <div class="settings-row"><div class="settings-row-left"><div class="settings-row-label">Live Check</div><div class="settings-row-sub">Instantly marks correct / wrong letters</div></div><label class="toggle"><input type="checkbox" id="instant-check-toggle" onchange="toggleInstantCheck(this.checked)" checked><span class="slider"></span></label></div>
     <div class="settings-section-title">Account</div>
+    <div class="settings-row"><div class="settings-row-left"><div class="settings-row-label">Name</div><div class="settings-row-value" id="settings-name-val">—</div></div><button class="settings-edit-btn" onclick="openEditName()">Change</button></div>
     <div class="settings-row"><div class="settings-row-left"><div class="settings-row-label">Year</div><div class="settings-row-value" id="settings-year-val">—</div></div><button class="settings-edit-btn" onclick="openEditYear()">Change</button></div>
     <div class="settings-row" style="border-bottom:none;"><div class="settings-row-left"><div class="settings-row-label">College</div><div class="settings-row-value" id="settings-college-val">—</div></div><button class="settings-edit-btn" onclick="openEditCollege()">Change</button></div>
     <button class="settings-signout" onclick="confirmSignOut()"><span class="ic" data-lucide="log-out" style="width:16px;height:16px;"></span>Sign out</button>
@@ -474,6 +477,15 @@
     <div class="auth-error" id="edit-year-error"></div>
     <button class="modal-close" onclick="saveEditYear()">Save</button>
     <button class="modal-close" style="background:none;border:1.5px solid var(--border);color:var(--text);margin-top:10px;" onclick="closeEditYear()">Cancel</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="edit-name-modal" onclick="closeEditName(event)">
+  <div class="modal"><div class="modal-handle"></div><div class="modal-title">Change Name</div>
+    <input class="auth-input" type="text" id="edit-name-input" placeholder="Your name" autocomplete="name" autocorrect="off" autocapitalize="words" maxlength="40" style="margin-bottom:16px;" />
+    <div class="auth-error" id="edit-name-error"></div>
+    <button class="modal-close" onclick="saveEditName()">Save</button>
+    <button class="modal-close" style="background:none;border:1.5px solid var(--border);color:var(--text);margin-top:10px;" onclick="closeEditName()">Cancel</button>
   </div>
 </div>
 
@@ -744,8 +756,15 @@ async function loadUserProfile(){
   userProfile=data||null;
   const missingCollege=!userProfile?.college||userProfile.college.trim()==='';
   const missingYear=!userProfile?.year||userProfile.year.trim()==='';
-  if(missingCollege||missingYear){
+  const missingUsername=!userProfile?.username||userProfile.username.trim()==='';
+  if(missingCollege||missingYear||missingUsername){
     hideLoading();buildAuthBg();showScreen('college-screen');initIcons();
+    // Pre-fill name field with Google suggestion if we have one and username is missing
+    if(missingUsername){
+      const suggestedName=currentUser.user_metadata?.full_name||currentUser.user_metadata?.name||currentUser.email?.split('@')[0]||'';
+      const nameInput=document.getElementById('name-input');
+      if(nameInput&&suggestedName)nameInput.value=suggestedName;
+    }
     return'needs-college';
   }
   if(userProfile&&userProfile.year&&!is2ndYear(userProfile.year)){showComingSoon(userProfile.year);return'coming-soon';}
@@ -806,19 +825,21 @@ async function deleteAccount(){
 
 // ── COLLEGE PROMPT ──
 async function saveCollegePrompt(){
+  const username=document.getElementById('name-input').value.trim();
   const college=document.getElementById('college-input').value.trim();
   const year=document.getElementById('year-input').value;
   const consent=document.getElementById('lb-consent').checked;
+  if(!username){document.getElementById('college-error').textContent='Please enter your name';return;}
   if(!college){document.getElementById('college-error').textContent='Please select your college from the list';return;}
   if(!year){document.getElementById('college-error').textContent='Please select your year';return;}
   document.getElementById('college-error').textContent='';
   try{
     // upsert handles the case where the profile row was never created (e.g. RLS blocked the insert)
-    const{error}=await sb.from('profiles').upsert({id:currentUser.id,college,year,show_on_leaderboard:consent},{onConflict:'id'});
+    const{error}=await sb.from('profiles').upsert({id:currentUser.id,username,college,year,show_on_leaderboard:consent},{onConflict:'id'});
     if(error){document.getElementById('college-error').textContent='Something went wrong, try again';return;}
     // Guard: userProfile may be null if the earlier insert returned no data due to RLS
     if(!userProfile)userProfile={id:currentUser.id};
-    userProfile.college=college;userProfile.year=year;userProfile.show_on_leaderboard=consent;
+    userProfile.username=username;userProfile.college=college;userProfile.year=year;userProfile.show_on_leaderboard=consent;
     if(!is2ndYear(year)){showComingSoon(year);return;}
     await loadPuzzle();
   }catch(e){
@@ -829,11 +850,23 @@ async function saveCollegePrompt(){
 
 // ── SETTINGS ──
 function openSettingsModal(){
+  document.getElementById('settings-name-val').textContent=userProfile?.username||'Not set';
   document.getElementById('settings-year-val').textContent=userProfile?.year||'Not set';
   document.getElementById('settings-college-val').textContent=userProfile?.college||'Not set';
   document.getElementById('settings-modal').classList.add('open');
 }
 function closeSettingsModal(e){if(!e||e.target===document.getElementById('settings-modal'))document.getElementById('settings-modal').classList.remove('open');}
+function openEditName(){document.getElementById('edit-name-input').value=userProfile?.username||'';document.getElementById('edit-name-error').textContent='';document.getElementById('edit-name-modal').classList.add('open');setTimeout(()=>document.getElementById('edit-name-input').focus(),100);}
+function closeEditName(e){if(!e||e.target===document.getElementById('edit-name-modal'))document.getElementById('edit-name-modal').classList.remove('open');}
+async function saveEditName(){
+  const val=document.getElementById('edit-name-input').value.trim();
+  if(!val){document.getElementById('edit-name-error').textContent='Please enter your name';return;}
+  const{error}=await sb.from('profiles').update({username:val}).eq('id',currentUser.id);
+  if(error){document.getElementById('edit-name-error').textContent='Something went wrong';return;}
+  userProfile.username=val;
+  document.getElementById('settings-name-val').textContent=val;
+  document.getElementById('edit-name-modal').classList.remove('open');
+}
 function openEditYear(){document.getElementById('edit-year-select').value=userProfile?.year||'';document.getElementById('edit-year-error').textContent='';document.getElementById('edit-year-modal').classList.add('open');}
 function closeEditYear(e){if(!e||e.target===document.getElementById('edit-year-modal'))document.getElementById('edit-year-modal').classList.remove('open');}
 async function saveEditYear(){
