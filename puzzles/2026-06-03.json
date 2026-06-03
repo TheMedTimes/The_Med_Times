@@ -288,21 +288,21 @@
         "row": 6,
         "col": 3,
         "len": 4,
-        "clue": "Toxocara larvae are transmitted via contact with __ soil"
+        "clue": "Hydatid __ is the deposition at the bottom of the cyst"
       },
       {
         "number": 10,
         "row": 9,
         "col": 9,
         "len": 6,
-        "clue": "Toxocara infection may cause __ blood loss in the stool"
+        "clue": "Meyers-Kouwenaar syndrome is also called __ filariasis"
       },
       {
         "number": 11,
         "row": 11,
         "col": 4,
         "len": 6,
-        "clue": "Echinococcus __ causes alveolar hydatid disease"
+        "clue": "Echinococcus __ causes polycystic hydatid disease"
       },
       {
         "number": 12,
@@ -339,7 +339,7 @@
         "row": 2,
         "col": 9,
         "len": 13,
-        "clue": "Daughter cysts in hydatid disease contain ___"
+        "clue": "Brood capsule in hydatid cyst contain ___"
       },
       {
         "number": 6,
